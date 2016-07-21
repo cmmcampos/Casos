@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    
+    <ui:define name="content">
+       
+        <h:form id="formCatServicios" style="width: 100%">
+           
+            <p:dataTable id="catServicios" var="catServicios" value="#{manejadorGestionCatalogo.listaCatServicios}"  rowKey="#{catServicios.idCatServ}" paginator="true" rows="5"
+                         selection="#{manejadorGestionCatalogo.catServicioSeleccionado}" selectionMode="single">
+                <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="4">CATÁLOGO DE CATEGORÍA DE SERVICIOS</p:column>
+                  </p:row>
+                </f:facet>
+                
+                <p:column headerText="Id " sortBy="#{catServicios.idCatServ}" filterBy="#{catServicios.idCatServ}">
+                    <h:outputText value="#{catServicios.idCatServ}"/>
+                 </p:column>
+                                <p:column headerText="Categoría " sortBy="#{catServicios.nombreCatServ}" filterBy="#{catServicios.nombreCatServ}">
+                    <h:outputText value="#{catServicios.nombreCatServ}"/>
+                </p:column>
+                <p:column headerText="Descripción ">
+                     <h:outputText value="#{catServicios.descripcionCatServ}"/>
+                </p:column>
+             
+               <f:facet name="footer">  
+                    <p:commandButton id="agregar" value="Adicionar" oncomplete="agregaCatServicios.show();" process="@this catServicios" update=":formCatServicios:Conte1" /> 
+                    <p:commandButton id="ConsultaBtnCS" value="Modificar" oncomplete="modificaCatServi.show();" process="catServicios" update=":formCatServicios:Conte2"/>  
+                    
+               </f:facet>     
+           
+           </p:dataTable>     
+                
+           <p:dialog  id="Conte1" widgetVar="agregaCatServicios" header="Ingrese Nueva Categoría de Servicios" modal="true" >
+                
+                <p:panelGrid id="Agrega1" columns="2">  
+                    <h:outputLabel id="identi" value="Id" style="font-weight: bold"/> 
+                    <h:outputText value="#{manejadorAdicionCatalogo.nuevoCategoriaServicios.idCatServ}" />
+                    <h:outputLabel id="nombre" value="Nombre:" style="font-weight: bold" />  
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoCategoriaServicios.nombreCatServ}" required="true" requiredMessage="Nombre es obligatorio"/> 
+                    <h:outputLabel value="Descripción: " style="font-weight: bold"/>  
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoCategoriaServicios.descripcionCatServ}" /> 
+                </p:panelGrid>      
+               
+                <p:commandButton value="Guardar" action="#{manejadorAdicionCatalogo.crearCatServi()}" update=":formCatServicios:catServicios " process="@this Conte1" oncomplete="handleRequest(args);" />
+                    
+                    <script type="text/javascript">
+                      function handleRequest(args) {
+                      if (args.validationFailed) {
+                          alert('Ha ocurrido un error. Complete los datos necesarios');
+                      }else{
+                        alert('Datos adicionados correctamente');
+                        agregaCatServicios.hide();
+                        }
+                      }
+                    </script>
+            
+           </p:dialog> 
+                
+           <p:dialog  id="Conte2" widgetVar="modificaCatServi" header="Modificar Categorías de Servicios" modal="true" >
+                 <p:panelGrid id="despliegaCS2" columns="2">
+                     <h:outputLabel value="Id Categoria: " style="font-weight: bold"/>
+                     <h:outputText value="#{manejadorGestionCatalogo.catServicioSeleccionado.idCatServ}"/>
+                     <h:outputLabel value="Nombre Categoría: " style="font-weight: bold"/>
+                     <h:inputText value="#{manejadorGestionCatalogo.catServicioSeleccionado.nombreCatServ}" />
+                     <h:outputLabel value="Descripción Categoría: " style="font-weight: bold"/>
+                     <h:inputText value="#{manejadorGestionCatalogo.catServicioSeleccionado.descripcionCatServ}" />
+                 </p:panelGrid>
+               
+               <p:commandButton value="Guardar" action="#{manejadorGestionCatalogo.actualizaCatServicio()}" update=":formCatServicios:catServicios" process="@this despliegaCS2" oncomplete="modificaCatServi.hide();"/>
+            </p:dialog>     
+         
+             
+              
+       </h:form>
+                     
+    </ui:define>
+
+    
+</ui:composition>

@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+        
+        <h:form id="formListaC" prependId="false" style="width: 100%">
+
+            <p:dataTable id="listaC"  var="listaq" value="#{controladorAdicionCaso.listRequeriPendien}"  rowKey="#{listaq.fechaRequerimiento}" paginator="true" rows="10" >
+
+                <f:facet name="header">
+                    <p:row>
+                        <p:column colspan="7">REQUERIMIENTOS POR ASIGNAR</p:column>
+                    </p:row>
+                </f:facet>
+
+                <p:column headerText="No." >
+                    <h:outputText value="#{listaq.numCaso}"/>
+                </p:column>
+
+                <p:column headerText="Fecha Solicitud">
+                    <h:outputText value="#{listaq.fechaRequerimiento}" title="Fecha de Solicitud">
+                        <f:convertDateTime pattern="dd/MM/yyyy" locale="es"></f:convertDateTime>
+                    </h:outputText>
+                </p:column>
+                           
+
+                <p:column headerText="Dependencia" filterBy="#{listaq.usuarioUsuarioSolicitante.idDependencia.nombreDependencia}" filterMatchMode="contains">
+                     <h:outputText value="#{listaq.usuarioUsuarioSolicitante.idDependencia.nombreDependencia}"/>
+                </p:column>
+
+                <p:column headerText="Nombre Solicitante" filterBy="#{listaq.usuarioUsuarioSolicitante.nombreUsuario} #{listaq.usuarioUsuarioSolicitante.apellidoUsuario}" filterMatchMode="contains">
+                    <h:outputText value="#{listaq.usuarioUsuarioSolicitante.nombreUsuario} #{listaq.usuarioUsuarioSolicitante.apellidoUsuario} " />
+                </p:column>
+                
+                 <p:column headerText="Descripción">
+                    <p:inputTextarea value="#{listaq.descripcionRequerimiento}" autoResize="false" style="width: 240px; height: 50px" disabled="true"></p:inputTextarea>
+                </p:column>
+                
+                <p:column headerText="Asignar">
+                  <center>  <p:commandButton icon="ui-icon-check" title="Asignar Tecnico" process="@this" ajax="false" immediate="true" action="#{controladorAdicionCaso.requeSelec()}" >
+                        <f:setPropertyActionListener value="#{listaq}" target="#{controladorAdicionCaso.requeSeleccionado}"/>
+                    </p:commandButton> </center>
+                </p:column>
+
+
+            </p:dataTable>
+
+
+            <p:growl id="msg12"/>  
+
+
+
+        </h:form>        
+
+    </ui:define>
+
+
+</ui:composition>

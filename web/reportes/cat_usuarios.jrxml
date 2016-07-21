@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cat_usuarios" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bc8ca17f-a123-45ac-a5ad-8d430d0cc27d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="undEje" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$F{usuarios_id_und_ejecutora}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     usuarios."id_usuario" AS usuarios_id_usuario,
+     usuarios."nombre_usuario" AS usuarios_nombre_usuario,
+     usuarios."apellido_usuario" AS usuarios_apellido_usuario,
+     usuarios."usuario_usuario" AS usuarios_usuario_usuario,
+     usuarios."id_tipo_usuario" AS usuarios_id_tipo_usuario,
+     usuarios."id_dependencia" AS usuarios_id_dependencia,
+     usuarios."id_rol" AS usuarios_id_rol,
+     usuarios."contrasenia_usuario" AS usuarios_contrasenia_usuario,
+     usuarios."correo_usuario" AS usuarios_correo_usuario,
+     usuarios."telefono_usuario" AS usuarios_telefono_usuario,
+     usuarios."fecha_crea_usuario" AS usuarios_fecha_crea_usuario,
+     usuarios."observaciones_usuario" AS usuarios_observaciones_usuario,
+     usuarios."id_und_ejecutora" AS usuarios_id_und_ejecutora,
+     usuarios."estado" AS usuarios_estado,
+     unidades_ejecutoras."nombre_und_ejecutora" AS unidades_ejecutoras_nombre_und_ejecutora,
+     tipos_usuarios."nombre_tipo_usuario" AS tipos_usuarios_nombre_tipo_usuario,
+     roles."nombre_rol" AS roles_nombre_rol,
+     dependencias."nombre_dependencia" AS dependencias_nombre_dependencia
+FROM
+     "public"."unidades_ejecutoras" unidades_ejecutoras RIGHT OUTER JOIN "public"."usuarios" usuarios ON unidades_ejecutoras."id_und_ejecutora" = usuarios."id_und_ejecutora"
+     LEFT OUTER JOIN "public"."tipos_usuarios" tipos_usuarios ON usuarios."id_tipo_usuario" = tipos_usuarios."id_tipo_usuario"
+     LEFT OUTER JOIN "public"."roles" roles ON usuarios."id_rol" = roles."id_rol"
+     LEFT OUTER JOIN "public"."dependencias" dependencias ON usuarios."id_dependencia" = dependencias."id_dependencia"
+
+WHERE usuarios."id_und_ejecutora"=$P{undEje}
+
+ORDER BY  dependencias."nombre_dependencia"]]>
+	</queryString>
+	<field name="usuarios_id_usuario" class="java.lang.Integer"/>
+	<field name="usuarios_nombre_usuario" class="java.lang.String"/>
+	<field name="usuarios_apellido_usuario" class="java.lang.String"/>
+	<field name="usuarios_usuario_usuario" class="java.lang.String"/>
+	<field name="usuarios_id_tipo_usuario" class="java.lang.Integer"/>
+	<field name="usuarios_id_dependencia" class="java.lang.Integer"/>
+	<field name="usuarios_id_rol" class="java.lang.Integer"/>
+	<field name="usuarios_contrasenia_usuario" class="java.lang.String"/>
+	<field name="usuarios_correo_usuario" class="java.lang.String"/>
+	<field name="usuarios_telefono_usuario" class="java.lang.String"/>
+	<field name="usuarios_fecha_crea_usuario" class="java.sql.Date"/>
+	<field name="usuarios_observaciones_usuario" class="java.lang.String"/>
+	<field name="usuarios_id_und_ejecutora" class="java.lang.Integer"/>
+	<field name="usuarios_estado" class="java.lang.Boolean"/>
+	<field name="unidades_ejecutoras_nombre_und_ejecutora" class="java.lang.String"/>
+	<field name="tipos_usuarios_nombre_tipo_usuario" class="java.lang.String"/>
+	<field name="roles_nombre_rol" class="java.lang.String"/>
+	<field name="dependencias_nombre_dependencia" class="java.lang.String"/>
+	<group name="dependencias_nombre_dependencia">
+		<groupExpression><![CDATA[$F{dependencias_nombre_dependencia}]]></groupExpression>
+		<groupHeader>
+			<band height="28">
+				<staticText>
+					<reportElement uuid="4bfaaf0e-a8a2-4df5-ac68-139b3748e4eb" x="24" y="7" width="100" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[>>> Dependencia]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="2bff0582-d1ae-47a6-8bf8-1ab7a85abaa8" x="124" y="7" width="282" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{dependencias_nombre_dependencia}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="149" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="669c9490-a854-4ce7-b099-7afcd1a96678" x="10" y="112" width="549" height="20" backcolor="#899FB6"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="7d6e78a2-2a64-42d0-a931-43f537aa8aaa" x="155" y="112" width="251" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[.: Catalogo de Usuarios por Dependencia :.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="50318d54-e1dd-44f5-87cb-37e00d8514a6" x="180" y="65" width="211" height="16"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistema de Control de Requerimientos]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="afde9390-47c7-406c-859e-25d8ba33bf38" x="200" y="86" width="174" height="20"/>
+				<box topPadding="1" leftPadding="1"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{unidades_ejecutoras_nombre_und_ejecutora}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="8b411f02-54bd-4b61-ba85-a7835bc0efd9" x="401" y="7" width="172" height="100"/>
+				<imageExpression><![CDATA["logo_e.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="8041c0d7-2643-4903-a1a4-2c1b52e3da7b" x="10" y="11" width="128" height="98"/>
+				<imageExpression><![CDATA["escudo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="c20f17ad-4948-4bf1-b193-e4eb0786d8e1" x="10" y="2" width="22" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2f6ec61d-a9d7-4828-aff8-c3b68538f177" x="38" y="2" width="66" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ec36fabc-42ca-41ae-b393-de328bb06f3c" x="109" y="2" width="70" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ed7a03e0-b2c9-4ee7-9d04-8c6501b64166" x="182" y="2" width="68" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cbe92664-4bdb-463d-8806-6d714d293775" x="262" y="2" width="88" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Correo Electrónico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="56bbaacc-a378-4ad2-9f38-de18eacb1a53" x="436" y="2" width="55" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rol]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fb04687d-0532-4fbf-9bd7-766e1c74eedc" x="509" y="2" width="62" height="28"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de usuario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6df50c13-6e30-4f1b-b9f2-3f1417b36b06" x="350" y="2" width="76" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefono]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="15dd01ba-a498-4474-91cc-7fabfc60c2c4" mode="Transparent" x="33" y="0" width="73" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarios_nombre_usuario}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement uuid="94ba259f-28f8-471f-95e6-e6d5526b77b0" mode="Transparent" x="106" y="0" width="75" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarios_apellido_usuario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="9fb1b265-1e57-4956-9995-ed107f0e9ac8" mode="Transparent" x="181" y="0" width="68" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarios_usuario_usuario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="1dbbb354-828d-4f13-ac00-4606840fd0a1" mode="Transparent" x="249" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarios_correo_usuario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="51154f56-4955-4331-9cd9-0c57bab860af" mode="Transparent" x="349" y="0" width="76" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarios_telefono_usuario}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement uuid="85ef0bd9-22f0-4fef-81f7-859974486004" mode="Transparent" x="490" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipos_usuarios_nombre_tipo_usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6cd55dbe-e2d7-4b2f-8fa0-34a121cdf6f3" x="425" y="0" width="65" height="20" backcolor="#FFFFFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{roles_nombre_rol}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bef1102c-3644-4485-ba41-df750ef2c32b" x="6" y="0" width="27" height="20"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarios_id_usuario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="13" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="98" splitType="Stretch">
+			<image>
+				<reportElement uuid="fa2840af-f896-4cf5-825d-e0de70188ddf" x="6" y="17" width="159" height="57"/>
+				<imageExpression><![CDATA["secre_new.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy h:mm a">
+				<reportElement uuid="fa084794-4823-46bf-847e-2b5bf9ccf75e" mode="Transparent" x="10" y="74" width="100" height="20" forecolor="#736343" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="bd28efd3-ef97-4c22-9d20-3ac5910da49c" x="519" y="74" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e1e8c480-697a-46da-8474-4efc0610409b" x="439" y="74" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement uuid="0d931065-b79d-472c-b8c4-eb07f8f72c6c" x="439" y="11" width="52" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c408d811-b05e-4ad2-938c-9d56e90d3d04" x="333" y="12" width="103" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de Usuarios]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

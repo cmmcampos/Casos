@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <ui:define name="content">
+         <h:form id="formularioEstado" style="width: 100%">  
+             
+             <p:dataTable id="estados" var="estados" value="#{controladorCatalogoEstado.listaDeEstado}"  rowKey="#{estados.idEstado}" paginator="true" rows="5"
+                          selection="#{controladorCatalogoEstado.estadoSeleccionado}" selectionMode="single">
+                <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="4">CATÁLOGO DE ESTADOS</p:column>
+                  </p:row>
+                </f:facet>
+                 <p:column headerText="ID" sortBy="#{estados.idEstado}" filterBy="#{estados.idEstado}" filterMatchMode="contains">
+                     <h:outputText value="#{estados.idEstado}"/>
+                 </p:column>
+                 <p:column headerText="Nombre" sortBy="#{estados.nombreEstado}" filterBy="#{estados.nombreEstado}" filterMatchMode="contains">
+                     <h:outputText value="#{estados.nombreEstado}"/>
+                 </p:column>
+                 <p:column headerText="Descripción">
+                     <h:outputText value="#{estados.descripcionEstado}"/>
+                 </p:column>
+                 
+                 <f:facet name="footer">  
+<!--                    <p:commandButton id="agregar" value="Adicionar" oncomplete="agregaEstado1.show();" process="@this estados" update=":formularioEstado:Conte1"/>
+                    <p:commandButton id="ConsultaBtn" value="Modificar" oncomplete="modificaEstado.show();" process="estados" update=":formularioEstado:Conte2"/>  
+                     -->
+                 </f:facet>
+                
+                                
+            </p:dataTable>
+            
+            <p:dialog  id="Conte1" widgetVar="agregaEstado1" header="Ingrese Nuevo Estado" modal="true">
+                
+                <p:panelGrid id="depliegaE1" columns="2">  
+                    
+                    
+                    <h:outputLabel id="nomb" value="Nombre:" style="font-weight: bold" />  
+                    <h:inputText value="#{controladorCatalogoEstado.nuevoEstado.nombreEstado}" /> 
+                    
+                    <h:outputLabel value="Descripción:" style="font-weight: bold"/>  
+                    <h:inputText value="#{controladorCatalogoEstado.nuevoEstado.descripcionEstado}" /> 
+                </p:panelGrid>      
+               
+                <p:commandButton value="Guardar" action="#{controladorCatalogoEstado.almacenar()}" update=":formularioEstado:estados :formularioEstado:msg12" process="@this Conte1" oncomplete="agregaEstado1.hide();" />
+                    
+<!--                    <script type="text/javascript">
+                      function handleRequest(args) {
+                      if (args.validationFailed) {
+                          alert('Ha ocurrido un error. Complete los datos necesarios');
+                      }else{
+                        alert('Datos adicionados correctamente');
+                        agregaEstado1.hide();
+                        }
+                      }
+                    </script>-->
+            </p:dialog> 
+            
+             
+            <p:dialog  id="Conte2" widgetVar="modificaEstado" header="Modificar Estado" modal="true">
+                 <p:panelGrid id="despliegaE2" columns="2">
+                     <h:outputLabel value="Id Estado" style="font-weight: bold"/>
+                     <h:outputText value="#{controladorCatalogoEstado.estadoSeleccionado.idEstado}"/>
+                     <h:outputLabel value="Nombre Estado" style="font-weight: bold"/>
+                     <h:inputText value="#{controladorCatalogoEstado.estadoSeleccionado.nombreEstado}" />
+                     <h:outputLabel value="Descripción Estado" style="font-weight: bold"/>
+                     <h:inputText value="#{controladorCatalogoEstado.estadoSeleccionado.descripcionEstado}" />
+                 </p:panelGrid>
+               
+                <p:commandButton value="Guardar" action="#{controladorCatalogoEstado.modificar()}" update=":formularioEstado:estados  :formularioEstado:msg12" process="@this despliegaE2" oncomplete="modificaEstado.hide();"/>
+            </p:dialog>
+             
+             
+
+             <p:growl id="msg12"/>
+             
+         </h:form>
+        
+    </ui:define>
+
+</ui:composition>

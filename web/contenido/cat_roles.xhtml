@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    
+    <ui:define name="content">
+         <h:form id="formRoles" style="width: 100%">  
+        
+             <p:dataTable id="rol" var="rol" value="#{controladorCatalogoRoles.listaRoles}"  rowKey="#{rol.idRol}" paginator="true" rows="5"
+                          selection="#{controladorCatalogoRoles.rolSeleccionado}" selectionMode="single">
+                <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="4">ROLES DE USUARIOS</p:column>
+                  </p:row>
+                </f:facet>
+                 <p:column headerText="Id" sortBy="#{rol.idRol}" filterBy="#{rol.idRol}" filterMatchMode="contains">
+                    <h:outputText value="#{rol.idRol}"/>
+                 </p:column>
+                 <p:column headerText="Nombre de Rol" sortBy="#{rol.nombreRol}" filterBy="#{rol.nombreRol}" filterMatchMode="contains">
+                    <h:outputText value="#{rol.nombreRol}"/>
+                 </p:column>
+                 <p:column headerText="Descripción de Rol">
+                     <h:outputText value="#{rol.descripcionRol}"/>
+                 </p:column>
+                 
+                 <f:facet name="footer">  
+                    <p:commandButton id="agregar" value="Adicionar" oncomplete="agregaRol.show();" process="@this rol" update=":formRoles:rol :formRoles:Conte1" /> 
+                    <p:commandButton id="ConsultaBtnRol" value="Modificar" oncomplete="modificaRol.show();" process="rol" update=":formRoles:Conte2"/>
+                 </f:facet>
+                               
+            </p:dataTable>
+        <p:growl id="msg12"/>
+            <p:dialog  id="Conte1" widgetVar="agregaRol" header="Ingrese Nuevo Rol de Usuario" modal="true">
+                
+                <p:panelGrid id="Agrega1" columns="2">  
+                   
+                    <h:outputLabel id="nomb" value="Nombre de Rol: " style="font-weight: bold" />  
+                    <p:inputText value="#{controladorCatalogoRoles.rolNuevo.nombreRol}" required="true" requiredMessage="Nombre es obligatorio"/> 
+                    <h:outputLabel value="Descripción de Rol: " style="font-weight: bold"/>  
+                    <p:inputText value="#{controladorCatalogoRoles.rolNuevo.descripcionRol}" required="true" requiredMessage="Descripción es obligatoria" /> 
+                </p:panelGrid>      
+               
+                <p:commandButton value="Guardar" action="#{controladorCatalogoRoles.agregarRol()}" update=":formRoles:rol :formRoles:msg12 @this" process="@this Conte1" oncomplete="handleRequest(args);" />
+                    
+                    <script type="text/javascript">
+                      function handleRequest(args) {
+                      if (args.validationFailed) {
+                          alert('Ha ocurrido un error. Complete los datos necesarios');
+                      }else{
+                        alert('Datos adicionados correctamente');
+                        agregaRol.hide();
+                        }
+                      }
+                    </script>
+            </p:dialog> 
+             
+            <p:dialog  id="Conte2" widgetVar="modificaRol" header="Modificar Roles" modal="true">
+                 <p:panelGrid id="Modifica2" columns="2">
+                     <h:outputText value="ID: "></h:outputText>
+                     <h:outputText value="#{controladorCatalogoRoles.rolSeleccionado.idRol}"></h:outputText>
+                     <h:outputLabel value="Nombre del Rol: " style="font-weight: bold"/>
+                     <h:inputText value="#{controladorCatalogoRoles.rolSeleccionado.nombreRol}" required="true" requiredMessage="Nombre es obligatorio" />
+                     <h:outputLabel value="Descripción del Rol:" style="font-weight: bold"/>
+                     <h:inputText value="#{controladorCatalogoRoles.rolSeleccionado.descripcionRol}" required="true" requiredMessage="Descipción es obligatorio"/>
+                 </p:panelGrid>
+                <p:commandButton value="Guardar" action="#{controladorCatalogoRoles.modificar()}" update=":formRoles:rol :formRoles:msg12" process="@this Conte2"  oncomplete="handleRequest(args);"/>
+            <script type="text/javascript">
+                      function handleRequest(args) {
+                      if (args.validationFailed) {
+                          alert('Ha ocurrido un error. Complete los datos necesarios');
+                      }else{
+                        alert('Datos modificados correctamente');
+                        modificaRol.hide();
+                        }
+                      }
+                    </script> 
+            
+            
+            
+            
+            </p:dialog> 
+             
+         </h:form> 
+        
+    </ui:define>
+
+</ui:composition>

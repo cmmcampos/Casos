@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    
+    <ui:define name="content">
+        
+        <h:form id="formViaSoli" style="width: 100%">  
+        
+            <p:dataTable id="viaSolicitud" var="viaSolicitud" value="#{controladorCatalogoViaSolicitudes.listaDeViaSolicitudes}"  rowKey="#{viaSolicitud.idViaSolicitud}" paginator="true" rows="5"
+                         selection="#{controladorCatalogoViaSolicitudes.viaSolicitudSeleccionada}" selectionMode="single">
+                <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="4">CATÁLOGO DE VÍAS DE SOLICITUDES</p:column>
+                  </p:row>
+                </f:facet>
+               <p:column headerText="Id" sortBy="#{viaSolicitud.idViaSolicitud}" filterBy="#{viaSolicitud.idViaSolicitud}">
+                    <h:outputText value="#{viaSolicitud.idViaSolicitud}"/>
+                 </p:column>
+                <p:column headerText="Vía de Solicitud" sortBy="#{viaSolicitud.nombreViaSolicitud}" filterBy="#{viaSolicitud.nombreViaSolicitud}">
+                    <h:outputText value="#{viaSolicitud.nombreViaSolicitud}"/>
+                 </p:column>
+                  <p:column headerText="Descripción">
+                     <h:outputText value="#{viaSolicitud.descripcionViaSolicitud}"/>
+                 </p:column>
+                 
+                <f:facet name="footer">  
+                    <p:commandButton id="agregar" value="Adicionar" oncomplete="agregaViaSoli.show();" process="@this viaSolicitud" update=":formViaSoli:viaSolicitud :formViaSoli:Conte1" /> 
+                    <p:commandButton id="ConsultaBtnVS" value="Modificar" oncomplete="modificaViaSoli.show();" process="viaSolicitud" update=":formViaSoli:Conte2"/>  
+                    
+                 </f:facet>
+ 
+                               
+            </p:dataTable>
+             
+            
+            <p:growl id="msg12"/>
+            
+            <p:dialog  id="Conte1" widgetVar="agregaViaSoli" header="Ingrese Nueva Vía de Solicitud" modal="true">
+                
+                <p:panelGrid id="Agrega1" columns="2">  
+                   
+                    <h:outputLabel id="nomb" value="Vía de Solicitud: " style="font-weight: bold" />  
+                    <h:inputText value="#{controladorCatalogoViaSolicitudes.nuevaViaSolicitud.nombreViaSolicitud}" /> 
+                    <h:outputLabel value="Descripción: " style="font-weight: bold"/>  
+                    <h:inputText value="#{controladorCatalogoViaSolicitudes.nuevaViaSolicitud.descripcionViaSolicitud}" /> 
+                </p:panelGrid>      
+               
+                <p:commandButton value="Guardar" onclick="if (!confirm('Esta seguro de registrar una nueva via de solicitud?')) return false;" action="#{controladorCatalogoViaSolicitudes.almacenar()}" update=":formViaSoli:viaSolicitud Agrega1 :formViaSoli:msg12" process="@this Conte1" oncomplete="agregaViaSoli.hide();" />
+                    
+                
+                 
+            </p:dialog> 
+            
+            <p:dialog  id="Conte2" widgetVar="modificaViaSoli" header="Modificar Vías de Solicitudes" modal="true">
+                 <p:panelGrid id="Modifica2" columns="2">
+                     <h:outputLabel value="Id Vía de Solicitud: " style="font-weight: bold"/>
+                     <h:outputText value="#{controladorCatalogoViaSolicitudes.viaSolicitudSeleccionada.idViaSolicitud}"/>
+                     <h:outputLabel value="Nombre Vía de Solicitud:" style="font-weight: bold"/>
+                     <h:inputText value="#{controladorCatalogoViaSolicitudes.viaSolicitudSeleccionada.nombreViaSolicitud}" />
+                     <h:outputLabel value="Descripción Vía de Solicitud:" style="font-weight: bold"/>
+                     <h:inputText value="#{controladorCatalogoViaSolicitudes.viaSolicitudSeleccionada.descripcionViaSolicitud}"/>
+                 </p:panelGrid>
+                <p:commandButton value="Guardar" onclick="if (!confirm('Esta seguro de modificar está via de solicitud?')) return false;" action="#{controladorCatalogoViaSolicitudes.modificar()}" update=":formViaSoli:viaSolicitud :formViaSoli:msg12" process="@this Conte2" oncomplete="modificaViaSoli.hide();" />
+            </p:dialog>
+            
+           
+            
+            
+        </h:form>
+        
+    </ui:define>
+
+</ui:composition>

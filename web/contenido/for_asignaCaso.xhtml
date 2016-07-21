@@ -1,0 +1,304 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+    <ui:define name="content">
+
+        <h:form id="formCasos" style="width: 100%">
+
+
+            <p:accordionPanel id="agregaSolicitante" multiple="true" activeIndex="1 0">
+                <p:tab title="1- Solicitante">
+                    <p:panelGrid style="width: 100%;">
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column colspan="4"><h:outputLabel value="Datos del Usuario Solicitante"/></p:column>
+                            </p:row>
+                        </f:facet>
+                        <p:row>
+                            <p:column colspan="1"><h:outputLabel value="Nombre:   " style="font-weight: bold"/></p:column>
+                            <p:column colspan="3"><h:outputText value="#{controladorAdicionCaso.requeSeleccionado.usuarioUsuarioSolicitante.nombreUsuario}  #{controladorAdicionCaso.requeSeleccionado.usuarioUsuarioSolicitante.apellidoUsuario}" /></p:column>                                   
+                        </p:row>                                
+                        <p:row>
+                            <p:column><h:outputLabel value="Teléfono: " style="font-weight: bold"/></p:column> 
+                            <p:column><h:outputText value="#{controladorAdicionCaso.requeSeleccionado.usuarioUsuarioSolicitante.telefonoUsuario}" /></p:column>
+                            <p:column><h:outputLabel value="Correo Electrónico:" style="font-weight: bold"/></p:column> 
+                            <p:column><h:outputText value="#{controladorAdicionCaso.requeSeleccionado.usuarioUsuarioSolicitante.correoUsuario}" /></p:column> 
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="1"><h:outputLabel value="Dependencia a la que pertenece:  " style="font-weight: bold"/> </p:column>
+                            <p:column colspan="1"><h:outputText value="#{controladorAdicionCaso.requeSeleccionado.usuarioUsuarioSolicitante.idDependencia.nombreDependencia}"/> </p:column>
+                            <p:column colspan="1"><h:outputLabel value="Jefe de la Dependencia:  " style="font-weight: bold"/> </p:column>
+                            <p:column colspan="1"><h:outputText value="#{controladorAdicionCaso.requeSeleccionado.usuarioUsuarioSolicitante.idDependencia.jefeDependencia}"/> </p:column>                         
+                        </p:row>                                
+                        <p:row>
+                            <p:column colspan="1"><h:outputLabel value="Dependencia / Unidad organizativa:  " style="font-weight: bold"/> </p:column>
+                            <p:column colspan="1"><h:outputText value="#{controladorAdicionCaso.requeSeleccionado.usuarioUsuarioSolicitante.idDependencia.idDirecInter.nombreDirecInter}"/> </p:column>
+                            <p:column colspan="1"><h:outputLabel value="Dirección Nacional:  " style="font-weight: bold"/> </p:column>
+                            <p:column colspan="1"><h:outputText value="#{controladorAdicionCaso.requeSeleccionado.usuarioUsuarioSolicitante.idDependencia.idDirecInter.idDirNacional.nombreDirNacional}"/> </p:column>                          
+                        </p:row>   
+                    </p:panelGrid>                        
+                </p:tab>
+
+                <p:tab title="2- Detalle de Requerimiento">
+                    <p:panelGrid style="width: 100%;">
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column colspan="6"><h:outputLabel value="Datos del Servicio Requerido"/></p:column>
+                            </p:row>
+                        </f:facet>
+                        <p:row>
+                            <p:column><h:outputLabel value="N° de Requerimiento: " style="font-weight: bold"/></p:column>
+                            <p:column colspan="1">
+                                <h:outputText value="#{controladorAdicionCaso.requeSeleccionado.numCaso}"></h:outputText>
+
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="Estado: " style="font-weight: bold"></h:outputText>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{controladorAdicionCaso.requeSeleccionado.idEstado.nombreEstado}"></h:outputText>
+                            </p:column>
+                            <p:column colspan="1"><h:outputLabel value="Fecha del Requerimiento: " style="font-weight: bold"/></p:column>
+                            <p:column colspan="2"> <h:outputText value="#{controladorAdicionCaso.requeSeleccionado.fechaRequerimiento}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es">
+
+                                    </f:convertDateTime>
+                                </h:outputText> </p:column>
+
+
+                        </p:row>
+                        <p:row>
+                            <p:column><h:outputLabel value="Categoría del Servicio: " style="font-weight: bold"/></p:column>
+                            <p:column colspan="3">
+                                <h:outputText value="#{controladorAdicionCaso.requeSeleccionado.idCatServ.nombreCatServ}"></h:outputText>
+
+                            </p:column>    
+                            <p:column >
+                                <h:outputText value="Via de solicitud:" style="font-weight: bold"></h:outputText>
+                            </p:column>
+                            <p:column >
+                                <h:outputText value="#{controladorAdicionCaso.requeSeleccionado.idViaSolicitud.nombreViaSolicitud}"/>
+                            </p:column>  
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="4" style="text-align: center"><h:outputLabel value="Descripción de requerimiento" style="font-weight: bold"/></p:column>
+                            <p:column colspan="2" style="text-align: center"><h:outputLabel value="Documentos Adjuntos" style="font-weight: bold"/></p:column>
+                        </p:row>
+                        <p:row>                                
+                            <p:column colspan="4" style="text-align: center">
+                                <p:inputTextarea value="#{controladorAdicionCaso.requeSeleccionado.descripcionRequerimiento}" rows="4" style="width: 99%;"  autoResize="false"  disabled="true"/>
+                            </p:column>
+                            <c:if test="#{controladorAdicionCaso.requeSeleccionado.documentacionCompleta}">                                  
+
+                                <p:column colspan="2">
+                                    <center> <p:commandButton value="Ver Adjuntos" oncomplete="verDoc.show();"></p:commandButton></center>
+                                </p:column>
+                            </c:if>
+                            <c:if test="#{!controladorAdicionCaso.requeSeleccionado.documentacionCompleta}" >
+                                <p:column colspan="3"><center><h:outputLabel value="No requiere documentos"/></center></p:column>
+                            </c:if>                                
+                        </p:row>                            
+                    </p:panelGrid>
+                </p:tab>   
+
+                <p:tab title="3- Asignación de Requerimiento">
+                    <p:panelGrid id="datosCaso" style="width: 100%;">
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column colspan="8"><h:outputLabel value="Asignar Técnico" style="font-weight: bold"/></p:column>
+                            </p:row>
+                        </f:facet>
+                        <p:row>                 
+                            <p:column colspan="1"><h:outputLabel value="Fecha de Asignación: " style="font-weight: bold"/></p:column>
+                            <p:column colspan="1"> <h:outputText value="#{controladorAdicionCaso.fechaActual12()}"/> </p:column>
+
+                            <p:column><h:outputLabel value="Tiempo estimado de Atención: " style="font-weight: bold"/></p:column>
+                            <p:column colspan="1">
+                                <p:inputText value="#{controladorAdicionCaso.nuevaAsignacion.tiempoAtencion}" required="true" requiredMessage="Es necesario que establezca el tiempo de atención"></p:inputText>
+
+                            </p:column> 
+                            <p:column>
+                                <p:selectOneMenu value="#{controladorAdicionCaso.nuevaAsignacion.tipoDeTiempo}">
+                                    <f:selectItem itemValue="Horas" itemLabel="Horas"></f:selectItem>
+                                    <f:selectItem itemValue="Dias" itemLabel="Dias"></f:selectItem>
+                                    <f:selectItem itemValue="Semanas" itemLabel="Semanas"></f:selectItem>
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column><h:outputLabel value="Hora de Asignación: " style="font-weight: bold"/></p:column>
+                            <p:column colspan="2"><center><h:outputText value="#{controladorAdicionCaso.horaActual12()}"/></center></p:column>
+                        </p:row>
+
+
+                        <p:row>
+                            <p:column><h:outputLabel value="Técnico: " style="font-weight: bold"/></p:column>
+                            <p:column colspan="1">
+
+
+                                <p:commandButton value="Seleccionar Tecnico" onclick="agregaTecnico.show();" />
+
+
+                            </p:column>
+                            <p:column><h:outputLabel value="Nombre del Técnico: " style="font-weight: bold"/></p:column>
+                            <p:column colspan="1"><h:outputLabel value="#{controladorAdicionCaso.tecnicoSeleccionadoConPeso.nombreTecnico}"/></p:column>
+                            <p:column><h:outputLabel value="Peso: " style="font-weight: bold"/></p:column>
+                            <p:column colspan="1">
+
+                                <center>  <p:selectOneMenu style="width: 70px" value="#{controladorAdicionCaso.nuevaAsignacion.peso}" required="true" requiredMessage="Es necesario que establezca un peso para este caso" >
+
+                                        <f:selectItem itemValue="1" itemLabel="1"></f:selectItem>
+                                        <f:selectItem itemValue="2" itemLabel="2"></f:selectItem>
+                                        <f:selectItem itemValue="3" itemLabel="3"></f:selectItem>
+                                        <f:selectItem itemValue="4" itemLabel="4"></f:selectItem>
+                                        <f:selectItem itemValue="5" itemLabel="5"></f:selectItem>
+                                        <f:selectItem itemValue="6" itemLabel="6"></f:selectItem>
+                                        <f:selectItem itemValue="7" itemLabel="7"></f:selectItem>
+                                        <f:selectItem itemValue="8" itemLabel="8"></f:selectItem>
+                                        <f:selectItem itemValue="9" itemLabel="9"></f:selectItem>
+                                        <f:selectItem itemValue="10" itemLabel="10"></f:selectItem>
+
+
+                                    </p:selectOneMenu></center>
+
+
+
+
+                            </p:column>    
+                            <p:column>
+                                <h:outputText value="Requiere Transporte: "  style="font-weight: bold"></h:outputText>
+                            </p:column>
+                            <p:column>
+                                <p:selectBooleanCheckbox value="#{controladorAdicionCaso.nuevaAsignacion.requiereTransporte}"/>
+                            </p:column> 
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="1"><h:outputLabel value="Diagnostico: " style="font-weight: bold"/></p:column>
+                            <p:column colspan="7"><p:inputTextarea value="#{controladorAdicionCaso.nuevaAsignacion.descripcionAsigna}" rows="3" style="width: 98%; height: 50px" autoResize="false"/></p:column>       
+                        </p:row>
+                    </p:panelGrid>
+
+
+                    <p:commandButton id="qwqwa"  icon="ui-icon-disk" value="Asignar" update="msg12" action="#{controladorAdicionCaso.crearAsignacion()}" process="@this datosCaso" oncomplete="redireccionar()">
+
+
+                    </p:commandButton>
+
+                    <p:growl id="msg12"/>  
+                    <!--
+                    update=":formCasos:agregaSolicitante"
+                    !-->
+
+                </p:tab>
+            </p:accordionPanel>
+
+            <script language="javascript">
+                function redireccionar() {
+                    setTimeout("javascript:location.replace('for_listaCasos.xhtml')", 900);
+                }
+            </script>
+
+
+
+        </h:form>
+
+
+
+
+
+        <h:form id="verdoc">
+            <p:dialog id="ventanadoc" header="Documentos Adjuntos:" widgetVar="verDoc" modal="true" visible="false">
+
+                <p:dataTable id="tablaDocAdjuntos" value="#{controladorAdicionCaso.requeSeleccionado.documentosList}" var="item12"  rows="5" paginator="true" paginatorPosition="bottom" >                   
+
+                    <p:column>       
+                        <f:facet name="header">
+                            <h:outputText value="Nombre del Documento"/>
+                        </f:facet>
+                        <h:outputText value="#{item12.nombreDocumento}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Descargar"/>
+                        </f:facet>
+                        <p:commandButton value="Abrir"  icon="ui-icon-arrowthick-1-s"  ajax="false">  
+                            <p:fileDownload value="#{controladorAdicionCaso.asigFile12(item12)}" />  
+                        </p:commandButton> 
+                    </p:column>  
+                </p:dataTable>
+
+
+            </p:dialog>
+        </h:form>
+
+
+
+
+
+
+        <h:form id="jjji">
+            <p:dialog id="kidge" header="Seleccione un Tecnico:" widgetVar="agregaTecnico" modal="true" visible="false">
+                <p:outputPanel id="kkjkkgtr">
+
+                    <p:dataTable id="tablaTecnicoPeso" var="item" value="#{controladorAdicionCaso.traeTecnicosConSuPeso1}" 
+                                 rowKey="#{item.idTecnico}" paginator="true" rows="15"  selection="#{controladorAdicionCaso.tecnicoConUnPesoSeleccionado}" selectionMode="single">
+                        <p:column >
+
+                            <f:facet name="header">
+                                <h:outputText value="ID"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idTecnico}"/>
+                        </p:column>    
+                        <p:column >
+
+                            <f:facet name="header">
+                                <h:outputText value="Nombre del Tecnico"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+
+                        <p:column >
+
+                            <f:facet name="header">
+                                <h:outputText value="Nombre de la Unidad Ejecutora"/>
+                            </f:facet>
+                            <h:outputText value="#{item.unidadEjecutora}"/>
+                        </p:column>
+
+
+                        <p:column >
+
+                            <f:facet name="header">
+                                <h:outputText value="Peso total Asignado"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sumaPeso}"/>
+                        </p:column>
+
+                    </p:dataTable>
+                    <p:commandButton id="xc" value="Asignar" action="#{controladorAdicionCaso.asignaIdTecnicoDeTabla()}" update="msg12 :formCasos:agregaSolicitante:datosCaso" oncomplete="agregaTecnico.hide();"/>
+                    <p:growl id="msg12"/>  
+                </p:outputPanel>
+            </p:dialog>
+
+
+        </h:form>
+
+
+
+
+
+
+
+    </ui:define>
+
+
+</ui:composition>

@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:form> 
+        <p:menubar id="menu1" style="width: 99%;">  
+                <p:menuitem value="Inicio" icon="ui-icon-home"/> 
+                
+                <p:submenu label="Gestión de Catálogos" icon="ui-icon-folder-collapsed"> 
+                        <p:menuitem value="Direcciones Nacionales" url="../contenido/cat_dirNac.xhtml"/>
+                        <p:menuitem value="Direcciones Intermedias" url="../contenido/cat_dirInter.xhtml"/>
+                        <p:menuitem value="Unidades Ejecutoras" url="../contenido/cat_undEjecutoras.xhtml"/>
+                        <p:menuitem value="Técnicos" url="../contenido/cat_tecnicos.jsf"/>
+                        <p:menuitem value="Categoría de Servicios" url="../contenido/cat_catServicios.xhtml"/>
+                        <p:menuitem value="Servicios" url="../contenido/cat_servicios.jsf"/>
+                        <p:menuitem value="Vía de Solicitudes" url="../contenido/cat_viaSolicitudes.xhtml"/>
+                        <p:menuitem value="Estados" url="../contenido/cat_estados.xhtml" />
+                </p:submenu> 
+                  
+                <p:submenu label="Gestión de Casos" icon="ui-icon-gear">  
+                        <p:menuitem value="Nuevo Requerimiento" url="../contenido/for_nuevoCaso.xhtml"/>  
+                        <p:menuitem value="Asignar Casos" url="../contenido/for_listaCasos.xhtml"/>
+                        <p:menuitem value="Consultar Casos" url="../contenido/for_consultaCasos.xhtml"/>
+                        <p:menuitem value="Seguimiento a Casos" url="../contenido/cat_listaCasosAsignados.xhtml"/>
+                </p:submenu>  
+                
+                <p:submenu label="Gestión de Reportes" icon="ui-icon-document">  
+                    <p:menuitem value="Hoja de Casos" url="#"/>  
+                    <p:menuitem value="Otros..." url="#"/>  
+                </p:submenu>
+                
+                <p:submenu label="Gestión de Usuarios" icon="ui-icon-person">  
+                    <p:menuitem value="Nuevo Usuario" url="../contenido/cat_usuarios.xhtml"/>  
+                    <p:menuitem value="Tipos de Usuario" url="#"/>
+                    <p:menuitem value="Roles de Usuario" url="../contenido/cat_roles.xhtml"/> 
+                </p:submenu>
+                <p:menuitem value="Salir" icon="ui-icon-circle-close"/>
+       </p:menubar>  
+    </h:form> 
+</ui:composition>

@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    
+    <ui:define name="content">
+        <h:form id="formUsuarios" style="width: 100%">
+           
+            <p:dataTable id="catUsuarios" var="catUsuarios" value="#{controladorCatalogo.listaUsua}"  rowKey="#{catUsuarios.usuarioUsuario}" paginator="true" rows="10"
+                         selection="#{controladorCatalogo.usuarioSelecionado}" selectionMode="single">
+                <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="4">CATÁLOGO DE USUARIOS</p:column>
+                  </p:row>
+                </f:facet>
+                
+                <p:column headerText="Nombre" sortBy="#{catUsuarios.nombreUsuario}" filterBy="#{catUsuarios.nombreUsuario}" filterMatchMode="contains">
+                    <h:outputText value="#{catUsuarios.nombreUsuario}"/>
+                 </p:column>
+                <p:column headerText="Apellido" sortBy="#{catUsuarios.apellidoUsuario}" filterBy="#{catUsuarios.apellidoUsuario}" filterMatchMode="contains">
+                    <h:outputText value="#{catUsuarios.apellidoUsuario}"/>
+                </p:column>
+                <p:column headerText="Usuario" filterBy="#{catUsuarios.usuarioUsuario}" filterMatchMode="contains">
+                    <h:outputText value="#{catUsuarios.usuarioUsuario}"/>
+                </p:column>
+                <p:column headerText="Tipo">
+                    <h:outputText value="#{catUsuarios.idTipoUsuario.nombreTipoUsuario}"/>
+                </p:column>
+                <p:column headerText="Rol">
+                    <h:outputText value="#{catUsuarios.idRol.nombreRol}"/>
+                </p:column>
+                <p:column headerText="Estado">
+                    <h:outputText value="#{catUsuarios.idEstado.nombreEstado}"/>
+                </p:column>
+                <p:column headerText="Dependencia">
+                    <h:outputText value="#{catUsuarios.idDependencia.nombreDependencia}"/>
+                </p:column>
+               <f:facet name="footer">  
+                    <p:commandButton id="agregar" value="Adicionar" oncomplete="AgregarUsr.show();" process="@this catUsuarios" update=":formUsuarios:Conte1" /> 
+                    <p:commandButton id="modificaBtnUs" value="Modificar" oncomplete="ModificaUsr.show();" process="catUsuarios" update=":formUsuarios:Conte2"/>  
+                
+                    
+               </f:facet>     
+           
+           </p:dataTable>    
+        
+           <p:dialog id="Conte1" widgetVar="AgregarUsr" header="Agregar Usuario" modal="true">
+                <p:panelGrid id="agregaUsr1" columns="2">
+                    <h:outputLabel id="id" value="Id Usuario" style="font-weight: bold"/>
+                    <h:outputText value="#{controladorCatalogo.nuevoUsuario.idUsuario}" />
+                    <h:outputLabel id="nombUsr" value="Nombre" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.nuevoUsuario.nombreUsuario}" />
+                    <h:outputLabel id="apeUsr" value="Apellido" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.nuevoUsuario.apellidoUsuario}" />
+                    <h:outputLabel id="depUsr" value="Dependencia" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.depenSelec}" />
+                    <input type="email" id="correUsr" value="Correo" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.nuevoUsuario.correoUsuario}" />
+                    <h:outputLabel id="telUsr" value="Telefono" style="font-weight: bold"/>
+                    <p:inputMask mask="9999-9999" value="#{controladorCatalogo.nuevoUsuario.telefonoUsuario}" />
+                    <h:outputLabel id="usr" value="Usuario" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.nuevoUsuario.usuarioUsuario}" />
+                    <h:outputLabel id="pwdUsr" value="Contraseña Usuario" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.nuevoUsuario.contraseniaUsuario}" />
+                    <h:outputLabel id="tUsr" value="Tipo Usuario" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.tipoUsrSelec}" />
+                    <h:outputLabel id="rolUsr" value="Rol Usuario" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.rolSelec}" />
+                    <h:outputLabel id="estUsr" value="Estado Usuario" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.estadoSelec}" />
+                    <h:outputLabel id="fecUsr" value="Fecha de creación" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.nuevoUsuario.fechaCreaUsuario}" />
+                    <h:outputLabel id="obsUsr" value="Observaciones" style="font-weight: bold"/>
+                    <p:inputTextarea value="#{controladorCatalogo.nuevoUsuario.observacionesUsuario}" rows="2" style="width: 99%;" autoResize="true"/>
+                    
+               </p:panelGrid>
+               <p:commandButton value="Guardar"  update=":formUsuarios:catUsuarios" process="@this agregaUsr1" oncomplete="AgregarUsr.hide();"/>
+                   
+<!--               <script type="text/javascript">
+                      function handleRequest(args) {
+                      if (args.validationFailed) {
+                          alert('Ha ocurrido un error. Complete los datos necesarios');
+                      }else{
+                        alert('Datos adicionados correctamente');
+                        AgregarUsr.hide();
+                        }
+                      }
+               </script> -->
+           
+           </p:dialog> 
+           
+            <p:dialog id="Conte2" widgetVar="ModificaUsr" header="Modificar Usuario" modal="true">
+                <p:panelGrid id="modificaUsr1" columns="2">
+                    <h:outputLabel id="id2" value="Id Usuario" style="font-weight: bold"/>
+                    <h:outputText value="#{controladorCatalogo.usuarioSeleccionado.idUsuario}" />
+                    <h:outputLabel id="nombUsr2" value="Nombre" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.usuarioSeleccionado.nombreUsuario}" />
+                    <h:outputLabel id="apeUsr2" value="Apellido" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.usuarioSeleccionado.apellidoUsuario}" />
+                    <h:outputLabel id="depUsr2" value="Dependencia" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.usuarioSeleccionado.idDependencia.nombreDependencia}" />
+                    <h:outputLabel id="correUsr2" value="Correo" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.usuarioSeleccionado.correoUsuario}" />
+                    <h:outputLabel id="telUsr2" value="Telefono" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.usuarioSeleccionado.telefonoUsuario}" />
+                    <h:outputLabel id="usr2" value="Usuario" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.usuarioSeleccionado.usuarioUsuario}" />
+                    <h:outputLabel id="pwdUsr2" value="Contraseña Usuario" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.usuarioSeleccionado.contraseniaUsuario}" />
+                    <h:outputLabel id="tUsr2" value="Tipo Usuario" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.usuarioSeleccionado.idTipoUsuario.nombreTipoUsuario}" />
+                    <h:outputLabel id="rolUsr2" value="Rol Usuario" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.usuarioSeleccionado.idRol.nombreRol}" />
+                    <h:outputLabel id="estUsr2" value="Estado Usuario" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogo.usuarioSeleccionado.idEstado.nombreEstado}" />
+                    <h:outputLabel id="fecUsr2" value="Fecha de creación" style="font-weight: bold"/>
+                    <h:outputText value="#{controladorCatalogo.usuarioSeleccionado.fechaCreaUsuario}"/>
+                    <h:outputLabel id="obsUsr2" value="Observaciones" style="font-weight: bold"/>
+                    <p:inputTextarea value="#{controladorCatalogo.usuarioSeleccionado.observacionesUsuario}" rows="3" style="width: 99%;" autoResize="true"/>
+                    
+               </p:panelGrid>
+                <p:commandButton value="Guardar"  update=":formUsuarios:catUsuarios" process="@this Conte2" oncomplete="ModificaUsr.hide();"/>
+                          
+           </p:dialog> 
+                
+       </h:form>
+    </ui:define>
+
+</ui:composition>

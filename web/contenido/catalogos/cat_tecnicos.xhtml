@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    
+   <ui:define name="content">
+        
+        <h:form id="formTecnicos" style="width: 100%"> 
+            <p:dataTable id="tecnicos" var="tecnicos1" value="#{manejadorGestionCatalogo.listaTecnicos}" rowKey="#{tecnicos1.tecnicosPK.idTecnico}" paginator="true" rows="5"
+                         selection="#{manejadorGestionCatalogo.tecnicoSeleccionado}" selectionMode="single">
+                <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="4">CATÁLOGO DE TECNICOS</p:column>
+                  </p:row>
+                </f:facet>
+            
+                <p:column headerText="Id Tecnicos"> 
+                    <h:outputText value="#{tecnicos1.tecnicosPK.idTecnico}" />
+                </p:column>
+                <p:column headerText="Nombre" sortBy="#{tecnicos1.nombreTecnico}" filterBy="#{tecnicos1.nombreTecnico}">
+                    <h:outputText value="#{tecnicos1.nombreTecnico}" />
+                </p:column>
+                <p:column headerText="Correo">
+                    <h:outputText value="#{tecnicos1.correoTecnico}" />
+                </p:column>
+                <p:column headerText="Telefono">
+                    <h:outputText value="#{tecnicos1.telefonoTecnico}" />
+                </p:column>
+            
+                
+            <f:facet name="footer">
+                <p:commandButton id="agregar" value="Adicionar" oncomplete="AgregarT1.show();" process="@this tecnicos" update=":formTecnicos:Conte1"/>
+                <p:commandButton id="ConsultaBtnT" value="Modificar" oncomplete="Modificar2.show();" process="tecnicos" update=":formTecnicos:Conte2"/>
+               
+            </f:facet>
+            
+            </p:dataTable>
+            
+            
+            <p:dialog id="Conte1" widgetVar="AgregarT1" header="Agregar Tecnicos" modal="true">
+                <p:panelGrid id="agregaTec1" columns="2">
+                    <h:outputLabel id="id" value="Id tecnico" style="font-weight: bold"/>
+                    <h:outputLabel value="#{manejadorAdicionCatalogo.idTec}" style="font-weight: bold"/>
+                    <h:outputLabel id="undeje" value="Unidad de pertenencia" style="font-weight: bold"/>
+                    <h:selectOneMenu id="ueNom" value="#{manejadorAdicionCatalogo.unEjSeles}">
+                        <f:selectItem itemLabel="Seleccione Unidad" itemValue="0"/>
+                        <f:selectItems value="#{manejadorGestionCatalogo.listaUndEjecutora}" var="catUndEje" itemLabel="#{catUndEje.nombreUndEjecutora}" itemValue="#{catUndEje.idUndEjecutora}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel id="nom" value="Nombre" style="font-weight: bold"/>
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoTecnico.nombreTecnico}" />
+                    <h:outputLabel id="correo" value="Correo" style="font-weight: bold"/>
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoTecnico.correoTecnico}" />
+                    <h:outputLabel id="tel" value="Teléfono" style="font-weight: bold"/>
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoTecnico.telefonoTecnico}" />
+                </p:panelGrid>
+                <p:commandButton value="Guardar" action="#{manejadorAdicionCatalogo.crearTecnico()}" update=":formTecnicos:tecnicos Conte1" process="@this Conte1" oncomplete="AgregarT1.hide();"/>
+            </p:dialog>
+            
+            <p:dialog id="Conte2" widgetVar="Modificar2" header="Modificar Tecnicos" modal="true">
+                <p:panelGrid id="modificarTec2" columns="2">
+                    <h:outputLabel value="Id tecnico" style="font-weight: bold"/>
+                    <h:outputText value="#{manejadorGestionCatalogo.tecnicoSeleccionado.tecnicosPK.idTecnico}" />
+                    <h:outputLabel value="Nombre" style="font-weight: bold"/>
+                    <h:inputText value="#{manejadorGestionCatalogo.tecnicoSeleccionado.nombreTecnico}" />
+                    <h:outputLabel value="Correo" style="font-weight: bold"/>
+                    <h:inputText value="#{manejadorGestionCatalogo.tecnicoSeleccionado.correoTecnico}" />
+                    <h:outputLabel value="Teléfono" style="font-weight: bold"/>
+                    <h:inputText value="#{manejadorGestionCatalogo.tecnicoSeleccionado.telefonoTecnico}" />
+                </p:panelGrid>
+                <p:commandButton value="Guardar" action="#{manejadorGestionCatalogo.actualizaTecnico()}" update=":formTecnicos:tecnicos" process="@this Conte2" oncomplete="Modificar2.hide();" />
+            </p:dialog>
+            
+                            
+                       
+            
+        </h:form>
+            
+                
+    </ui:define>
+
+    
+</ui:composition>

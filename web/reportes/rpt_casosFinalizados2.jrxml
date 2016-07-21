@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_casosFinalizados2" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2bd9d10a-f54f-445c-9bcd-b85abb22ff39">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     asignar_tecnico."id_tecnico" AS asignar_tecnico_id_tecnico,
+     asignar_tecnico."fecha_asigna" AS asignar_tecnico_fecha_asigna,
+     enca_requerimientos."id_enca_requerimiento" AS enca_requerimientos_id_enca_requerimiento,
+     enca_requerimientos."id_cat_serv" AS enca_requerimientos_id_cat_serv,
+     enca_requerimientos."id_estado" AS enca_requerimientos_id_estado,
+     enca_requerimientos."anio" AS enca_requerimientos_anio,
+     enca_requerimientos."num_caso" AS enca_requerimientos_num_caso,
+     enca_requerimientos."fecha_fin" AS enca_requerimientos_fecha_fin,
+     estados."nombre_estado" AS estados_nombre_estado,
+     tecnicos."nombre_tecnico" AS tecnicos_nombre_tecnico,
+     unidades_ejecutoras."nombre_und_ejecutora" AS unidades_ejecutoras_nombre_und_ejecutora,
+     asignar_tecnico."id_und_ejecutora" AS asignar_tecnico_id_und_ejecutora,
+     categoria_servicios."id_cat_serv" AS categoria_servicios_id_cat_serv,
+     categoria_servicios."nombre_cat_serv" AS categoria_servicios_nombre_cat_serv
+FROM
+     "public"."enca_requerimientos" enca_requerimientos INNER JOIN "public"."asignar_tecnico" asignar_tecnico ON enca_requerimientos."id_enca_requerimiento" = asignar_tecnico."id_enca_requerimiento"
+     INNER JOIN "public"."estados" estados ON enca_requerimientos."id_estado" = estados."id_estado"
+     INNER JOIN "public"."categoria_servicios" categoria_servicios ON enca_requerimientos."id_cat_serv" = categoria_servicios."id_cat_serv"
+     INNER JOIN "public"."tecnicos" tecnicos ON asignar_tecnico."id_tecnico" = tecnicos."id_tecnico"
+     AND tecnicos."id_und_ejecutora" = asignar_tecnico."id_und_ejecutora"
+     INNER JOIN "public"."unidades_ejecutoras" unidades_ejecutoras ON tecnicos."id_und_ejecutora" = unidades_ejecutoras."id_und_ejecutora"
+WHERE
+     asignar_tecnico."id_und_ejecutora" = 1
+ AND enca_requerimientos."id_estado" = 3]]>
+	</queryString>
+	<field name="asignar_tecnico_id_tecnico" class="java.lang.Integer"/>
+	<field name="asignar_tecnico_fecha_asigna" class="java.sql.Date"/>
+	<field name="enca_requerimientos_id_enca_requerimiento" class="java.lang.Integer"/>
+	<field name="enca_requerimientos_id_cat_serv" class="java.lang.Integer"/>
+	<field name="enca_requerimientos_id_estado" class="java.lang.Integer"/>
+	<field name="enca_requerimientos_anio" class="java.lang.Integer"/>
+	<field name="enca_requerimientos_num_caso" class="java.lang.Integer"/>
+	<field name="enca_requerimientos_fecha_fin" class="java.sql.Date"/>
+	<field name="estados_nombre_estado" class="java.lang.String"/>
+	<field name="tecnicos_nombre_tecnico" class="java.lang.String"/>
+	<field name="unidades_ejecutoras_nombre_und_ejecutora" class="java.lang.String"/>
+	<field name="asignar_tecnico_id_und_ejecutora" class="java.lang.Integer"/>
+	<field name="categoria_servicios_id_cat_serv" class="java.lang.Integer"/>
+	<field name="categoria_servicios_nombre_cat_serv" class="java.lang.String"/>
+	<group name="categoria_servicios_nombre_cat_serv">
+		<groupExpression><![CDATA[$F{categoria_servicios_nombre_cat_serv}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="e27ce7c8-ed16-412c-8b26-3c2c43b3aa16" x="139" y="2" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[enca_requerimientos_num_caso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7af53947-973d-461c-9a82-86b62dde1e34" x="15" y="2" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[tecnicos_nombre_tecnico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="01045ad4-289e-4085-b7ff-5c53866bc796" x="255" y="2" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[asignar_tecnico_fecha_asigna]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement uuid="be521362-3df8-49e7-9a61-39c7f78061fb" x="139" y="0" width="39" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{enca_requerimientos_num_caso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3867900a-f7d0-45a5-8e11-b882f3762e9f" x="15" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{tecnicos_nombre_tecnico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="646f9d2b-1ece-40e0-b4e3-c29630c5946e" x="180" y="1" width="48" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{enca_requerimientos_anio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8504c242-4fa6-410f-91b3-e335964276f2" x="255" y="1" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{asignar_tecnico_fecha_asigna}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

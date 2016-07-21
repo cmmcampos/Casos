@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <ui:define name="content">
+        <h:form id="formtipoUsuarios" style="width: 100%">
+           
+            <p:dataTable id="catTipoUsuarios" var="catTipoUsu" value="#{controladorCatalogoTipoUsuario.listaTipoUsua}"  rowKey="#{catTipoUsu.idTipoUsuario}" paginator="true" rows="5"
+                         selection="#{controladorCatalogoTipoUsuario.tipoUsuaSelecionado}" selectionMode="single">
+                <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="4">CATÁLOGO TIPOS DE USUARIOS</p:column>
+                  </p:row>
+                    
+                </f:facet>
+                <p:column headerText="ID">
+                        <h:outputText value="#{catTipoUsu.idTipoUsuario}"></h:outputText>
+                </p:column>
+                <p:column headerText="Nombre">
+                    <p:inputTextarea value="#{catTipoUsu.nombreTipoUsuario}" disabled="true" style="height: 30px; width: 170px;" autoResize="false"/>
+                </p:column>
+                <p:column headerText="Descripción">
+                    <center> <p:inputTextarea value="#{catTipoUsu.descripcionTipoUsuario}" disabled="true" style="width: 450px;"/></center>
+                </p:column>
+                <p:column headerText="Modificar" rendered="#{appSession.usuario.idRol.nombreRol.equals('Super administrador')}">
+                    <center><p:commandButton id="modificaBtnUs" icon="ui-icon-check" title="Modificar" oncomplete="ModificarTipoUsr.show();" process="catTipoUsuarios" update=":forModificaTipoUsuario:Conte1">
+                        <f:setPropertyActionListener value="#{catTipoUsu}" target="#{controladorCatalogoTipoUsuario.tipoUsuaSelecionado}"/>
+                        </p:commandButton>  </center>
+                </p:column>
+            </p:dataTable>
+            <center><p:commandButton value="Adicionar" oncomplete="AgregarTipoUsr.show();" update=":forInsertTipoUsuario:Conte2" process="@this catTipoUsuarios"></p:commandButton></center>
+             <p:growl id="msg12"/>
+        </h:form>
+        
+        <h:form id="forModificaTipoUsuario">
+            <p:dialog id="Conte1" widgetVar="ModificarTipoUsr" header="Modificar Tipo Usuario" modal="true">
+                <p:panelGrid id="agregaUsr1" columns="2">
+                    <h:outputText value="ID"></h:outputText>
+                    <h:outputText value="#{controladorCatalogoTipoUsuario.tipoUsuaSelecionado.idTipoUsuario}"></h:outputText>
+                    <h:outputText value="Nombre"></h:outputText>
+                    <p:inputText valueChangeListener="#{controladorCatalogoTipoUsuario.cambioNombre(e)}" value="#{controladorCatalogoTipoUsuario.tipoUsuaSelecionado.nombreTipoUsuario}"/>
+                    <h:outputText value="Descripción"/>
+                    <p:inputTextarea valueChangeListener="#{controladorCatalogoTipoUsuario.cambioDescripcion(e)}" value="#{controladorCatalogoTipoUsuario.tipoUsuaSelecionado.descripcionTipoUsuario}"/>
+                </p:panelGrid>
+                <p:commandButton value="Modificar" action="#{controladorCatalogoTipoUsuario.modificar()}" onclick="if (!confirm('Esta seguro de modificar este registro del catalogo TIPO DE USUARIO?')) return false;" update=":formtipoUsuarios:catTipoUsuarios :formtipoUsuarios:msg12 @this" oncomplete="ModificarTipoUsr.hide()"></p:commandButton>
+            </p:dialog>
+        </h:form>
+        
+        <h:form id="forInsertTipoUsuario">
+            <p:dialog id="Conte2" widgetVar="AgregarTipoUsr" header="Agregar Tipo Usuario" modal="true">
+                <p:panelGrid id="agregaUsr1" columns="2">
+         
+                    <h:outputText value="Nombre"></h:outputText>
+                    <p:inputText  value="#{controladorCatalogoTipoUsuario.nuevoTipoUsua.nombreTipoUsuario}"/>
+                    <h:outputText value="Descripción"/>
+                    <p:inputTextarea  value="#{controladorCatalogoTipoUsuario.nuevoTipoUsua.descripcionTipoUsuario}"/>
+                </p:panelGrid>
+                <p:commandButton value="Guardar" action="#{controladorCatalogoTipoUsuario.insert()}" onclick="if (!confirm('Esta seguro de almacenar este registro dentro del catalogo TIPO DE USUARIO?')) return false;" update=":formtipoUsuarios:catTipoUsuarios :formtipoUsuarios:msg12" oncomplete="AgregarTipoUsr.hide()"></p:commandButton>
+            </p:dialog>
+        </h:form>
+        
+        
+        
+        
+    </ui:define>
+
+   
+</ui:composition>
+

@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_casosSinAsignar" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="fdd7518e-72cb-4b65-9546-7d881fd1d787">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="fecha1" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha2" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="undEje" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT enca_requerimientos.id_enca_requerimiento,
+enca_requerimientos.solicitante,
+enca_requerimientos.num_caso,
+enca_requerimientos.anio,
+enca_requerimientos.fecha_requerimiento,
+enca_requerimientos.descripcion_requerimiento,
+estados.nombre_estado,
+unidades_ejecutoras.nombre_und_ejecutora,
+via_solicitudes.nombre_via_solicitud,
+dependencias.nombre_dependencia,
+categoria_servicios.nombre_cat_serv
+
+FROM enca_requerimientos
+INNER JOIN usuarios ON enca_requerimientos.usuario_usuario_solicitante = usuarios.usuario_usuario
+INNER JOIN unidades_ejecutoras ON usuarios.id_und_ejecutora = unidades_ejecutoras.id_und_ejecutora
+INNER JOIN estados ON enca_requerimientos.id_estado=estados.id_estado
+INNER JOIN via_solicitudes ON enca_requerimientos.id_via_solicitud = via_solicitudes.id_via_solicitud
+INNER JOIN dependencias ON usuarios.id_dependencia = dependencias.id_dependencia
+LEFT JOIN categoria_servicios ON enca_requerimientos.id_cat_serv = categoria_servicios.id_cat_serv
+
+WHERE enca_requerimientos.id_estado=1
+AND unidades_ejecutoras.id_und_ejecutora =$P{undEje}
+AND enca_requerimientos.fecha_requerimiento>=$P{fecha1}
+AND enca_requerimientos.fecha_requerimiento<=$P{fecha2}
+ORDER BY enca_requerimientos.fecha_requerimiento ASC;]]>
+	</queryString>
+	<field name="id_enca_requerimiento" class="java.lang.Integer"/>
+	<field name="solicitante" class="java.lang.String"/>
+	<field name="num_caso" class="java.lang.Integer"/>
+	<field name="anio" class="java.lang.Integer"/>
+	<field name="fecha_requerimiento" class="java.sql.Date"/>
+	<field name="descripcion_requerimiento" class="java.lang.String"/>
+	<field name="nombre_estado" class="java.lang.String"/>
+	<field name="nombre_und_ejecutora" class="java.lang.String"/>
+	<field name="nombre_via_solicitud" class="java.lang.String"/>
+	<field name="nombre_dependencia" class="java.lang.String"/>
+	<field name="nombre_cat_serv" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="3" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="68" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="218f16d9-f812-4732-8cac-eb2a93e5ee27" mode="Transparent" x="206" y="34" width="95" height="20" forecolor="#736343" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Unidad Ejecutora:]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="123b7458-6cd3-414a-b087-495ea8cfbbd5" x="16" y="0" width="91" height="68"/>
+				<imageExpression><![CDATA["escudo.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="4bbf23b6-495a-45d3-99d8-83735e4941de" x="630" y="0" width="122" height="68"/>
+				<imageExpression><![CDATA["logo_e.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="90198ade-3795-495f-bb5e-d5db8388f2fe" mode="Transparent" x="245" y="4" width="246" height="20" forecolor="#736343" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[.: Reporte de Requerimientos sin Asignar :. ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ef17ae45-a229-4aff-ac8e-033d5de5c0c1" x="312" y="34" width="189" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_und_ejecutora}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="07d6ef59-e717-4164-8036-4425c742e3f2" mode="Transparent" x="12" y="3" width="71" height="26" forecolor="#736343" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[No. de Requerimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="da514b8d-6615-4493-ba18-78684650a424" mode="Transparent" x="326" y="6" width="35" height="20" forecolor="#736343" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a4518de4-e8df-4633-a3dc-541f1dac5bc4" mode="Transparent" x="369" y="3" width="58" height="27" forecolor="#736343" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Fecha de Solicitud]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="807941e1-c0ac-40f8-84ad-4472c445f557" x="3" y="30" width="746" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="3f13fab1-4985-4033-80e9-057f74109867" mode="Transparent" x="431" y="6" width="100" height="20" forecolor="#736343" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Categoria del Servicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="312fa979-8876-4ef3-92c0-37fe5df77f37" mode="Transparent" x="112" y="6" width="59" height="20" forecolor="#736343" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Dependencia]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="cffb8fc9-5dd3-4ff9-adc5-af730e234f42" x="4" y="3" width="746" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="4457ef4f-bde9-4b29-9156-18f2a653aace" mode="Transparent" x="230" y="7" width="64" height="20" forecolor="#736343" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Solicitante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b60fff85-82dc-484f-a188-dbedb437e1cf" mode="Transparent" x="561" y="7" width="156" height="20" forecolor="#736343" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Descripción del requerimiento]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement uuid="fac52251-e925-4e82-82a0-7308efb95027" x="374" y="6" width="50" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_requerimiento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c2fcbec2-724c-4c79-87a8-e94645d1f6dd" x="40" y="6" width="15" height="17"/>
+				<textElement>
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="0cd861b4-0a96-4933-9948-961d035f2afa" x="317" y="6" width="52" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_estado}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="7d05d1ec-1f00-462a-b2c5-c0edb3adbfea" x="48" y="6" width="33" height="17"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="946b9f0c-2b2a-4485-a264-9249519e847e" x="14" y="6" width="30" height="17"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{num_caso}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="fd6d1690-10ed-4d4c-83a6-6e9e8313979a" x="432" y="6" width="104" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_cat_serv}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="aef11a3b-7b68-4e21-8474-24153383b42e" x="93" y="6" width="113" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_dependencia}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="8027a854-9706-47a9-b35a-fd94201dad93" x="213" y="6" width="100" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{solicitante}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="d1517317-0377-4e91-a180-dcd64a067099" x="541" y="6" width="208" height="20"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion_requerimiento}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="de67e514-37a8-48e5-8989-1799d7c85c11" x="12" y="2" width="737" height="1" forecolor="#3366FF"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#666600"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="57" splitType="Stretch">
+			<image>
+				<reportElement uuid="e164350c-5bd2-44bc-8401-6465dfe1ce03" x="3" y="3" width="137" height="53"/>
+				<imageExpression><![CDATA["secre_new.jpg"]]></imageExpression>
+			</image>
+			<textField evaluationTime="Report">
+				<reportElement uuid="5055d1aa-5ae3-4094-9835-3e5cc09587de" x="698" y="29" width="40" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9816f045-27ae-4db0-b71b-a91b97e7056f" x="618" y="29" width="80" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h:mm a">
+				<reportElement uuid="e9e574c0-2f0d-4524-8666-c48f362ad64b" x="303" y="29" width="110" height="20"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement uuid="43a853fd-e7e5-4a87-aa02-1ba6bd967e35" x="638" y="5" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e5148785-6bd9-41f9-b79b-0991caadc3a9" mode="Transparent" x="533" y="5" width="95" height="20" forecolor="#736343" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Total de registros:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

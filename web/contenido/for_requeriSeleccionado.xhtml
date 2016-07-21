@@ -1,0 +1,393 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+    <ui:define name="content">
+
+        <h:form id="formCasos"  prependId="true" style="width: 100%" >
+
+            <p:accordionPanel id="maestroDetalle" multiple="true" activeIndex="1 2">
+
+
+                <p:tab title="1- Solicitante">
+                    <p:panelGrid style="width: 100%;">
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column colspan="4"><h:outputLabel value="Datos del Usuario Solicitante"/></p:column>
+                            </p:row>
+                        </f:facet>
+                        <p:row>
+                            <!--<c:if test="#{appSession.usuario.idRol.nombreRol=='Super administrador'}">
+                                <p:column>
+                                    <p:commandButton value="Seleccionar usuario"  />
+                                </p:column>
+                                    
+                            </c:if>!-->
+                            <p:column colspan="1"><h:outputLabel value="Nombre:  " style="font-weight: bold"/></p:column>
+                            <p:column colspan="3"><h:outputText value="#{controladorAdicionCaso.encaElejidoDetodos.usuarioUsuarioSolicitante.nombreUsuario}  #{controladorAdicionCaso.encaElejidoDetodos.usuarioUsuarioSolicitante.apellidoUsuario}" /></p:column>                                  
+                        </p:row>                                
+                        <p:row>
+                            <p:column><h:outputLabel value="Teléfono: " style="font-weight: bold"/></p:column> 
+                            <p:column><h:outputText value="#{controladorAdicionCaso.encaElejidoDetodos.usuarioUsuarioSolicitante.telefonoUsuario}" /></p:column>
+                            <p:column><h:outputLabel value="Correo Electrónico:" style="font-weight: bold"/></p:column> 
+                            <p:column><h:outputText value="#{controladorAdicionCaso.encaElejidoDetodos.usuarioUsuarioSolicitante.correoUsuario}" /></p:column> 
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="1"><h:outputLabel value="Dependencia a la que pertenece:  " style="font-weight: bold"/> </p:column>
+                            <p:column colspan="1"><h:outputText value="#{controladorAdicionCaso.encaElejidoDetodos.usuarioUsuarioSolicitante.idDependencia.nombreDependencia}"/> </p:column>
+                            <p:column colspan="1"><h:outputLabel value="Jefe de la Dependencia:  " style="font-weight: bold"/> </p:column>
+                            <p:column colspan="1"><h:outputText value="#{controladorAdicionCaso.encaElejidoDetodos.usuarioUsuarioSolicitante.idDependencia.jefeDependencia}"/> </p:column>                         
+                        </p:row>                                
+                        <p:row>
+                            <p:column colspan="1"><h:outputLabel value="Dependencia / Unidad organizativa:  " style="font-weight: bold"/> </p:column>
+                            <p:column colspan="1"><h:outputText value="#{controladorAdicionCaso.encaElejidoDetodos.usuarioUsuarioSolicitante.idDependencia.idDirecInter.nombreDirecInter}"/> </p:column>
+                            <p:column colspan="1"><h:outputLabel value="Dirección Nacional:  " style="font-weight: bold"/> </p:column>
+                            <p:column colspan="1"><h:outputText value="#{controladorAdicionCaso.encaElejidoDetodos.usuarioUsuarioSolicitante.idDependencia.idDirecInter.idDirNacional.nombreDirNacional}"/> </p:column>                          
+                        </p:row>   
+                    </p:panelGrid>                        
+                </p:tab>
+
+
+
+
+
+
+                <p:tab title="2- Detalle de Requerimiento">
+                    <p:panelGrid style="width: 100%;">
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column colspan="6"><h:outputLabel value="Datos del Servicio Requerido"/></p:column>
+                            </p:row>
+                        </f:facet>
+                        <p:row>
+                            <p:column><h:outputLabel value="N° de Caso: " style="font-weight: bold"/></p:column>
+                            <p:column colspan="1">
+                                <h:outputText value="#{controladorAdicionCaso.encaElejidoDetodos.numCaso}"></h:outputText>
+
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="Estado: " style="font-weight: bold"></h:outputText>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{controladorAdicionCaso.encaElejidoDetodos.idEstado.nombreEstado}"></h:outputText>
+                            </p:column>
+                            <p:column colspan="1"><h:outputLabel value="Fecha del Requerimiento: " style="font-weight: bold"/></p:column>
+                            <p:column colspan="2"> <h:outputText value="#{controladorAdicionCaso.encaElejidoDetodos.fechaRequerimiento}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es">
+
+                                    </f:convertDateTime>
+                                </h:outputText> </p:column>
+
+
+                        </p:row>
+                        <p:row>
+                            <p:column><h:outputLabel value="Categoría del Servicio: " style="font-weight: bold"/></p:column>
+                            <p:column colspan="3">
+                                <h:outputText value="#{controladorAdicionCaso.encaElejidoDetodos.idCatServ.nombreCatServ}"></h:outputText>
+
+                            </p:column>    
+                            <p:column >
+                                <h:outputText value="Via de solicitud:" style="font-weight: bold"></h:outputText>
+                            </p:column>
+                            <p:column >
+                                <h:outputText value="#{controladorAdicionCaso.encaElejidoDetodos.idViaSolicitud.nombreViaSolicitud}"/>
+                            </p:column>  
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="4" style="text-align: center"><h:outputLabel value="Descripción de requerimiento" style="font-weight: bold"/></p:column>
+                            <p:column colspan="2" style="text-align: center"><h:outputLabel value="Documentos Adjuntos" style="font-weight: bold"/></p:column>
+                        </p:row>
+                        <p:row>                                
+                            <p:column colspan="4" style="text-align: center">
+                                <p:inputTextarea value="#{controladorAdicionCaso.encaElejidoDetodos.descripcionRequerimiento}" rows="6" style="width: 99%;" disabled="true" autoResize="false" />
+                            </p:column>
+                            <c:if test="#{controladorAdicionCaso.encaElejidoDetodos.documentacionCompleta}">                                  
+
+                                <p:column colspan="2">
+                                    <center><p:commandButton value="Ver Adjuntos" onstart="verDoc.show();"></p:commandButton></center>
+                                </p:column>
+                            </c:if>
+                            <c:if test="#{!controladorAdicionCaso.encaElejidoDetodos.documentacionCompleta}" >
+                                <p:column colspan="3"><center><h:outputLabel value="No requiere documentos"/></center></p:column>
+                            </c:if>                                
+                        </p:row>                            
+                    </p:panelGrid>
+                </p:tab>   
+
+
+
+
+
+
+                <p:tab title="3- Detalle de Asignacion"  rendered="#{!(controladorAdicionCaso.asignaDelElejiReque.fechaAsigna==null)}">
+                    <p:panelGrid id="datosR" style="width: 100%;">
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column colspan="8"><h:outputLabel value="INFORMACION"/></p:column>
+                            </p:row>
+                        </f:facet>
+                        <p:row>
+
+
+                            <p:column colspan="1"><h:outputText value="Fecha de asignacion:" style="font-weight: bold"/></p:column>
+                            <p:column colspan="1"><h:outputText value="#{controladorAdicionCaso.asignaDelElejiReque.fechaAsigna}"  >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es"></f:convertDateTime>
+                                </h:outputText></p:column>
+
+                            <p:column colspan="1"><h:outputText value="Tiempo de atencion:" style="font-weight: bold"/></p:column>
+                            <p:column colspan="1" >
+                                <h:outputText value="#{controladorAdicionCaso.asignaDelElejiReque.tiempoAtencion} #{controladorAdicionCaso.asignaDelElejiReque.tipoDeTiempo}"  >
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column colspan="1">
+                                <h:outputText  style="font-weight: bold" value="Tecnico:"></h:outputText>        
+                            </p:column>
+                            <p:column colspan="1">
+                                <h:outputText   value="#{controladorAdicionCaso.traeTecnico(controladorAdicionCaso.asignaDelElejiReque.asignarTecnicoPK.idTecnico)}"></h:outputText>    
+                            </p:column>  
+                            <p:column>
+                                <h:outputText style="font-weight: bold" value="Requiere Transporte:"/>
+                            </p:column>
+                            <p:column>
+                                <c:if test="#{controladorAdicionCaso.asignaDelElejiReque.requiereTransporte}">
+                                    <h:outputText value="Si"/>
+                                </c:if>
+                                <c:if test="#{!controladorAdicionCaso.asignaDelElejiReque.requiereTransporte}">
+                                    <h:outputText value="No"/>
+                                </c:if>
+                            </p:column>
+
+
+                        </p:row>                                <p:row>
+                            <p:column colspan="1"><h:outputText value="Diagnostico: " style="font-weight: bold"></h:outputText></p:column>
+                            <p:column colspan="7">
+                                <p:inputTextarea  disabled="true" autoResize="false" style="width: 690px; height: 40px"  value="#{controladorAdicionCaso.asignaDelElejiReque.descripcionAsigna}"></p:inputTextarea>
+                            </p:column>
+                        </p:row>
+
+                    </p:panelGrid>
+
+                </p:tab>
+
+            </p:accordionPanel>
+            <p:dataTable  rendered="#{!(controladorAdicionCaso.asignaDelElejiReque.fechaAsigna==null) and (appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Asistente') or appSession.usuario.idRol.nombreRol.equals('Tecnico') or appSession.usuario.idRol.nombreRol.equals('Coordinador'))}" id="tablaRequerimientosAsignados" paginator="true"  value="#{controladorAdicionCaso.detallesDelReq}" var="item" rows="3" paginatorPosition="bottom">
+
+                <f:facet name="header">
+                    <p:row>
+                        <p:column colspan="6">DETALLES DEL SEGUIMIENTO</p:column>
+                    </p:row>
+                </f:facet>      
+
+
+                <p:column headerText="ID">
+                    <center> <h:outputText value="#{item.idDetaRequerimiento}"/></center>
+                </p:column>        
+
+
+                <p:column headerText="Fecha de Atencion">
+                    <center><h:outputText value="#{item.fechaAtencion}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" locale="es"></f:convertDateTime>
+                        </h:outputText></center>
+                </p:column>
+                <p:column headerText="Descripcion"  >
+                    <CENTER><p:inputTextarea autoResize="false" disabled="true" value="#{item.detaDescripcionServicio}" style="width: 600px;height: 40px;resize: none"/></CENTER>
+                </p:column>
+
+
+                <p:column headerText="Ver"  ><!-- update=":formularioParaModificarDeta:qsxxc" !-->
+                    <center><p:commandButton  icon="ui-icon-search" title="Ver detalle" update=":formularioParaModificarDeta:qsxxc"  oncomplete="modificarDetalle.show();" >
+                            <f:setPropertyActionListener value="#{item}" target="#{controladorAdicionCaso.detaAModificar}"/>
+                        </p:commandButton>
+                    </center>
+                </p:column>
+
+
+
+
+            </p:dataTable>
+
+            <p:growl id="a"/>
+        </h:form>
+
+
+
+
+
+
+        <h:form id="formularioParaModificarDeta">
+            <p:dialog  id="qsxxc" header="SEGUIMIENTO AL REQUERIMIENTO" widgetVar="modificarDetalle" resizable="false" modal="true" dynamic="false" draggable="false">
+
+
+                <p:panelGrid id="datosR" style="width: 100%;">
+
+                    <p:row>
+                        <p:column colspan="1">
+                            <h:outputText value="Tipo de Servicio: " style="font-weight: bold"></h:outputText>
+                        </p:column>
+
+                        <p:column colspan="4">
+                            <h:outputText value="#{controladorAdicionCaso.detaAModificar.PIdServicio.nombreServicio}"/>
+
+
+                        </p:column>
+
+
+                        <p:column>
+                            <h:outputText value="Identificacion del bien: " style="font-weight: bold"></h:outputText>
+                        </p:column>
+                        <p:column>
+                            <p:inputTextarea disabled="true" valueChangeListener="#{controladorAdicionCaso.cambiodeIdentificacionDelBien(e)}" autoResize="false" value="#{controladorAdicionCaso.detaAModificar.bienIntervenido}" style="width: 200px;height: 50px" >
+
+                            </p:inputTextarea>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:panelGrid id="datosR9" style="width: 100%;">
+
+                    <f:facet name="header">
+                        <p:row>
+                            <p:column colspan="6"><h:outputLabel value=""/></p:column>
+                        </p:row>
+                    </f:facet>
+                    <p:row>
+                        <p:column colspan="1">
+                            <h:outputText value="Fecha: " style="font-weight: bold"></h:outputText>
+                        </p:column>
+
+                        <p:column colspan="1">
+                            <p:calendar disabled="true" valueChangeListener="#{controladorAdicionCaso.cambiodeFecha(e)}" value="#{controladorAdicionCaso.detaAModificar.fechaAtencion}" pattern="dd/MM/yyyy" maxdate="#{controladorAdicionCaso.fechaSeguimiento}"/> 
+                        </p:column>
+                        <p:column colspan="1">
+                            <h:outputText value="Hora de inicio:" style="font-weight: bold"></h:outputText>
+                        </p:column>
+                        <p:column colspan="1">
+                            <p:calendar disabled="true" valueChangeListener="#{controladorAdicionCaso.cambiodeHoraInicio(e)}"   value="#{controladorAdicionCaso.detaAModificar.horaInicio}" pattern="hh:mm a" timeOnly="true" >
+                                <p:ajax  event="dateSelect"  update="web" ></p:ajax>
+                            </p:calendar>  
+                           <!-- <p:inputText valueChangeListener="#{controladorAdicionCaso.cambiodeHoraInicio(e)}" value="#{controladorAdicionCaso.detaAModificar.horaInicio}" >
+                                <f:convertDateTime type="time" ></f:convertDateTime>
+                            </p:inputText>!-->
+                        </p:column>
+                        <p:column colspan="1">
+                            <h:outputText value="Hora fin:" style="font-weight: bold"></h:outputText>
+                        </p:column>
+                        <p:column colspan="1">
+                            <p:outputPanel id="web">
+                                <p:calendar  disabled="true" valueChangeListener="#{controladorAdicionCaso.cambiodeHorafin(e)}"   value="#{controladorAdicionCaso.detaAModificar.horaFin}" pattern="hh:mm a" timeOnly="true" minHour="#{controladorAdicionCaso.detaAModificar.horaInicio.hours}"  >
+
+                                </p:calendar>  
+                            </p:outputPanel>
+                            <!--<p:inputText valueChangeListener="#{controladorAdicionCaso.cambiodeHorafin(e)}" value="#{controladorAdicionCaso.detaAModificar.horaFin}">
+                                <f:convertDateTime type="time"  ></f:convertDateTime>
+                            </p:inputText>!-->
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:panelGrid id="datosR9Q" style="width: 100%;">
+
+                </p:panelGrid>
+                <p:panelGrid id="datosRQ9Q" style="width: 100%;">
+                    <f:facet name="header">
+                        <p:row>
+                            <p:column colspan="6"><h:outputLabel value="DESCRIPCION DEL SERVICIO"/></p:column>
+                        </p:row>
+                    </f:facet>
+                    <p:row>
+                        <p:column>
+                            <p:inputTextarea disabled="true" valueChangeListener="${controladorAdicionCaso.cambiodeDescripcionServicio(e)}" autoResize="false" value="#{controladorAdicionCaso.detaAModificar.detaDescripcionServicio}" style="width: 870px;height: 80px" >
+
+                            </p:inputTextarea>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:panelGrid id="datoRQ9Q" style="width: 100%;">
+                    <f:facet name="header">
+                        <p:row>
+                            <p:column colspan="6"><h:outputLabel value="MATERIALES"/></p:column>
+                        </p:row>
+                    </f:facet>
+                    <p:row>
+                        <p:column>
+                            <p:inputTextarea disabled="true" valueChangeListener="#{controladorAdicionCaso.cambiodeMateriales(e)}"   autoResize="false" value="#{controladorAdicionCaso.detaAModificar.detaMateriales}" style="width: 870px;height: 80px" >
+
+                            </p:inputTextarea>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+
+
+
+            </p:dialog>
+
+        </h:form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <h:form id="verdoc">
+            <p:dialog id="ventanadoc" header="Documentos Adjuntos:" widgetVar="verDoc" modal="true" resizable="false" draggable="false" visible="false">
+
+                <p:dataTable id="tablaDocAdjuntos" value="#{controladorAdicionCaso.encaElejidoDetodos.documentosList}" var="item12"  rows="3">                   
+
+                    <p:column>       
+                        <f:facet name="header">
+                            <h:outputText value="Nombre del Documento"/>
+                        </f:facet>
+                        <h:outputText value="#{item12.nombreDocumento}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Descargar"/>
+                        </f:facet>
+                        <p:commandButton value="Download" icon="ui-icon-arrowthick-1-s" ajax="false">  
+                            <p:fileDownload value="#{controladorAdicionCaso.asigFile12(item12)}" />  
+                        </p:commandButton> 
+                    </p:column>  
+                </p:dataTable>
+
+
+            </p:dialog>
+        </h:form>
+
+
+
+
+
+
+
+
+
+
+
+
+    </ui:define>
+
+</ui:composition>

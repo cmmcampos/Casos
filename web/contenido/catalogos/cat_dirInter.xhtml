@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+   
+  <ui:define name="content">
+        <h:form id="formDirInter1" style="width: 100%">
+            <p:panelGrid style="width: 100%;">
+                
+                <p:row>
+                <p:column headerText="Seleccione Dirección Nacional">
+                    <h:selectOneMenu id="nacionales1" value="#{manejadorGestionCatalogo.direccionNacionalSeleccionada}" required="true">
+                        <f:selectItem itemLabel="Seleccione uno..." itemValue="0"/>
+                        <f:selectItems value="#{manejadorGestionCatalogo.listaDireccionesNacionales}" var="catDireNac" itemLabel="#{catDireNac.nombreDirNacional}" itemValue="#{catDireNac.idDirNacional}"/>
+                        <p:ajax update="dirInter"/>
+                    </h:selectOneMenu>
+                    <p:commandButton id="procesar" value="Buscar" update=":formDirInter1:dirInter nacionales1"/>
+                </p:column>
+                </p:row>
+            </p:panelGrid>
+            
+            <p:dataTable id="dirInter" var="dirInter" value="#{controladorCatalogos.listDireccionesInter}" rowKey="#{dirInter.idDirecInter}" paginator="true" rows="5" 
+                         selection="#{controladorCatalogos.direcionesInterSeleccionado}" selectionMode="single">
+                
+                <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="4">CATÁLOGO DE DIRECCIONES INTERMEDIAS/GERENCIAS</p:column>
+                  </p:row>
+                </f:facet>
+                
+                <p:column headerText="ID">
+                    <h:outputText value="#{dirInter.idDirecInter}"/>
+                </p:column>
+                <p:column headerText="Dirección Nacional:">
+                    <h:outputText value="#{dirInter.idDirNacional.nombreDirNacional}"/>                
+                </p:column>
+                <p:column headerText="Nombre Dirección Intermedia:">
+                    <h:outputText value="#{dirInter.nombreDirecInter}"/>
+                </p:column>
+                <p:column headerText="Nombre Director Intermedio:">
+                    <h:outputText value="#{dirInter.directorInter}"/>
+                </p:column>
+                <p:column headerText="Teléfono:">
+                    <h:outputText value="#{dirInter.telefonoDirecInter}"/>
+                </p:column>
+                <p:column headerText="Descripción:">
+                    <h:outputText value="#{dirInter.descripcionDirecInter}"/>
+                </p:column>
+
+                        
+                <f:facet name="footer">  
+                    <p:commandButton id="Agregadint" value="Adicionar" oncomplete="agregaDinter1.show();" process="@this dirInter" update=":formDirInter1:ConteDint1"/> 
+
+                </f:facet>
+            
+           </p:dataTable>     
+                
+           
+            <p:dialog  id="ConteDint1" widgetVar="agregaDinter1" header="Ingrese Nueva Direción ó Gerencia" modal="true" >
+                
+               <p:panelGrid id="depliegaDi1" columns="2" style="width: 100%;">  
+                                   
+                    <h:outputLabel id="nombDN" value="Dirección Nacional a la que pertenece:" style="font-weight: bold"/>  
+                    <h:selectOneMenu id="nacionales" value="#{controladorCatalogos.direccionNacionalSeleccionada}" required="true">
+                        <f:selectItem itemLabel="Seleccione uno..." itemValue="0"/>
+                        <f:selectItems value="#{controladorCatalogos.listaDireccionesNacionales}" var="catDireNac" itemLabel="#{catDireNac.nombreDirNacional}" itemValue="#{catDireNac.idDirNacional}"/>
+                    </h:selectOneMenu>
+                    
+                    <h:outputLabel id="nombDint" value="Nombre de Dirección o Gerencia:" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogos.nuevoDirecionInter.nombreDirecInter}" required="true" requiredMessage="Nombre es obligatorio"/>  
+                    
+                    <h:outputLabel id="nombDire" value="Nombre de Director o Gerente:" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogos.nuevoDirecionInter.directorInter}" required="true" requiredMessage="Nombre es obligatorio"/>  
+                    <h:outputLabel id="telDint" value="Teléfono:" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogos.nuevoDirecionInter.telefonoDirecInter}"/>
+                    <h:outputLabel id="descDint" value="Descripción:" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogos.nuevoDirecionInter.descripcionDirecInter}"/>
+                 
+             </p:panelGrid>
+                    
+                <p:commandButton value="Guardar" action="#{controladorCatalogos.insertarDireccionInter}" update=":formDirInter1:dirInter" process="@this depliegaDi1" oncomplete="handleRequest(args);"/>
+                    
+                    <script type="text/javascript">
+                      function handleRequest(args) {
+                      if (args.validationFailed) {
+                          alert('Ha ocurrido un error. Complete los datos necesarios');
+                      }else{
+                        alert('Datos adicionados correctamente');
+                        agregaDinter1.hide();
+                        }
+                      }
+                   </script>            
+               
+           </p:dialog>
+
+                      
+            
+            
+            
+        </h:form> 
+       
+                
+  </ui:define>
+
+   
+</ui:composition>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cat_dependencias" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="30edc2b6-b0f8-4987-b52a-4c78d8b23a47">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     dependencias."id_dependencia" AS dependencias_id_dependencia,
+     dependencias."id_direc_inter" AS dependencias_id_direc_inter,
+     dependencias."nombre_dependencia" AS dependencias_nombre_dependencia,
+     dependencias."direccion_dependencia" AS dependencias_direccion_dependencia,
+     dependencias."telefono_dependencia" AS dependencias_telefono_dependencia,
+     dependencias."descripcion_dependencia" AS dependencias_descripcion_dependencia,
+     dependencias."jefe_dependencia" AS dependencias_jefe_dependencia,
+     direcciones_inter."nombre_direc_inter" AS direcciones_inter_nombre_direc_inter
+FROM
+     "public"."direcciones_inter" direcciones_inter RIGHT OUTER JOIN "public"."dependencias" dependencias ON direcciones_inter."id_direc_inter" = dependencias."id_direc_inter"
+
+ORDER BY direcciones_inter."nombre_direc_inter"]]>
+	</queryString>
+	<field name="dependencias_id_dependencia" class="java.lang.Integer"/>
+	<field name="dependencias_id_direc_inter" class="java.lang.Integer"/>
+	<field name="dependencias_nombre_dependencia" class="java.lang.String"/>
+	<field name="dependencias_direccion_dependencia" class="java.lang.String"/>
+	<field name="dependencias_telefono_dependencia" class="java.lang.String"/>
+	<field name="dependencias_descripcion_dependencia" class="java.lang.String"/>
+	<field name="dependencias_jefe_dependencia" class="java.lang.String"/>
+	<field name="direcciones_inter_nombre_direc_inter" class="java.lang.String"/>
+	<group name="dirIntermedias">
+		<groupExpression><![CDATA[$F{dependencias_id_direc_inter}]]></groupExpression>
+		<groupHeader>
+			<band height="31">
+				<rectangle>
+					<reportElement uuid="1b2b2472-bae0-47d7-9909-0a5ac6c7985f" mode="Opaque" x="11" y="7" width="552" height="20" forecolor="#FFFFFF" backcolor="#8FA9C3"/>
+					<graphicElement>
+						<pen lineStyle="Double"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement uuid="0fb09888-7147-4325-9eb1-44ad87340adb" x="29" y="9" width="318" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{direcciones_inter_nombre_direc_inter}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="3" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="121" splitType="Stretch">
+			<image>
+				<reportElement uuid="9d581f80-9e33-43e8-9fb0-29cf2e84a69a" x="11" y="1" width="128" height="98"/>
+				<imageExpression><![CDATA["escudo.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="f5139ac8-6872-40f5-b3de-9e0a48afeadf" x="404" y="-1" width="172" height="100"/>
+				<imageExpression><![CDATA["logo_e.jpg"]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement uuid="c7e5c875-ab24-4f69-86db-4caa4a01f202" x="11" y="99" width="549" height="20" backcolor="#899FB6"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="3ac17f85-0c59-48bd-b1e3-69785fea9ac3" x="178" y="70" width="211" height="16"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistema de Control de Requerimientos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7f3f62d8-1a4c-4a28-a07f-44bb31c9262b" x="155" y="100" width="251" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[.: Catalogo de Dependencias :.]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d663e4a4-a2c2-4039-b818-510b9d4c7d6e" x="18" y="10" width="25" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="53b7aa9a-e2af-4fca-9d1e-8a6cef23c27f" x="48" y="10" width="130" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a7ba0d2-099c-460c-8a75-7488e6012892" x="347" y="10" width="110" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4a57eb74-13ea-43ba-b26a-7cec636cba8f" x="223" y="10" width="88" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jefe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="08b05a03-cb07-4afe-a420-79bde581a094" x="492" y="10" width="71" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f4558ade-6816-484c-98d8-0298bc9346dd" x="17" y="3" width="25" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dependencias_id_dependencia}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="65c46007-e5e1-4c0f-9b5f-95959f64d188" x="46" y="3" width="171" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dependencias_nombre_dependencia}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="f4602ad3-679a-431d-aa4e-d9207454c492" x="346" y="4" width="141" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dependencias_direccion_dependencia}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="6b2fd432-d7db-43df-a19d-b944eb5967e9" x="222" y="4" width="120" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dependencias_jefe_dependencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="71e2eda2-7706-4168-8b7e-4c4b32221aa4" x="492" y="4" width="80" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dependencias_telefono_dependencia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="105" splitType="Stretch">
+			<textField>
+				<reportElement uuid="21735ed9-3e6b-47b9-94c7-7343ca306a3a" x="437" y="83" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="628b1a57-c1c6-4466-bb57-3ae646c129f3" x="517" y="83" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h:mm a">
+				<reportElement uuid="f8c594b4-828f-47f6-bad2-98a76913abc2" mode="Transparent" x="8" y="83" width="100" height="20" forecolor="#736343" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="9c222296-7830-410c-8725-975acb8218f8" x="6" y="19" width="159" height="71"/>
+				<imageExpression><![CDATA["secre_new.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement uuid="de5396ad-e191-45bb-8468-8f04b3e4ddc7" x="500" y="22" width="57" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5e031c55-2036-4330-9349-365486664fc8" x="342" y="23" width="152" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de Dependencias]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

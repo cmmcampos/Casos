@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+        <h:form id="CatDependencias" style="width: 100%">
+            <p:panelGrid style="width: 100%; alignment-baseline: middle">
+                <p:row>
+                    <p:column headerText="Seleccione Dirección Intermedia">
+                        
+                        <p:outputPanel id="qaz">
+                            <p:outputLabel value="Nombre de Dirección Intermedia:"></p:outputLabel>
+                            <p:selectOneMenu id="dep1" value="#{controladorCatalogoDependencias.direccionInSeleccionada}" required="true" filter="true" filterMatchMode="contains">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0" noSelectionOption="true"/>
+                                <f:selectItems value="#{controladorCatalogoDependencias.listaDirecInter}" var="catDirInter" itemLabel="#{catDirInter.nombreDirecInter}" itemValue="#{catDirInter.idDirecInter}"/>
+                                <p:ajax update="dependencia1"/>
+                            </p:selectOneMenu>
+                        </p:outputPanel>
+                          
+                        <p:commandButton id="procesar" value="Buscar" update=":CatDependencias:dependencia1 dep1"/>
+                    
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+
+            <p:dataTable id="dependencia1" var="dependencia1" value="#{controladorCatalogoDependencias.listaDependencias}" rowKey="#{dependencia1.idDependencia}" paginator="true" rows="5" 
+                         selection="#{controladorCatalogoDependencias.dependenciaSeleccionada}" selectionMode="single">
+
+                <f:facet name="header">
+                    <p:row>
+                        <p:column colspan="4">CATÁLOGO DE DEPENDENCIAS</p:column>
+                    </p:row>
+                </f:facet>
+
+                <p:column headerText="ID">
+                    <h:outputText value="#{dependencia1.idDependencia}"/>
+                </p:column>
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{dependencia1.nombreDependencia}"/>
+                </p:column>
+                <p:column headerText="Jefatura o Encargado">
+                    <h:outputText value="#{dependencia1.jefeDependencia}"/>
+                </p:column>
+                <p:column headerText="Teléfono">
+                    <h:outputText value="#{dependencia1.telefonoDependencia}"/>
+                </p:column>
+
+
+
+                <f:facet name="footer">  
+                    <p:commandButton id="Agregadep" value="Adicionar"  oncomplete="agregaDep1.show();" process="@this dependencia1" update=":CatDependencias:ConteDep1 :CatDependencias:dep1"/> 
+                    <p:commandButton id="Modifica" value="Modificar" action="#{controladorCatalogoDedendencias.setearId()}" oncomplete="modificarDep.show();" process="@this dependencia1" update=":CatDependencias:ConteDep2"/> 
+                </f:facet>
+
+            </p:dataTable>     
+
+            <p:growl id="msg12"/>
+            
+            <p:dialog  id="ConteDep1" widgetVar="agregaDep1" header="Ingrese Nueva Dependencia" modal="true" >
+
+                <p:panelGrid id="depliegaD1" columns="2" style="width: 100%;">  
+
+                    <p:outputLabel id="nombDN" value="Dirección Nacional:" for="selecDNac" style="font-weight: bold"/>  
+                    <h:selectOneMenu id="selecDNac" value="#{controladorCatalogoDependencias.idDNacSeleccionada}" required="true">
+                        <f:selectItem itemLabel="Seleccione uno..." itemValue="0"/>
+                        <f:selectItems value="#{controladorCatalogoDependencias.listaDNac}" var="catDNac" itemLabel="#{catDNac.nombreDirNacional}" itemValue="#{catDNac.idDirNacional}"/>
+                        <p:ajax update="selecDInt"></p:ajax>
+                    </h:selectOneMenu>
+                    
+                    
+                    <p:outputLabel id="nombDI" value="Dirección Intermedia:" style="font-weight: bold"/>  
+                    <p:selectOneMenu id="selecDInt" value="#{controladorCatalogoDependencias.idDInterSeleccionada}" required="true" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="Seleccione uno..." itemValue="0"/>
+                       
+                        <f:selectItems value="#{controladorCatalogoDependencias.listaDirecInter}" var="catDireInter" itemLabel="#{catDireInter.nombreDirecInter}" itemValue="#{catDireInter.idDirecInter}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel id="nomb2" value="Nombre de Dependencia:" style="font-weight: bold"/>
+                    <p:inputText size="70" value="#{controladorCatalogoDependencias.nuevaDependencia.nombreDependencia}"/>  
+
+                    <h:outputLabel id="nombJefe" value="Nombre Jefe o Encargado:" style="font-weight: bold"/>
+                    <p:inputText size="70" value="#{controladorCatalogoDependencias.nuevaDependencia.jefeDependencia}"/>  
+
+                    <h:outputLabel id="tel" value="Teléfono:" style="font-weight: bold"/>
+                    <p:inputMask size="70" mask="(999)9999-9999" value="#{controladorCatalogoDependencias.nuevaDependencia.telefonoDependencia}"/>
+
+                    <h:outputLabel id="dir" value="Dirección:" style="font-weight: bold"/>
+                    <p:inputText size="70" value="#{controladorCatalogoDependencias.nuevaDependencia.direccionDependencia}"/>
+
+                    <h:outputLabel id="descrip" value="Descripción:" style="font-weight: bold"/>
+                    <p:inputText size="70" value="#{controladorCatalogoDependencias.nuevaDependencia.descripcionDependencia}"/>
+
+                </p:panelGrid>
+
+                <p:commandButton value="Guardar" action="#{controladorCatalogoDependencias.almacenar()}" update=":CatDependencias:dependencia1 :CatDependencias:msg12 :CatDependencias:qaz" process="@this depliegaD1" oncomplete="agregaDep1.hide();"/>
+
+
+            </p:dialog>
+
+
+
+
+
+            <p:dialog  id="ConteDep2" widgetVar="modificarDep" header="Modificar está Dependencia" modal="true" >
+
+                <p:panelGrid id="depliegaD2" columns="2" style="width: 100%;">  
+
+                    <h:outputLabel id="nombDN2" value="Dirección Intermedia a la que pertenece:" style="font-weight: bold"/>  
+                    <h:selectOneMenu id="nacionales2" value="#{controladorCatalogoDependencias.idDInterSeleccionada}" required="true">
+                        <f:selectItems value="#{controladorCatalogoDependencias.listaDirecInter}" var="catDireIn" itemLabel="#{catDireIn.nombreDirecInter}" itemValue="#{catDireIn.idDirecInter}"/>
+                    </h:selectOneMenu>
+
+                    <h:outputLabel id="nombre2" value="Nombre de Dependencia:" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogoDependencias.dependenciaSeleccionada.nombreDependencia}" />  
+
+                    <h:outputLabel id="nombJefe2" value="Nombre Jefatura o Encargado:" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogoDependencias.dependenciaSeleccionada.jefeDependencia}" />  
+
+                    <h:outputLabel id="tel2" value="Teléfono:" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogoDependencias.dependenciaSeleccionada.telefonoDependencia}"/>
+
+                    <h:outputLabel id="dir2" value="Dirección:" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogoDependencias.dependenciaSeleccionada.direccionDependencia}"/>
+
+                    <h:outputLabel id="descrip2" value="Descripción:" style="font-weight: bold"/>
+                    <h:inputText value="#{controladorCatalogoDependencias.dependenciaSeleccionada.descripcionDependencia}"/>
+
+                </p:panelGrid>
+
+                <p:commandButton value="Guardar" action="#{controladorCatalogoDedendencias.modificar()}" update=":CatDependencias:dependencia1 :CatDependencias:msg12 @this" process="@this depliegaD2" oncomplete="modificarDep.hide();"/>
+
+
+            </p:dialog>
+
+
+
+        </h:form> 
+
+
+    </ui:define>
+
+
+</ui:composition>

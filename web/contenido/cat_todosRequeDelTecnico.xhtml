@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <ui:define name="content">
+        <h:form id="formConsultaC" prependId="false" style="width: 100%">
+            <p:dataTable id="consultaC" var="consultaC" value="#{controladorAdicionCaso.listaTodosXTecnico}" paginator="true" rows="20">
+                
+               <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="6">TODOS LOS REQUERIMIENTOS</p:column>
+                  </p:row>
+                </f:facet>
+                <p:column headerText="# Req."  width="40" filterBy="#{consultaC.numCaso}" filterStyle="width:50px" filterMatchMode="contains">
+                    <h:outputText value="#{consultaC.numCaso}"/>
+                 </p:column>
+                
+              
+                <p:column headerText="Nombre Solicitante" filterBy="#{consultaC.usuarioUsuarioSolicitante.nombreUsuario} #{consultaC.usuarioUsuarioSolicitante.apellidoUsuario}" filterStyle="width:120px" filterMatchMode="contains">
+                    <h:outputText value="#{consultaC.usuarioUsuarioSolicitante.nombreUsuario} #{consultaC.usuarioUsuarioSolicitante.apellidoUsuario}"/>
+                 </p:column>
+                
+                
+                <p:column headerText="Dependencia" filterBy="#{consultaC.usuarioUsuarioSolicitante.idDependencia.nombreDependencia}" filterMatchMode="contains">
+                    <p:inputTextarea autoResize="false" style="resize: none;height: 40px;width: 135px" disabled="true" value="#{consultaC.usuarioUsuarioSolicitante.idDependencia.nombreDependencia}"/>
+                 </p:column>
+               
+                <p:column headerText="Fecha solicitud" sortBy="#{controladorAdicionCaso.fechaToString(consultaC.fechaIngreso)}" filterBy="#{controladorAdicionCaso.fechaToString(consultaC.fechaIngreso)}">
+                    <center><h:outputText value="#{controladorAdicionCaso.fechaToString(consultaC.fechaIngreso)}"> 
+                    
+                     </h:outputText></center>
+                 </p:column>
+             
+                <p:column headerText="Estado" filterBy="#{consultaC.idEstado.nombreEstado}" filterMatchMode="contains" style="height: 30px;width: 25px">
+                    <h:outputText value="#{consultaC.idEstado.nombreEstado}" />
+                 </p:column>
+<!--                <p:column headerText="Año" filterBy="#{consultaC.anio}" filterMatchMode="contains" style="height: 30px;width: 25px">
+                    <h:outputText value="#{consultaC.anio}" />
+                 </p:column>
+                -->
+                 <p:column headerText="Descripción">
+                       <p:inputTextarea value="#{consultaC.descripcionRequerimiento}" autoResize="false" style="width: 150px; height: 40px" disabled="true"></p:inputTextarea>
+                     
+                 </p:column>
+                <p:column headerText="Ver">
+                    <p:commandButton  icon="ui-icon-check" title="Ver Requerimiento" process="@this" action="#{controladorAdicionCaso.redireccionar2()}" >
+                            <f:setPropertyActionListener value="#{consultaC}" target="#{controladorAdicionCaso.encaElejidoDetodos}"/>
+                    </p:commandButton>
+                </p:column>
+               
+            </p:dataTable>
+        
+      </h:form>
+        
+    </ui:define>
+
+    
+</ui:composition>

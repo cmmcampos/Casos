@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    
+    <ui:define name="content">
+        
+           <h:form id="formDirNac" style="width: 100%">  
+             
+            <p:dataTable id="dirNac" var="dirNac" value="#{manejadorGestionCatalogo.listaDireccionesNacionales}"  rowKey="#{dirNac.idDirNacional}" paginator="true" rows="5"
+                         selection="#{manejadorGestionCatalogo.direnacSeleccionada}" selectionMode="single">
+                <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="4">CATÁLOGO DE DIRECCIÓN NACIONAL</p:column>
+                  </p:row>
+                </f:facet>
+                <p:column headerText="ID" sortBy="#{dirNac.idDirNacional}" filterBy="#{dirNac.idDirNacional}">
+                    <h:outputText value="#{dirNac.idDirNacional}"/>
+                 </p:column>
+                <p:column headerText="Nombre" sortBy="#{dirNac.nombreDirNacional}" filterBy="#{dirNac.nombreDirNacional}">
+                    <h:outputText value="#{dirNac.nombreDirNacional}"/>
+                 </p:column>
+                <p:column headerText="Director">
+                    <h:outputText value="#{dirNac.directorNacional}"/>
+                 </p:column>
+                 <p:column headerText="Descripción">
+                     <h:outputText value="#{dirNac.descripcionDirNacional}"/>
+                 </p:column>
+                 
+                 <f:facet name="footer">  
+                    <p:commandButton id="agregar" value="Adicionar" oncomplete="agregaDireNac.show();" process="@this dirNac" update=":formDirNac:dirNac" /> 
+                    <p:commandButton id="ConsultaBtnDn" value="Modificar" oncomplete="modificaDireNac.show();" process="dirNac" update=":formDirNac:Conte2"/>  
+                    
+                 </f:facet>
+                
+                                
+            </p:dataTable>
+            
+            <p:dialog  id="Conte1" widgetVar="agregaDireNac" header="Ingrese Nueva Dirección Nacional" modal="true">
+                
+                <p:panelGrid id="Agrega1" columns="2">  
+                    <h:outputLabel id="cod" value="Id" style="font-weight: bold"/> 
+                    <h:outputText value="#{manejadorAdicionCatalogo.nuevoDireccionesNacionales.idDirNacional}" />
+                    <h:outputLabel id="nomb" value="Nombre:" style="font-weight: bold" />  
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoDireccionesNacionales.nombreDirNacional}" required="true" requiredMessage="Nombre es obligatorio"/> 
+                    <h:outputLabel value="Director:" style="font-weight: bold"/>  
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoDireccionesNacionales.directorNacional}" /> 
+                    <h:outputLabel value="Descripción:" style="font-weight: bold"/>  
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoDireccionesNacionales.descripcionDirNacional}" /> 
+                </p:panelGrid>      
+               
+                <p:commandButton value="Guardar" action="#{manejadorAdicionCatalogo.crearDireccionesNacionales()}" update=":formDirNac:dirNac " process="@this Conte1" oncomplete="handleRequest(args);" />
+                    
+                    <script type="text/javascript">
+                      function handleRequest(args) {
+                      if (args.validationFailed) {
+                          alert('Ha ocurrido un error. Complete los datos necesarios');
+                      }else{
+                        alert('Datos adicionados correctamente');
+                        agregaDireNac.hide();
+                        }
+                      }
+                    </script>
+            </p:dialog> 
+            
+             <p:dialog  id="Conte2" widgetVar="modificaDireNac" header="Modificar Dirección Nacional" modal="true">
+                 <p:panelGrid id="Modifica2" columns="2">
+                     <h:outputLabel value="Id Dirección Nacional" style="font-weight: bold"/>
+                     <h:outputText value="#{manejadorGestionCatalogo.direnacSeleccionada.idDirNacional}"/>
+                     <h:outputLabel value="Nombre Dirección Nacional" style="font-weight: bold"/>
+                     <h:inputText value="#{manejadorGestionCatalogo.direnacSeleccionada.nombreDirNacional}" />
+                     <h:outputLabel value="Nombre Director Nacional" style="font-weight: bold"/>
+                     <h:inputText value="#{manejadorGestionCatalogo.direnacSeleccionada.directorNacional}"/>
+                     <h:outputLabel value="Descripción Dirección Nacional" style="font-weight: bold"/>
+                     <h:inputText value="#{manejadorGestionCatalogo.direnacSeleccionada.descripcionDirNacional}"/>
+                 </p:panelGrid>
+                 <p:commandButton value="Guardar" action="#{manejadorGestionCatalogo.actualizaDireNac()}" update=":formDirNac:dirNac" process="@this Conte2" oncomplete="modificaDireNac.hide();" />
+             </p:dialog>
+            
+           
+               
+               
+        </h:form>
+            
+        </ui:define>    
+    
+    
+</ui:composition>

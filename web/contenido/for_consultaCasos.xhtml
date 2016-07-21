@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+        <h:form id="formConsultaC" prependId="false" style="width: 100%">
+            <p:dataTable id="consultaC" var="consultaC" value="#{controladorAdicionCaso.listEncaRequerimientoAModificar}"  rowKey="#{consultaC.fechaRequerimiento}" paginator="true" rows="5" >
+
+                <f:facet name="header">
+                    <p:row>
+                        <p:column colspan="7">REQUERIMIENTOS INGRESADOS</p:column>
+                    </p:row>
+                </f:facet>     
+
+                <p:column  headerText="Fecha Req."  sortBy="#{consultaC.fechaRequerimiento}" >
+                    <center><h:outputText title="Fecha del Requerimiento" value="#{consultaC.fechaRequerimiento}"> 
+                            <f:convertDateTime pattern="dd/MM/yyyy" locale="es"></f:convertDateTime>
+                        </h:outputText></center>
+
+                </p:column>
+
+                <p:column headerText="Nombre Solicitante" filterBy="#{consultaC.usuarioUsuarioSolicitante.nombreUsuario} #{consultaC.usuarioUsuarioSolicitante.apellidoUsuario}" filterMatchMode="contains">
+
+                    <h:outputText value="#{consultaC.usuarioUsuarioSolicitante.nombreUsuario} #{consultaC.usuarioUsuarioSolicitante.apellidoUsuario}"/>
+                </p:column>
+                
+<!--                <p:column headerText="Apellido" filterBy="#{consultaC.usuarioUsuarioSolicitante.apellidoUsuario}" filterMatchMode="contains">
+                    <h:outputText value="#{consultaC.usuarioUsuarioSolicitante.apellidoUsuario}"/>
+                </p:column>-->
+                
+                <p:column headerText="Dependencia" filterBy="#{consultaC.usuarioUsuarioSolicitante.idDependencia.nombreDependencia}" filterMatchMode="contains">
+                    <h:outputText  style="height: 40px;resize:none" value="#{consultaC.usuarioUsuarioSolicitante.idDependencia.nombreDependencia}"/>
+                </p:column>
+
+
+                <p:column headerText="Descripción">
+                    <p:inputTextarea  value="#{consultaC.descripcionRequerimiento}" autoResize="false" style="width: 350px; height: 50px" disabled="true"></p:inputTextarea>
+
+                </p:column>
+                
+                <p:column headerText="Modific">
+                    <center> <p:commandButton   icon="ui-icon-check" title="Modificar Requerimiento" process="@this" action="#{controladorAdicionCaso.redireccionar()}" >
+                            <f:setPropertyActionListener value="#{consultaC}" target="#{controladorAdicionCaso.requerimientoSeleccionadoAModificar}"/>
+                            <f:setPropertyActionListener value="#{consultaC.usuarioUsuarioSolicitante}" target="#{controladorAdicionCaso.usuarioSolicitanteSelecionadoAModificar}"/>
+                            <f:param name="operacion" value="Modificar"/>
+                        </p:commandButton></center>
+                </p:column>
+                
+                <p:column headerText="Elimin">
+                    <center> <p:commandButton   icon="ui-icon-close" title="Eliminar Requerimiento" process="@this" action="#{controladorAdicionCaso.redireccionar()}" >
+                            <f:setPropertyActionListener value="#{consultaC}" target="#{controladorAdicionCaso.requerimientoSeleccionadoAModificar}"/>
+                            <f:setPropertyActionListener value="#{consultaC.usuarioUsuarioSolicitante}" target="#{controladorAdicionCaso.usuarioSolicitanteSelecionadoAModificar}"/>
+                            <f:param name="operacion" value="Eliminar"/>
+                        </p:commandButton></center>
+                </p:column>
+
+            </p:dataTable>
+
+        </h:form>
+
+    </ui:define>
+
+
+</ui:composition>

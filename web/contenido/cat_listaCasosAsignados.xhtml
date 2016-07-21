@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+        <h:form id="formListaC" prependId="false" style="width: 100%">
+
+            <p:dataTable  id="listaC" var="listaq" value="#{controladorAdicionCaso.listaDeCasosDelTecnico}" rowKey="#{listaq.idEncaRequerimiento}" paginator="true" rows="10" emptyMessage="No hay datos para mostrar...">
+
+
+                <f:facet name="header">
+                    <p:row> <p:column colspan="7">REQUERIMIENTOS ASIGNADOS</p:column> </p:row> 
+                    <br/>
+                    <p:row> <p:column> <h:outputLabel value="Total de casos asignados: "/> <h:outputText value="#{controladorAdicionCaso.listaDeCasosDelTecnico.size()}"/> </p:column> </p:row>
+                </f:facet>
+
+                <p:column headerText="Fecha Asigna">
+                    <ui:repeat value="#{listaq.asignarTecnicoList}" var="asigna_tecnico">
+                        <h:outputText value="#{controladorAdicionCaso.fechaToString(asigna_tecnico.fechaAsigna)}" />
+                    </ui:repeat>
+                </p:column>
+
+                <p:column headerText="Fecha Solicitud" sortBy="#{controladorAdicionCaso.fechaToString(listaq.fechaRequerimiento)}" filterBy="#{controladorAdicionCaso.fechaToString(listaq.fechaRequerimiento)}" filterStyle="width:80px" width="92">
+                    <h:outputText value="#{controladorAdicionCaso.fechaToString(listaq.fechaRequerimiento)}">
+
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="No. Reque" filterBy="#{listaq.numCaso}" filterStyle="width:45px" width="55">
+                    <center> <h:outputText value="#{listaq.numCaso}"/> </center>
+
+                </p:column>
+
+                <p:column headerText="Nombre Solicitante"  filterBy="#{listaq.usuarioUsuarioSolicitante.nombreUsuario}#{listaq.usuarioUsuarioSolicitante.apellidoUsuario}"   filterMatchMode="contains" filterStyle="width:100px" width="120">
+                    <h:outputText value="#{listaq.usuarioUsuarioSolicitante.nombreUsuario} #{listaq.usuarioUsuarioSolicitante.apellidoUsuario}"/>
+
+                </p:column>
+
+
+                <p:column headerText="Dependencia" filterBy="#{listaq.usuarioUsuarioSolicitante.idDependencia.nombreDependencia}" filterMatchMode="contains" filterStyle="width:120px" width="140">
+                    <h:outputText value="#{listaq.usuarioUsuarioSolicitante.idDependencia.nombreDependencia}"/>
+                </p:column>
+
+
+                <p:column headerText="Descripción">
+                    <p:inputTextarea disabled="true" autoResize="false" value="#{listaq.descripcionRequerimiento}" />
+                </p:column>
+
+                <p:column headerText="Seguimiento" width="90">
+                    <center><p:commandButton icon="ui-icon-check" title="Seguir caso"  ajax="false" action="#{controladorAdicionCaso.requeAsignadoSelec()}" >
+                            <f:setPropertyActionListener value="#{listaq}" target="#{controladorAdicionCaso.requerimientoAsigSeleccionado}" />
+                        </p:commandButton></center>
+                </p:column>
+                <!--      !-->
+
+            </p:dataTable>
+
+
+
+        </h:form>        
+
+    </ui:define>
+
+
+</ui:composition>
+

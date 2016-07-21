@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+            <h:form id="formListaCasosTec" prependId="false" style="width: 100%">
+            
+                <p:dataTable id="listaC" var="listaq" value="#{controladorAdicionCaso.traeTecnicosConSuPeso1}"  rowKey="#{listaq.idTecnico}" paginator="true" rows="10">
+                 
+                      
+                <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="6">REQUERIMIENTOS POR TECNICO PARA REASIGNAR</p:column>
+                  </p:row>
+                </f:facet>
+               
+                <p:column headerText="Id">
+                    <h:outputText value="#{listaq.idTecnico}"/>
+                 </p:column>
+                 
+                                   
+                    <p:column headerText="Nombre del Tecnico"  filterBy="#{listaq.nombre}"   filterMatchMode="contains">
+                        <center><h:outputText value="#{listaq.nombre}"/></center>
+                        
+                 </p:column>
+                    
+                               
+                    <p:column headerText="Peso Asignado" >
+                        <center> <h:outputText value="#{listaq.sumaPeso}"/></center>
+                 </p:column>
+                    
+                <p:column headerText="Ver casos">
+                    <center><p:commandButton icon="ui-icon-check" title="Ver casos del tecnico" process="@this" action="#{controladorAdicionCaso.redireccionarCasosDelTecnicoR()}" >
+                            <f:setPropertyActionListener value="#{listaq}" target="#{controladorAdicionCaso.sumaPesoTecnicoSelec}"/>
+                    </p:commandButton></center>
+                </p:column>
+         
+                               
+            </p:dataTable>
+            
+            
+            
+            
+      
+</h:form>        
+        
+    </ui:define>
+
+    
+</ui:composition>
+
+
+

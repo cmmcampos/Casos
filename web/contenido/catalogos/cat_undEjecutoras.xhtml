@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    
+    <ui:define name="content">
+        
+        <h:form id="formUndEjecutoras" style="width: 100%">
+        
+            <p:dataTable id="undEjecuta" var="undEjecuta" value="#{manejadorGestionCatalogo.listaUndEjecutora}"  rowKey="#{undEjecuta.idUndEjecutora}" paginator="true" rows="5"
+                         selection="#{manejadorGestionCatalogo.undEjecutoraSeleccionada}" selectionMode="single">
+               <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="4">CATÁLOGO DE UNDADES EJECUTORAS</p:column>
+                  </p:row>
+                </f:facet>
+                
+                <p:column headerText="Id" sortBy="#{undEjecuta.idUndEjecutora}" filterBy="#{undEjecuta.idUndEjecutora}">
+                    <h:outputText value="#{undEjecuta.idUndEjecutora}"/>
+                 </p:column>
+                <p:column headerText="Nombre" sortBy="#{undEjecuta.nombreUndEjecutora}" filterBy="#{undEjecuta.nombreUndEjecutora}">
+                    <h:outputText value="#{undEjecuta.nombreUndEjecutora}"/>
+                 </p:column>
+                <p:column headerText="Jefe">
+                    <h:outputText value="#{undEjecuta.jefeUndEjecutora}"/>
+                 </p:column>
+                 <p:column headerText="Correo de Jefe">
+                     <h:outputText value="#{undEjecuta.correoJefeUndEjecutora}"/>
+                 </p:column>
+                 
+                 <f:facet name="footer">  
+                    <p:commandButton id="agregar" value="Adicionar" oncomplete="agregaUndEje.show();" process="@this undEjecuta" update=":formUndEjecutoras:undEjecuta" /> 
+                    <p:commandButton id="ConsultaBtnUE" value="Modificar" oncomplete="modificaUndEje.show();" process="undEjecuta" update=":formUndEjecutoras:Conte2"/>  
+                 </f:facet>
+                
+            </p:dataTable>
+                    
+            <p:dialog  id="Conte1" widgetVar="agregaUndEje" header="Ingrese Nueva Unidad Ejecutora" modal="true">
+                
+                <p:panelGrid id="Agrega1" columns="2">  
+                    <h:outputLabel id="cod" value="Id" style="font-weight: bold"/> 
+                    <h:outputText value="#{manejadorAdicionCatalogo.nuevoUnidadesEjecutoras.idUndEjecutora}" />
+                    <h:outputLabel id="nomb" value="Nombre:" style="font-weight: bold" />
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoUnidadesEjecutoras.nombreUndEjecutora}" required="true"/>
+                    <h:outputLabel value="Jefe:" style="font-weight: bold"/>  
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoUnidadesEjecutoras.jefeUndEjecutora}" required="true" requiredMessage="Nombre de Jefe es obligatorio" /> 
+                    <h:outputLabel value="Correo de Jefe:" style="font-weight: bold"/>  
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoUnidadesEjecutoras.correoJefeUndEjecutora}" /> 
+                </p:panelGrid>      
+               
+                <p:commandButton value="Guardar" action="#{manejadorAdicionCatalogo.crearUndEjecutoras()}" update=":formUndEjecutoras:undEjecuta" process="@this Conte1" oncomplete="handleRequest(args);" />
+                       
+                    <script type="text/javascript">
+                      function handleRequest(args) {
+                      if (args.validationFailed) {
+                          alert('Ha ocurrido un error. Complete los datos necesarios');
+                      }else{
+                        alert('Datos adicionados correctamente');
+                        agregaUndEje.hide();
+                        }
+                      }
+                    </script>
+            </p:dialog> 
+            
+            <p:dialog  id="Conte2" widgetVar="modificaUndEje" header="Modificar Unidad Ejecutora" modal="true">
+                 <p:panelGrid id="Modifica2" columns="2">
+                     <h:outputLabel value="Id Unidad Ejecutora:" style="font-weight: bold"/>
+                     <h:outputText value="#{manejadorGestionCatalogo.undEjecutoraSeleccionada.idUndEjecutora}"/>
+                     <h:outputLabel value="Nombre Unidad Ejecutora:" style="font-weight: bold"/>
+                     <h:inputText value="#{manejadorGestionCatalogo.undEjecutoraSeleccionada.nombreUndEjecutora}" />
+                     <h:outputLabel value="Jefe Unidad Ejecutora:" style="font-weight: bold"/>
+                     <h:inputText value="#{manejadorGestionCatalogo.undEjecutoraSeleccionada.jefeUndEjecutora}"/>
+                     <h:outputLabel value="Correo de Jefe;" style="font-weight: bold"/>
+                     <h:inputText value="#{manejadorGestionCatalogo.undEjecutoraSeleccionada.correoJefeUndEjecutora}"/>
+                 </p:panelGrid>
+                <p:commandButton value="Guardar" action="#{manejadorGestionCatalogo.actualizaUndEjecutora()}" update=":formUndEjecutoras:undEjecuta" process="@this Conte2" oncomplete="modificaUndEje.hide();" />
+             </p:dialog>
+            
+            
+        </h:form>
+                        
+    </ui:define>
+    
+</ui:composition>

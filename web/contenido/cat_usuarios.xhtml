@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    
+    <ui:define name="content">
+        <h:form id="formUsuarios" style="width: 100%">
+           
+            <p:dataTable id="catUsuarios" var="catUsuarios" value="#{controladorCatalogo.listaUsua}"  rowKey="#{catUsuarios.usuarioUsuario}" sortBy="#{catUsuarios.nombreUsuario}" paginator="true" rows="12"
+                         selection="#{controladorCatalogo.usuarioSeleccionado}" selectionMode="single">
+                <f:facet name="header">
+                  <p:row>
+                      
+                      <c:if test="#{appSession.usuario.idRol.nombreRol.equals('Asistente')or appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN')or appSession.usuario.idRol.nombreRol.equals('Coordinador')}">
+                          <p:column colspan="4">CATÁLOGO DE TECNICOS</p:column>
+                      </c:if>
+                      <c:if test="#{appSession.usuario.idRol.nombreRol.equals('Super administrador')}">
+                          <p:column colspan="4">CATÁLOGO DE USUARIOS</p:column>
+                      </c:if>
+                     
+                  </p:row>
+                </f:facet>
+                
+                <p:column headerText="Nombre" sortBy="#{catUsuarios.nombreUsuario}" filterBy="#{catUsuarios.nombreUsuario}" filterMatchMode="contains">
+                    <center>  <h:outputText  style="width: 100px; height: 30px;" value="#{catUsuarios.nombreUsuario}"/></center>
+                </p:column>
+                <p:column headerText="Apellido"  filterBy="#{catUsuarios.apellidoUsuario}" filterMatchMode="contains">
+                    <center> <h:outputText  value="#{catUsuarios.apellidoUsuario}"  style="width: 100px; height: 30px;"/></center>
+                </p:column>
+                
+                <p:column headerText="Usuario" filterBy="#{catUsuarios.usuarioUsuario}" filterMatchMode="contains">
+                    <center> <h:outputText   style="width: 90px; height: 30px;" value="#{catUsuarios.usuarioUsuario}"/></center>
+                </p:column>
+                
+                <p:column headerText="Dependencia" filterBy="#{catUsuarios.idDependencia.nombreDependencia}" filterMatchMode="contains">
+                    <h:outputText style="width: 125px" value="#{catUsuarios.idDependencia.nombreDependencia}"/>
+                </p:column>
+                <c:if test="#{appSession.usuario.idRol.nombreRol.equals('Super administrador')}">
+                
+                    <p:column headerText="Rol" filterBy="#{catUsuarios.idRol.nombreRol}" filterMatchMode="contains">
+                    <center> <h:outputText style="width: 90px " value="#{catUsuarios.idRol.nombreRol}"/></center>
+                </p:column>
+                </c:if>
+                <p:column headerText="Estado">
+                    <center><h:outputText value="#{catUsuarios.estado}"/></center>
+                </p:column>
+                
+            
+                <p:column headerText="Modifi" > <!--rendered=" {appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"-->
+                    <center> <p:commandButton icon="ui-icon-check" title="Modificar" id="modificaBtnUs"  action="#{controladorCatalogo.asignar()}" oncomplete="ModificaUsr.show();" process="catUsuarios" update=":forModificaUsuario:Conte2">
+                        <f:setPropertyActionListener value="#{catUsuarios}" target="#{controladorCatalogo.usuarioSeleccionado}"/>
+                        </p:commandButton>  </center>
+                </p:column>
+           </p:dataTable>    
+       
+             <!--<f:facet name="footer">  
+                    <p:commandButton id="agregar" value="Adicionar" oncomplete="AgregarUsr.show();" process="@this catUsuarios" update=":formUsuarios:Conte1" /> 
+                    <p:commandButton id="modificaBtnUs" value="Modificar" oncomplete="ModificaUsr.show();" process="catUsuarios" update=":forModificaUsuario:Conte2"/>  
+      
+               </f:facet>     
+            !-->
+             <c:if test="#{appSession.usuario.idRol.nombreRol.equals('Super administrador') or  appSession.usuario.idRol.nombreRol.equals('Asistente')}">
+             <center><p:commandButton id="agregar" value="Adicionar" oncomplete="AgregarUsr.show();" process="@this catUsuarios" update=":forAgregausario:Conte1" /></center>
+
+             </c:if>
+            
+                        
+            
+            <p:growl id="msg12"/>
+            
+            
+            
+                
+       </h:form>
+        
+        
+        <h:form id="forAgregausario">
+            <p:dialog id="Conte1" widgetVar="AgregarUsr" header="Agregar Usuario" modal="true">
+                <p:panelGrid id="agregaUsr1" columns="2">
+                    
+                    <h:outputLabel id="nombUsr" value="Nombre" style="font-weight: bold"/>
+                    <p:inputText size="70" value="#{controladorCatalogo.nuevoUsuario.nombreUsuario}" />
+                    <h:outputLabel id="apeUsr" value="Apellido" style="font-weight: bold"/>
+                    <p:inputText size="70" value="#{controladorCatalogo.nuevoUsuario.apellidoUsuario}" />
+                    <h:outputLabel id="depUsr" value="Dependencia" style="font-weight: bold"/>
+                    
+                    <p:selectOneMenu id="sera" value="#{controladorCatalogo.idDepe}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="Seleccione..." itemValue="0"></f:selectItem>
+                        <f:selectItems value="#{controladorCatalogo.listaDependencia}" var="tip2" itemLabel="#{tip2.nombreDependencia}" itemValue="#{tip2.idDependencia}"></f:selectItems>
+                    </p:selectOneMenu>
+                   
+                    <h:outputText value="Correo Usuario:" style="font-weight: bold"></h:outputText> 
+                    <p:inputText size="70" value="#{controladorCatalogo.nuevoUsuario.correoUsuario}"/>
+                   
+                    <h:outputLabel id="telUsr" value="Telefono" style="font-weight: bold"/>
+                    <p:inputMask size="70" mask="(999)9999-9999" value="#{controladorCatalogo.nuevoUsuario.telefonoUsuario}" />
+                    <h:outputLabel id="usr" value="Usuario" style="font-weight: bold"/>
+                    <p:inputText size="70" value="#{controladorCatalogo.nuevoUsuario.usuarioUsuario}" />
+                    <h:outputLabel id="pwdUsr" value="Contraseña Usuario" style="font-weight: bold"/>
+                    <p:inputText value="#{controladorCatalogo.nuevoUsuario.contraseniaUsuario}" />
+                    <h:outputLabel id="tUsr" value="Tipo Usuario" style="font-weight: bold"/>
+                    
+                    <p:selectOneMenu id="sera2"  value="#{controladorCatalogo.tipoUsu}">
+                        <f:selectItem itemLabel="Seleccione..." itemValue="0"></f:selectItem>
+                        <f:selectItems value="#{controladorCatalogo.listaTipoUsuario}" var="tip" itemLabel="#{tip.nombreTipoUsuario}" itemValue="#{tip.idTipoUsuario}"></f:selectItems>
+                    </p:selectOneMenu>
+                    
+                    <h:outputLabel id="rolUsr" value="Rol Usuario" style="font-weight: bold"/>
+                    
+                    
+                    <p:selectOneMenu id="sera42"  value="#{controladorCatalogo.rolSelec}">
+                        <f:selectItem itemLabel="Seleccione..." itemValue="0"></f:selectItem>
+                        <f:selectItems value="#{controladorCatalogo.listaRoles}" var="tip" itemLabel="#{tip.nombreRol}" itemValue="#{tip.idRol}"></f:selectItems>
+                    </p:selectOneMenu>
+                    
+                    <h:outputLabel id="rolUsr22" value="Estado" style="font-weight: bold"/>
+                    <p:selectOneMenu id="sera4542"  value="#{controladorCatalogo.nuevoUsuario.estado}" >
+                         <f:selectItem itemLabel="Activo" itemValue="TRUE"></f:selectItem>
+                         <f:selectItem itemLabel="No Activo" itemValue="FALSE"></f:selectItem>
+                    </p:selectOneMenu>
+                    
+                    
+                    <h:outputLabel id="obsUsr" value="Observaciones" style="font-weight: bold"/>
+                    <p:inputTextarea value="#{controladorCatalogo.nuevoUsuario.observacionesUsuario}" rows="2" style="width: 70%;" autoResize="true"/>
+                    
+               </p:panelGrid>
+                 <p:commandButton value="Guardar" onclick="if (!confirm('Esta seguro de registrarl@ como usuario de tu unidad ejecutora?')) return false;" action="#{controladorCatalogo.almacenar()}" update=":formUsuarios:catUsuarios :formUsuarios:msg12" process="@this Conte1" oncomplete="AgregarUsr.hide();"/>
+                  
+<!--               <script type="text/javascript">
+                      function handleRequest(args) {
+                      if (args.validationFailed) {
+                          alert('Ha ocurrido un error. Complete los datos necesarios');
+                      }else{
+                        alert('Datos adicionados correctamente');
+                        AgregarUsr.hide();
+                        }
+                      }
+               </script> -->
+           
+          </p:dialog> 
+            
+        </h:form>
+        <h:form id="forModificaUsuario">
+            <p:dialog id="Conte2" widgetVar="ModificaUsr" header="#{controladorCatalogo.tipoOperacion}" modal="true">
+                <p:panelGrid id="modificaUsr1" columns="2">
+                    <h:outputLabel id="id2" value="Id Usuario" style="font-weight: bold"/>
+                    <h:outputText  value="#{controladorCatalogo.usuarioSeleccionado.idUsuario}"  />
+                    <h:outputLabel id="nombUsr2" value="Nombre" style="font-weight: bold"/>
+                    <p:inputText valueChangeListener="#{controladorCatalogo.cambioNombre(e)}" value="#{controladorCatalogo.usuarioSeleccionado.nombreUsuario}" />
+                    <h:outputLabel id="apeUsr2" value="Apellido" style="font-weight: bold"/>
+                    <p:inputText valueChangeListener="#{controladorCatalogo.cambioApellido(e)}" value="#{controladorCatalogo.usuarioSeleccionado.apellidoUsuario}" />
+                    <h:outputLabel id="depUsr2" value="Dependencia" style="font-weight: bold"/>     
+                    
+                    <p:selectOneMenu id="sera" valueChangeListener="#{controladorCatalogo.cambioDependencia(e)}" value="#{controladorCatalogo.indice3}" filter="true" filterMatchMode="contains">
+                        <f:selectItems value="#{controladorCatalogo.listaDependencia}" var="tip2" itemLabel="#{tip2.nombreDependencia}" itemValue="#{tip2.idDependencia}"></f:selectItems>
+                    </p:selectOneMenu>
+                    
+                    
+                    
+                    
+                    <h:outputLabel id="correUsr2" value="Correo" style="font-weight: bold"/>
+                    <p:inputText  valueChangeListener="#{controladorCatalogo.cambioCorro(e)}" value="#{controladorCatalogo.usuarioSeleccionado.correoUsuario}" />
+                    <h:outputLabel id="telUsr2" value="Telefono" style="font-weight: bold"/>
+                    <p:inputMask valueChangeListener="#{controladorCatalogo.cambioTelefono(e)}" value="#{controladorCatalogo.usuarioSeleccionado.telefonoUsuario}" mask="(999) 9999-9999"/>  
+                    <c:if test="#{appSession.usuario.idRol.nombreRol.equals('Super administrador')}">
+                    <h:outputLabel id="usr2" value="Usuario" style="font-weight: bold"/>
+                    <p:inputText disabled="true" valueChangeListener="#{controladorCatalogo.cambioUsuario(e)}" value="#{controladorCatalogo.usuarioSeleccionado.usuarioUsuario}" />
+                    <h:outputLabel id="pwdUsr2" value="Contraseña Usuario" style="font-weight: bold"/>
+                    <p:inputText valueChangeListener="#{controladorCatalogo.cambioContrasena(e)}" value="#{controladorCatalogo.usuarioSeleccionado.contraseniaUsuario}" />
+                    <h:outputLabel id="tUsr2" value="Tipo Usuario" style="font-weight: bold"/>
+                    
+                    <p:selectOneMenu id="sera2" valueChangeListener="#{controladorCatalogo.cambioTipoUusario(e)}" value="#{controladorCatalogo.indice}">
+                        <f:selectItems value="#{controladorCatalogo.listaTipoUsuario}" var="tip" itemLabel="#{tip.nombreTipoUsuario}" itemValue="#{tip.idTipoUsuario}"></f:selectItems>
+                    </p:selectOneMenu>
+                  
+                    
+                    <h:outputLabel id="rolUsr2" value="Rol Usuario" style="font-weight: bold"/>
+                    
+                    <p:selectOneMenu id="sera42" valueChangeListener="#{controladorCatalogo.cambioRolUsuario(e)}" value="#{controladorCatalogo.indice2}">
+                     <f:selectItems value="#{controladorCatalogo.listaRoles}" var="tip" itemLabel="#{tip.nombreRol}" itemValue="#{tip.idRol}"></f:selectItems>
+                    </p:selectOneMenu>
+                   
+                    
+                    <h:outputText value="Estado:" style="font-weight: bold"></h:outputText>
+                    <p:selectOneMenu id="sera442" valueChangeListener="#{controladorCatalogo.cambioEstado(e)}" value="#{controladorCatalogo.estado}" >
+                         <f:selectItem itemLabel="Activo" itemValue="TRUE"></f:selectItem>
+                         <f:selectItem itemLabel="No Activo" itemValue="FALSE"></f:selectItem>
+                    </p:selectOneMenu>
+                    
+                   
+                    <h:outputLabel id="fecUsr2" value="Fecha de creación" style="font-weight: bold"/>
+                    <h:outputText value="#{controladorCatalogo.usuarioSeleccionado.fechaCreaUsuario}">
+                     <f:convertDateTime pattern="dd/MM/yyyy" locale="es"></f:convertDateTime>
+                    </h:outputText>
+                    <h:outputLabel id="obsUsr2" value="Observaciones" style="font-weight: bold"/>
+                    <p:inputTextarea valueChangeListener="#{controladorCatalogo.cambioObservaciones(e)}" value="#{controladorCatalogo.usuarioSeleccionado.observacionesUsuario}" rows="3" style="width: 99%;" autoResize="true"/>
+                     </c:if>
+               </p:panelGrid>
+                 <p:commandButton  value="Guardar" onclick="if (!confirm('Esta seguro de modificar al usuari@?')) return false;" action="#{controladorCatalogo.ver()}"  update=":formUsuarios:catUsuarios :formUsuarios:msg12" process="@this Conte2" oncomplete="ModificaUsr.hide();"/>
+                          
+           </p:dialog>
+            
+            
+        </h:form>
+    </ui:define>
+
+</ui:composition>

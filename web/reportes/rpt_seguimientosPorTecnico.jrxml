@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_casosPorTecnico" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="953143dc-02fe-47f5-b1d7-99de258ee686">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#D0D0BB">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFFFE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="SumarioTecnico" uuid="8e50c937-f2a6-417f-8c73-8410866bcacc">
+		<queryString language="SQL">
+			<![CDATA[SELECT unidades_ejecutoras.nombre_und_ejecutora,
+enca_requerimientos.id_enca_requerimiento,
+enca_requerimientos.num_caso, enca_requerimientos.anio,
+dependencias.nombre_dependencia,
+enca_requerimientos.solicitante,
+enca_requerimientos.fecha_requerimiento,
+enca_requerimientos.fecha_fin,
+enca_requerimientos.descripcion_requerimiento,
+asignar_tecnico.estado_del_tecnico,
+estados.nombre_estado,
+asignar_tecnico.fecha_asigna, asignar_tecnico.tipo_de_tiempo,
+asignar_tecnico.tiempo_atencion,
+tecnicos.nombre_tecnico, deta_requerimientos.deta_descripcion_servicio,
+servicios.nombre_servicio, servicios.tiempo_atencion_servicio
+FROM enca_requerimientos, asignar_tecnico,
+tecnicos, usuarios, dependencias,
+unidades_ejecutoras, deta_requerimientos,
+servicios, estados
+WHERE
+enca_requerimientos.id_enca_requerimiento = asignar_tecnico.id_enca_requerimiento
+and enca_requerimientos.usuario_usuario_solicitante= usuarios.usuario_usuario
+and asignar_tecnico.id_und_ejecutora = unidades_ejecutoras.id_und_ejecutora
+and asignar_tecnico.id_tecnico = tecnicos.id_tecnico
+and usuarios.id_dependencia = dependencias.id_dependencia
+and deta_requerimientos.id_servicio= servicios.id_servicio
+and enca_requerimientos.id_estado= estados.id_estado
+and enca_requerimientos.id_enca_requerimiento=deta_requerimientos.id_enca_requerimiento]]>
+		</queryString>
+		<field name="nombre_tecnico" class="java.lang.String"/>
+		<field name="num_caso" class="java.lang.Integer"/>
+		<field name="anio" class="java.lang.Integer"/>
+		<field name="estado_del_tecnico" class="java.lang.String"/>
+		<field name="fecha_requerimiento" class="java.sql.Date"/>
+		<field name="fecha_asigna" class="java.sql.Date"/>
+		<field name="fecha_fin" class="java.sql.Date"/>
+		<field name="tiempo_atencion" class="java.math.BigDecimal"/>
+		<field name="tipo_de_tiempo" class="java.lang.String"/>
+		<field name="tiempo_atencion_servicio" class="java.lang.String"/>
+		<group name="estado_del_tecnico">
+			<groupExpression><![CDATA[$F{estado_del_tecnico}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="tecnico" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$F{id_tecnico}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaInicial" class="java.util.Date">
+		<parameterDescription><![CDATA[Ingrese fecha inicial para realizar búsqueda]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.util.Date">
+		<parameterDescription><![CDATA[Ingrese fecha final para completar búsqueda]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT unidades_ejecutoras.nombre_und_ejecutora, enca_requerimientos.id_enca_requerimiento, enca_requerimientos.num_caso, enca_requerimientos.anio,
+dependencias.nombre_dependencia, enca_requerimientos.solicitante, enca_requerimientos.fecha_requerimiento, enca_requerimientos.fecha_fin,
+enca_requerimientos.descripcion_requerimiento, asignar_tecnico.estado_del_tecnico,estados.nombre_estado, asignar_tecnico.fecha_asigna, asignar_tecnico.tipo_de_tiempo, asignar_tecnico.tiempo_atencion,
+tecnicos.nombre_tecnico, tecnicos.id_tecnico, deta_requerimientos.id_deta_requerimiento, deta_requerimientos.deta_descripcion_servicio, servicios.nombre_servicio, servicios.tiempo_atencion_servicio
+
+FROM enca_requerimientos, asignar_tecnico, tecnicos, usuarios, dependencias, unidades_ejecutoras, deta_requerimientos, servicios, estados
+
+where enca_requerimientos.id_enca_requerimiento = asignar_tecnico.id_enca_requerimiento
+and enca_requerimientos.usuario_usuario_solicitante= usuarios.usuario_usuario
+and asignar_tecnico.id_und_ejecutora = unidades_ejecutoras.id_und_ejecutora
+and asignar_tecnico.id_tecnico = tecnicos.id_tecnico
+and usuarios.id_dependencia = dependencias.id_dependencia
+and deta_requerimientos.id_servicio= servicios.id_servicio
+and enca_requerimientos.id_estado= estados.id_estado
+AND asignar_tecnico.id_tecnico=$P{tecnico}
+and asignar_tecnico.fecha_asigna>=$P{fechaInicial}
+and asignar_tecnico.fecha_asigna<=$P{fechaFinal}
+and enca_requerimientos.id_enca_requerimiento=deta_requerimientos.id_enca_requerimiento
+ORDER BY estados.nombre_estado, enca_requerimientos.num_caso]]>
+	</queryString>
+	<field name="nombre_und_ejecutora" class="java.lang.String"/>
+	<field name="id_enca_requerimiento" class="java.lang.Integer"/>
+	<field name="num_caso" class="java.lang.Integer"/>
+	<field name="anio" class="java.lang.Integer"/>
+	<field name="nombre_dependencia" class="java.lang.String"/>
+	<field name="solicitante" class="java.lang.String"/>
+	<field name="fecha_requerimiento" class="java.sql.Date"/>
+	<field name="fecha_fin" class="java.sql.Date"/>
+	<field name="descripcion_requerimiento" class="java.lang.String"/>
+	<field name="estado_del_tecnico" class="java.lang.String"/>
+	<field name="nombre_estado" class="java.lang.String"/>
+	<field name="fecha_asigna" class="java.sql.Date"/>
+	<field name="tipo_de_tiempo" class="java.lang.String"/>
+	<field name="tiempo_atencion" class="java.math.BigDecimal"/>
+	<field name="nombre_tecnico" class="java.lang.String"/>
+	<field name="id_tecnico" class="java.lang.Integer"/>
+	<field name="deta_descripcion_servicio" class="java.lang.String"/>
+	<field name="nombre_servicio" class="java.lang.String"/>
+	<field name="tiempo_atencion_servicio" class="java.lang.String"/>
+	<field name="id_deta_requerimiento" class="java.lang.String"/>
+	<group name="Estado">
+		<groupExpression><![CDATA[$F{estado_del_tecnico}]]></groupExpression>
+		<groupHeader>
+			<band height="31">
+				<rectangle>
+					<reportElement uuid="2805d0ca-2bd5-4d67-92e6-13b72f485863" x="4" y="5" width="568" height="23" forecolor="#FFFFFF" backcolor="#899FB6"/>
+					<graphicElement>
+						<pen lineStyle="Double"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement uuid="29844926-0917-4878-a518-aac9846e04d4" x="27" y="8" width="151" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[>> Requerimientos en estado]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="d3a40ee6-56e6-4e8d-acad-a9c610135294" x="183" y="8" width="100" height="20"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre_estado}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Caso">
+		<groupExpression><![CDATA[$F{num_caso}]]></groupExpression>
+		<groupHeader>
+			<band height="28">
+				<textField pattern="dd/MM/yyyy">
+					<reportElement uuid="f5c908b1-ab63-4097-b4ad-b5e93fb34f41" x="68" y="6" width="60" height="20"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fecha_requerimiento}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+					<reportElement uuid="2079b971-171a-4dcb-a967-711f4fafc6cb" isPrintRepeatedValues="false" x="130" y="6" width="60" height="20"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fecha_fin}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="0196f987-1527-4223-8e91-28ec162f67a0" x="41" y="6" width="27" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+					<reportElement uuid="161223e7-2d6e-44e1-b185-75ae93bf3adf" x="202" y="6" width="171" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre_dependencia}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="63062c18-cef0-437a-a86a-f4f5390a86de" x="386" y="6" width="113" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{solicitante}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="c573674d-f417-49f0-a292-ebd89fed4fe6" x="32" y="6" width="9" height="20"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[/]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="1e428b39-0d5f-4ed7-91e1-f394eb275d29" x="8" y="6" width="23" height="20"/>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{num_caso}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="0f4ec1dd-461e-4368-858b-65ccea4fb58d" x="4" y="2" width="566" height="1" forecolor="#666666"/>
+				</line>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="2" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="121" splitType="Stretch">
+			<image>
+				<reportElement uuid="64b423a3-a41d-4ae2-b140-162872832a63" x="4" y="17" width="186" height="99"/>
+				<imageExpression><![CDATA["escudo.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="b8a3baec-c9d4-4e77-9da6-8070dac4f0b7" x="431" y="19" width="141" height="95"/>
+				<imageExpression><![CDATA["logo_e.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="7b530dd6-08fb-44ff-855b-9f0893bcb2c5" x="231" y="54" width="200" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_und_ejecutora}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="839592aa-e4cd-4da3-8075-3ec72db0bb01" x="231" y="74" width="200" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_tecnico}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a69bd7b1-2c9f-46ee-a8e1-e073e2f64006" x="144" y="54" width="84" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Unidad:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8be5d8c0-6e80-4bdb-80e5-de6d745848f9" x="145" y="74" width="84" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Técnico:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="06c80e36-3f05-40d0-9a19-beec13a15475" x="181" y="5" width="211" height="16"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistema de Control de Requerimientos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ae76cc6f-54cd-409f-bb50-35ff9447d7e5" x="117" y="21" width="333" height="28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[.: Reporte de Seguimientos de Requerimiento por Técnico :.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="155fd813-7d30-4239-ad02-506883ebf559" x="169" y="94" width="72" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Asignados desde:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6bec4acf-2841-4a23-a9ce-6c59d43e6a64" x="318" y="94" width="30" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hasta:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="6e8d476b-3434-4ca9-bb69-385d64ed9212" x="245" y="94" width="67" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaInicial}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="c1576747-a823-436c-9749-d51ec906c274" x="350" y="94" width="67" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fechaFinal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d24e4645-bece-426e-8770-68be06d31b31" x="69" y="5" width="49" height="28"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Solicitud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2d98d4b3-5713-4f76-a021-a03bcec3d6b4" x="10" y="5" width="51" height="28"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número Reque.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="169db657-885c-430a-8bd5-edb8cd0bcd3d" x="192" y="5" width="146" height="28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre de la Dependencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="82ed7d04-9a81-4b40-b6b0-9341d497e63b" x="374" y="5" width="111" height="28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario Solicitante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a60e6d4a-3bee-4c85-bbd6-9ecf25906db5" x="124" y="5" width="66" height="28"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Finalización]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="9d46a658-5f6b-425c-892e-6eeac481b0c1" x="0" y="2" width="572" height="2"/>
+				<graphicElement>
+					<pen lineStyle="Double" lineColor="#0033CC"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="bde0aed0-82a7-4bcc-a0c0-df418ca10e06" x="0" y="31" width="572" height="2"/>
+				<graphicElement>
+					<pen lineStyle="Double" lineColor="#0033CC"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="29" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="01a4593a-17ee-4f2e-adbd-e76ee40fd328" x="292" y="4" width="279" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deta_descripcion_servicio}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="1cfa00f4-b313-430d-8c0b-fa7f79092a82" x="84" y="4" width="115" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_servicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e9482510-39de-4cd7-929c-d5342de01a6a" x="8" y="4" width="76" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de Servicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="63140226-adea-45ce-8ac9-8346900c18dd" x="205" y="4" width="84" height="20" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción Seguimiento]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="99" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy h:mm a">
+				<reportElement uuid="1bd9db15-bdb1-4a78-bd7a-6e5f378c045a" x="31" y="77" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="acb64422-621f-4f59-8d4d-40b64f63c772" x="406" y="77" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="c302c7fe-cc49-40bb-85f0-4e642037d908" x="486" y="77" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="716ed1d9-d05b-4720-a569-60cf85329cc0" x="13" y="15" width="167" height="68"/>
+				<imageExpression><![CDATA["secre_new.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement uuid="47206037-9b41-4b81-bb43-0f54cbf025b4" x="470" y="16" width="85" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="01bce0fb-c28e-4c0b-96fe-732ed7f3815d" x="359" y="11" width="111" height="28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de seguimientos encontrados]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

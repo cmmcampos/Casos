@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    
+    <ui:define name="content">
+        
+        <h:form id="formViaSoli" style="width: 100%">  
+        
+            <p:dataTable id="viaSolicitud" var="viaSolicitud" value="#{manejadorGestionCatalogo.listaViaSoli}"  rowKey="#{viaSolicitud.idViaSolicitud}" paginator="true" rows="5"
+                         selection="#{manejadorGestionCatalogo.viaSoliSeleccionada}" selectionMode="single">
+                <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="4">CATÁLOGO DE VÍAS DE SOLICITUDES</p:column>
+                  </p:row>
+                </f:facet>
+                <p:column headerText="Id" sortBy="#{viaSolicitud.idViaSolicitud}" filterBy="#{viaSolicitud.idViaSolicitud}">
+                    <h:outputText value="#{viaSolicitud.idViaSolicitud}"/>
+                 </p:column>
+                <p:column headerText="Vía de Solicitud" sortBy="#{viaSolicitud.nombreViaSolicitud}" filterBy="#{viaSolicitud.nombreViaSolicitud}">
+                    <h:outputText value="#{viaSolicitud.nombreViaSolicitud}"/>
+                 </p:column>
+                 <p:column headerText="Descripción">
+                     <h:outputText value="#{viaSolicitud.descripcionViaSolicitud}"/>
+                 </p:column>
+                 
+                 <f:facet name="footer">  
+                    <p:commandButton id="agregar" value="Adicionar" oncomplete="agregaViaSoli.show();" process="@this viaSolicitud" update=":formViaSoli:viaSolicitud" /> 
+                    <p:commandButton id="ConsultaBtnVS" value="Modificar" oncomplete="modificaViaSoli.show();" process="viaSolicitud" update=":formViaSoli:Conte2"/>  
+                    <p:commandButton id="EliminaBtn" value="Eliminar" oncomplete="confirmarVS.show();" /> 
+                 </f:facet>
+                               
+            </p:dataTable>
+            
+            <p:dialog  id="Conte1" widgetVar="agregaViaSoli" header="Ingrese Nueva Vía de Solicitud" modal="true">
+                
+                <p:panelGrid id="Agrega1" columns="2">  
+                    <h:outputLabel id="cod" value="Id: " style="font-weight: bold"/> 
+                    <h:outputText value="#{manejadorAdicionCatalogo.nuevoViaSolicitudes.idViaSolicitud}" />
+                    <h:outputLabel id="nomb" value="Vía de Solicitud: " style="font-weight: bold" />  
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoViaSolicitudes.nombreViaSolicitud}" required="true" requiredMessage="Nombre es obligatorio"/> 
+                    <h:outputLabel value="Descripción: " style="font-weight: bold"/>  
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoViaSolicitudes.descripcionViaSolicitud}" /> 
+                </p:panelGrid>      
+               
+                <p:commandButton value="Guardar" action="#{manejadorAdicionCatalogo.crearViaSoli()}" update=":formViaSoli:viaSolicitud Agrega1" process="@this Conte1" oncomplete="handleRequest(args);" />
+                    
+                    <script type="text/javascript">
+                      function handleRequest(args) {
+                      if (args.validationFailed) {
+                          alert('Ha ocurrido un error. Complete los datos necesarios');
+                      }else{
+                        alert('Datos adicionados correctamente');
+                        agregaViaSoli.hide();
+                        }
+                      }
+                    </script>
+            </p:dialog> 
+            
+            <p:dialog  id="Conte2" widgetVar="modificaViaSoli" header="Modificar Vías de Solicitudes" modal="true">
+                 <p:panelGrid id="Modifica2" columns="2">
+                     <h:outputLabel value="Id Vía de Solicitud: " style="font-weight: bold"/>
+                     <h:outputText value="#{manejadorGestionCatalogo.viaSoliSeleccionada.idViaSolicitud}"/>
+                     <h:outputLabel value="Nombre Vía de Solicitud:" style="font-weight: bold"/>
+                     <h:inputText value="#{manejadorGestionCatalogo.viaSoliSeleccionada.nombreViaSolicitud}" />
+                     <h:outputLabel value="Descripción Vía de Solicitud:" style="font-weight: bold"/>
+                     <h:inputText value="#{manejadorGestionCatalogo.viaSoliSeleccionada.descripcionViaSolicitud}"/>
+                 </p:panelGrid>
+                <p:commandButton value="Guardar" action="#{manejadorGestionCatalogo.actualizaViaSoli()}" update=":formViaSoli:viaSolicitud" process="@this Conte2" oncomplete="modificaViaSoli.hide();" />
+            </p:dialog>
+            
+            <p:confirmDialog header="Eliminar Vía de Solicitud" widgetVar="confirmarVS" message="Desea eliminar Vía de Solicitud seleccionada" >
+                <p:commandButton value="Confirmar" action="#{manejadorGestionCatalogo.eliminaViaSoli()}" update=":formViaSoli:viaSolicitud" process="@this viaSolicitud" oncomplete="confirmarVS.hide();"/>
+                 <p:commandButton value="Cancelar"  oncomplete="confirmarVS.hide();"/>
+            </p:confirmDialog>
+            
+        </h:form>
+        
+    </ui:define>
+
+</ui:composition>

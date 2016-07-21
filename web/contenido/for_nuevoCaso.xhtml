@@ -1,0 +1,226 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"                
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+    <br></br>
+    <br></br>
+    <br></br>
+    <ui:define name="content">
+
+
+        <h:form id="formCasos"  prependId="true" style="width: 100%" enctype="multipart/form-data" >
+            <p:accordionPanel id="agregaSolicitante" multiple="true" activeIndex="0">
+
+                <p:tab title="1- Solicitante">
+                    <p:panelGrid id="datosUsuario" style="width: 100%;">
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column colspan="4"><h:outputLabel value="Datos del Usuario Solicitante"/></p:column>
+                            </p:row>
+                        </f:facet>
+                        <p:row>
+                            <p:column colspan="4">
+                                <p:column colspan="1">
+                                    <p:commandButton value="Seleccionar usuario" onclick="agregaUsuario.show();" />
+                                </p:column>  
+                                <p:column colspan="1"><h:outputLabel value="Nombre:  " style="font-weight: bold"/></p:column>
+                                <p:column colspan="1"><h:outputText value=" #{controladorAdicionCaso.usuarioSeleccionado.nombreUsuario}  #{controladorAdicionCaso.usuarioSeleccionado.apellidoUsuario}" style="font-weight: bold"/></p:column>    
+                            </p:column> 
+                        </p:row>
+
+                        <p:row>
+                            <p:column><h:outputLabel value="Teléfono: " style="font-weight: bold"/></p:column> 
+                            <p:column><h:outputText value="#{controladorAdicionCaso.usuarioSeleccionado.telefonoUsuario}" /></p:column>
+                            <p:column><h:outputLabel value="Correo Electrónico:" style="font-weight: bold"/></p:column> 
+                            <p:column><h:outputText value="#{controladorAdicionCaso.usuarioSeleccionado.correoUsuario}" /></p:column> 
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="2"><h:outputLabel value="Dependencia a la que pertenece:  " style="font-weight: bold"/> </p:column>
+                            <p:column colspan="2"><h:outputText value="#{controladorAdicionCaso.usuarioSeleccionado.idDependencia.nombreDependencia}"/> </p:column>
+
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="2"><h:outputLabel value="Jefe de la Dependencia:  " style="font-weight: bold"/> </p:column>
+                            <p:column colspan="2"><h:outputText value="#{controladorAdicionCaso.usuarioSeleccionado.idDependencia.jefeDependencia}"/> </p:column>
+
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="2"><h:outputLabel value="Dependencia / Unidad organizativa:  " style="font-weight: bold"/> </p:column>
+                            <p:column colspan="2"><h:outputText value="#{controladorAdicionCaso.usuarioSeleccionado.idDependencia.idDirecInter.nombreDirecInter}"/> </p:column>
+
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="2"><h:outputLabel value="Dirección Nacional:  " style="font-weight: bold"/> </p:column>
+                            <p:column colspan="2"><h:outputText value="#{controladorAdicionCaso.usuarioSeleccionado.idDependencia.idDirecInter.idDirNacional.nombreDirNacional}"/> </p:column>
+
+                        </p:row>
+
+                    </p:panelGrid>
+
+                </p:tab>
+                <p:tab title="2- Detalle de Requerimiento"  >
+                    <p:panelGrid id="datosCaso" style="width: 100%;">
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column colspan="6"><h:outputLabel value="Datos del Servicio Requerido"/></p:column>
+                            </p:row>
+                        </f:facet>
+                        <p:row>
+                            <p:column><h:outputLabel value="Vía de soliciud: "/></p:column>
+                            <p:column colspan="2">
+                                <p:selectOneMenu id="ueNom" value="#{controladorAdicionCaso.viaSelec}" style="width: 200px">
+                                    <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                    <f:selectItems value="#{controladorAdicionCaso.listViaSolic}" var="viaSoli" itemLabel="#{viaSoli.nombreViaSolicitud}" itemValue="#{viaSoli.idViaSolicitud}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+
+                            <p:column colspan="1"><h:outputLabel value="Fecha de ingreso: "/></p:column>
+                            <p:column colspan="2"> <p:calendar value="#{controladorAdicionCaso.nuevoReque.fechaIngreso}" pattern="dd/MM/yyyy" maxdate="#{controladorAdicionCaso.fechaSeguimiento}"/> </p:column>
+
+
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="1"><h:outputLabel value="Categoría del Servicio: "/></p:column>
+                            <p:column colspan="4">
+                                <p:selectOneMenu id="ctServ" value="#{controladorAdicionCaso.catServ}" style="width: 200px">
+                                    <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                    <f:selectItems value="#{controladorAdicionCaso.listCatServ}" var="catServi" itemLabel="#{catServi.nombreCatServ}" itemValue="#{catServi.idCatServ}"/>
+                                </p:selectOneMenu>
+                            </p:column>    
+
+
+                        </p:row>
+
+
+                        <p:row>
+                            <p:column colspan="6" style="text-align: center">
+                                <h:outputLabel value="Descripción del Requerimiento" style="font-weight: bold"/>
+                                <p:inputTextarea value="#{controladorAdicionCaso.nuevoReque.descripcionRequerimiento}" rows="5" style="width: 99%;" autoResize="false" required="false"/>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>      
+
+                            <p:column colspan="1"><h:outputLabel value="Requiere documentación: "/></p:column>
+                            <p:column colspan="1">
+                                <p:outputPanel id="saass">
+                                    <p:selectBooleanCheckbox  id="saas"  value="#{controladorAdicionCaso.nuevoReque.documentacionCompleta}" disabled="#{controladorAdicionCaso.bandera}">
+                                        <p:ajax update="mlp msg12" listener="#{controladorAdicionCaso.control()}"></p:ajax>
+                                    </p:selectBooleanCheckbox>
+                                </p:outputPanel>
+                            </p:column>   
+
+
+
+
+                            <p:column colspan="3">
+                                <p:outputPanel id="mlp">
+                                    <p:commandButton value="#{controladorAdicionCaso.textoSubirArchivo}" onclick="subi.show();" rendered="#{controladorAdicionCaso.nuevoReque.documentacionCompleta}"/>
+
+                                </p:outputPanel>
+                            </p:column>            
+                        </p:row>
+
+
+                    </p:panelGrid>
+
+
+
+                    <p:growl id="msg12"/>                            
+
+
+                    <p:commandButton icon="ui-icon-disk" value="Guardar" actionListener="#{controladorAdicionCaso.crearRequerimiento()}" process="@this datosCaso" update=":formCasos:agregaSolicitante msg12" oncomplete="redireccionar()"/> 
+                    <p:commandButton icon="ui-icon-arrowrefresh-1-w" value="Limpiar" action="#{controladorAdicionCaso.limpiarFormularioCrearReq()}" process="@this" update=":formCasos:agregaSolicitante :formCasos:agregaSolicitante:saass"></p:commandButton>
+                </p:tab>
+
+            </p:accordionPanel>
+
+
+            <!--       location.href='for_consultaCasos.xhtml'         javascript:location.replace('for_consultaCasos.xhtml');!-->
+
+            <script language="javascript">
+                function redireccionar() {
+                    setTimeout("javascript:location.replace('for_consultaCasos.xhtml')", 900);
+                }
+            </script>
+
+
+
+        </h:form> 
+
+
+
+        <h:form id="subirAr" enctype="multipart/form-data">
+            <p:dialog header="Cargar archivo a adjuntar" widgetVar="subi" modal="true">
+                <p:fileUpload id="uplo" value="#{controladorAdicionCaso.file21}" mode="simple" required="true" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/" update="msg12"></p:fileUpload>
+                <h:commandButton id="Subir" value="Subir Archivo" onclick="subi.hide();" class="btn btn-success">
+                                       
+                </h:commandButton> 
+
+            </p:dialog>
+            <p:growl id="msg12"/>       
+        </h:form>
+
+
+
+        <h:form id="qwerty">
+            <p:dialog header="Seleccione un usuario:" widgetVar="agregaUsuario" modal="true">
+                <p:dataTable id="tablaUsuarios" value="#{controladorAdicionCaso.listUsuarios}" var="item" rowKey="#{item.usuarioUsuario}" rows="10" paginator="true" 
+                             selection="#{controladorAdicionCaso.usuarioSeleccionado}" selectionMode="single">
+
+                    <p:column filterBy="#{item.nombreUsuario}" filterMatchMode="contains">
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nombreUsuario}"/>
+                    </p:column>
+                    <p:column filterBy="#{item.apellidoUsuario}" filterMatchMode="contains">
+                        <f:facet name="header">
+                            <h:outputText value="Apellido"/>
+                        </f:facet>
+                        <h:outputText value="#{item.apellidoUsuario}"/>
+                    </p:column>
+                    <p:column filterBy="#{item.correoUsuario}" filterMatchMode="contains">
+                        <f:facet name="header">
+                            <h:outputText value="Correo de Usuario"/>
+                        </f:facet>
+                        <h:outputText value="#{item.correoUsuario}"/>
+                    </p:column>
+
+                    <p:column filterBy="#{item.telefonoUsuario}" filterMatchMode="contains">
+                        <f:facet name="header">
+                            <h:outputText value="Teléfono de Usuario"/>
+                        </f:facet>
+                        <h:outputText value="#{item.telefonoUsuario}"/>
+                    </p:column>
+                    <p:column filterBy="#{item.idDependencia.nombreDependencia}" filterMatchMode="contains">
+                        <f:facet name="header">
+                            <h:outputText value="Dependencia de Usuario"/>
+                        </f:facet>
+                        <h:outputText value="#{item.idDependencia.nombreDependencia}"/>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton value="Asignar" process="tablaUsuarios" update=":formCasos:agregaSolicitante:datosUsuario" oncomplete="agregaUsuario.hide();"/>
+
+            </p:dialog>
+
+
+
+        </h:form>
+
+
+    </ui:define>  
+
+</ui:composition>

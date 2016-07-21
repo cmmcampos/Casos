@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <br></br>
+          <br></br>
+          <br></br>
+    <ui:define name="content">
+           
+       
+            
+        <h:form id="rptCasosTec"  prependId="true" style="width: 100%; background-color:whitesmoke; text-align: center;" >
+            <p:panelGrid columns="2" style="width: 100%;  ">
+               <f:facet name="header">Reporte de requerimientos por técnico</f:facet> 
+               
+               
+                  <h:outputLabel value="Fecha Inicial: " style="font-weight: bold"/> 
+                  <p:calendar value="#{reporteBean.fechaInicio}" required="true" requiredMessage="Seleccione Fecha Inicial"/>
+                  
+                  <h:outputLabel value="Fecha Final: " style="font-weight: bold"/> 
+                  <p:calendar value="#{reporteBean.fechaFin}" required="true" requiredMessage="Seleccione Fecha Final"/>
+                  
+                  <h:outputLabel value="Seleccione Técnico: " style="font-weight: bold"/>                   
+                                 
+                  <p:selectOneMenu id="sera" value="#{reporteBean.tecnico}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="Seleccione..." itemValue="0"></f:selectItem>
+                        <f:selectItems value="#{controladorCatalogo.listaTec()}" var="tip2" itemLabel="#{tip2.nombreTecnico}" itemValue="#{tip2.tecnicosPK.idTecnico}"></f:selectItems>
+                  </p:selectOneMenu>
+                  
+                  <h:outputLabel value=" "/>
+                  <p:commandLink action="#{reporteBean.repor()}" oncomplete="window.open('../servlets/report/PDF','_blank')" target="_blank">
+                      <h:graphicImage alt="Ver reporte"/>
+                      <f:setPropertyActionListener value="rpt_casosPorTecnico" target="#{reporteBean.nombArch}"/>
+                  </p:commandLink>
+                           
+            </p:panelGrid>                           
+
+                  
+
+        </h:form> 
+ 
+      </ui:define>  
+    
+</ui:composition>

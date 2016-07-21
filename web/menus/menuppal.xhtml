@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:form> 
+        <p:menubar id="menu1" style="width: 99%;">  
+            <p:menuitem value="Inicio" icon="ui-icon-home" url="../contenido/cat_listaCasosAsignados.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('Tecnico')}"/> 
+            <p:menuitem value="Inicio" icon="ui-icon-home" url="../contenido/for_consultaCasos.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('Asistente') or appSession.usuario.idRol.nombreRol.equals('Coordinador') or appSession.usuario.idRol.nombreRol.equals('Super administrador')}"/> 
+
+            <p:submenu label="Gestión de Catálogos" icon="ui-icon-note" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"> 
+                
+                <p:menuitem value="Direcciones Nacionales" url="../contenido/cat_dirNac.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador')}"/>
+                <p:menuitem value="Direcciones Intermedias" url="../contenido/cat_dirInter.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador')}"/>
+                <p:menuitem value="Dependencias" url="../contenido/cat_dependencias.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador')}"/>
+                <p:menuitem value="Unidades Ejecutoras" url="../contenido/cat_undEjecutoras.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador')}"/>
+                <p:menuitem value="Técnicos" url="../contenido/cat_usuarios.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Asistente')or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/>
+                <p:menuitem value="Categoría de Servicios" url="../contenido/cat_catServicios.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/>
+                <p:menuitem value="Servicios" url="../contenido/cat_servicios.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/>
+                <p:menuitem value="Vía de Solicitudes" url="../contenido/cat_viaSolicitudes.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador')}"/>
+                <p:menuitem value="Estados" url="../contenido/cat_estados.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador')}" />
+            </p:submenu> 
+
+
+
+            <p:submenu label="Gestión de Requerimientos" icon="ui-icon-folder-collapsed" >  
+                
+                <p:menuitem value="Agregar Requerimiento" url="../contenido/for_nuevoCaso.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Coordinador') or appSession.usuario.idRol.nombreRol.equals('Asistente') or appSession.usuario.idRol.nombreRol.equals('Super administrador')}"/>  
+                <p:menuitem value="Asignar Requerimientos" url="../contenido/for_listaCasos.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Coordinador') or appSession.usuario.idRol.nombreRol.equals('Super administrador')}"/>
+                <p:menuitem value="Modificar /Eliminar Requerimientos" url="../contenido/for_consultaCasos.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Coordinador') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Asistente') }"/>
+                <p:menuitem value="Reasignar Requerimientos" url="../contenido/listaTecnicosCasosR.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Coordinador') or appSession.usuario.idRol.nombreRol.equals('Super administrador') }"/>
+                <p:menuitem value="Seguimiento a Requerimientos" url="../contenido/cat_listaCasosAsignados.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('Tecnico')}"/>
+                <p:menuitem value="Seguimiento a Requerimientos" url="../contenido/listaDeTecnicosConCasos.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Coordinador') or appSession.usuario.idRol.nombreRol.equals('Super administrador')}"/>
+                <p:menuitem value="Todos los Requerimientos" url="../contenido/cat_todosLosRequerimientos.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Coordinador') or appSession.usuario.idRol.nombreRol.equals('Tecnico') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Asistente')}"/>    
+                <!--   <p:menuitem value="Todos los Requerimientos" url="../contenido/cat_todosRequeDelTecnico.xhtml" rendered="{appSession.usuario.idRol.nombreRol.equals('Tecnico')}"/>    -->
+
+            </p:submenu>  
+
+
+
+            <p:submenu label="Gestión de Usuarios" icon="ui-icon-person"  rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Asistente') or appSession.usuario.idRol.nombreRol.equals('Super administrador')}">  
+               
+                <p:menuitem value="Nuevo Usuario" url="../contenido/cat_usuarios.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('Asistente') }"/>  
+                <p:menuitem value="Nuevo / Modificar Usuario" url="../contenido/cat_usuarios.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador')}"/>  
+                <p:menuitem value="Tipos de Usuario" url="../contenido/cat_tiposUsuario.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador')}"/> 
+                <p:menuitem value="Roles de Usuario" url="../contenido/cat_roles.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador')}"/>
+            </p:submenu>
+
+
+            <p:submenu label="Gestión de Reportes" icon="ui-icon-clipboard">  
+                
+                <p:menuitem value="Hoja de Requerimiento" url="../contenido/rpt_hojaReque.xhtml"/>
+                <p:menuitem value="Requerimientos por Técnico" url="../contenido/rpt_casosTecnico.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/> 
+                <p:menuitem value="Requerimientos por Técnico" url="../contenido/rpt_casosTecnicoLog.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('Tecnico')}"/> 
+                <p:menuitem value="Seguimientos por Técnico" url="../contenido/rpt_seguiTecnicos.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/> 
+                <p:menuitem value="Requerimientos por Dependencia" url="../contenido/rpt_casosXDep.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/>
+                <p:menuitem value="Requerimientos Finalizados" url="../contenido/rpt_casosFinalizados.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/> 
+                <p:menuitem value="Requerimientos Finalizados por Dependencia" url="../contenido/rpt_casosFinalizadosXdepe.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/> 
+                <p:menuitem value="Seguimiento a Requerimientos" url="../contenido/rpt_atencionXCate.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/> 
+                <p:menuitem value="Requerimientos sin Asignar" url="../contenido/rpt_casosSinAsignar.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/> 
+                
+                <p:submenu label="Catálogos" icon="ui-icon-note" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}">
+                    <p:menuitem value="Direcciones Nacionales" url="../contenido/rpt_dirNac.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/>  
+                    <p:menuitem value="Direcciones Intermedias" url="../contenido/rpt_dirIntermedias.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/>
+                    <p:menuitem value="Dependencias" url="../contenido/rpt_dependencias.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/>
+                    <p:menuitem value="Usuarios por Dependencia" url="../contenido/rpt_usuarios.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/>
+                    <p:menuitem value="Servicios" url="../contenido/rpt_servicios.xhtml" rendered="#{appSession.usuario.idRol.nombreRol.equals('ROL_ADMIN') or appSession.usuario.idRol.nombreRol.equals('Super administrador') or appSession.usuario.idRol.nombreRol.equals('Coordinador')}"/>
+                </p:submenu>
+            </p:submenu>
+
+            <p:menuitem value="Ayuda" icon="ui-icon-help" url="#"/>
+            <p:menuitem value="Salir" icon="ui-icon-bookmark"  action="#{controladorAdicionCaso.salir()}"  url="../j_spring_security_logout" onclick="if (!confirm('Esta seguro que desea salir #{appSession.usuario.nombreUsuario}  #{appSession.usuario.apellidoUsuario}?'))
+                            return false;" />
+
+
+        </p:menubar>  
+    </h:form> 
+</ui:composition>

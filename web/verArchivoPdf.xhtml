@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+           
+        <center><embed src="#{request.getParameter('variable')}" width="1100" height="720"></embed></center>
+        <center>
+         
+             
+                                   
+ 
+            
+            <p:commandButton value="Eliminar" action="#{controladorAdicionCaso.eliminarAdjunto()}" onclick="if (!confirm('Estas seguro de eliminar el archivo:  #{request.getParameter('variable')}?')) return false;" >
+                  <f:param name="id" value="#{request.getParameter('var2')}"></f:param>
+                  <c:if test="${request.getParameter('var3')=='modificado'}">
+                    <f:param name="tipo" value="modificado"></f:param>
+                  </c:if>
+                  <c:if test="${request.getParameter('var3')=='nuevo'}">
+                    <f:param name="tipo" value="nuevo"></f:param>
+                  </c:if>
+                </p:commandButton>                    
+          
+            
+            
+            
+            
+           </center>
+        </h:form>
+    </h:body>
+</html>
+

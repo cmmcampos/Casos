@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_casosFinalizados" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b842b866-53af-4986-b538-c851c8704adc">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<subDataset name="New Dataset 1" uuid="7e2cb73f-a9d1-4d40-813e-d6a4601c78f4">
+		<queryString language="SQL">
+			<![CDATA[SELECT
+     asignar_tecnico."id_tecnico" AS asignar_tecnico_id_tecnico,
+     asignar_tecnico."fecha_asigna" AS asignar_tecnico_fecha_asigna,
+     enca_requerimientos."id_enca_requerimiento" AS enca_requerimientos_id_enca_requerimiento,
+     enca_requerimientos."id_cat_serv" AS enca_requerimientos_id_cat_serv,
+     enca_requerimientos."id_estado" AS enca_requerimientos_id_estado,
+     enca_requerimientos."anio" AS enca_requerimientos_anio,
+     enca_requerimientos."num_caso" AS enca_requerimientos_num_caso,
+     enca_requerimientos."fecha_fin" AS enca_requerimientos_fecha_fin,
+     estados."nombre_estado" AS estados_nombre_estado,
+     tecnicos."nombre_tecnico" AS tecnicos_nombre_tecnico,
+     unidades_ejecutoras."nombre_und_ejecutora" AS unidades_ejecutoras_nombre_und_ejecutora,
+     asignar_tecnico."id_und_ejecutora" AS asignar_tecnico_id_und_ejecutora,
+     categoria_servicios."id_cat_serv" AS categoria_servicios_id_cat_serv,
+     categoria_servicios."nombre_cat_serv" AS categoria_servicios_nombre_cat_serv
+FROM
+     "public"."enca_requerimientos" enca_requerimientos INNER JOIN "public"."asignar_tecnico" asignar_tecnico ON enca_requerimientos."id_enca_requerimiento" = asignar_tecnico."id_enca_requerimiento"
+     INNER JOIN "public"."estados" estados ON enca_requerimientos."id_estado" = estados."id_estado"
+     INNER JOIN "public"."categoria_servicios" categoria_servicios ON enca_requerimientos."id_cat_serv" = categoria_servicios."id_cat_serv"
+     INNER JOIN "public"."tecnicos" tecnicos ON asignar_tecnico."id_tecnico" = tecnicos."id_tecnico"
+     AND tecnicos."id_und_ejecutora" = asignar_tecnico."id_und_ejecutora"
+     INNER JOIN "public"."unidades_ejecutoras" unidades_ejecutoras ON tecnicos."id_und_ejecutora" = unidades_ejecutoras."id_und_ejecutora"
+WHERE
+     asignar_tecnico."id_und_ejecutora" = 1
+ AND enca_requerimientos."id_estado" = 3]]>
+		</queryString>
+		<field name="asignar_tecnico_id_tecnico" class="java.lang.Integer"/>
+		<field name="asignar_tecnico_fecha_asigna" class="java.sql.Date"/>
+		<field name="enca_requerimientos_id_enca_requerimiento" class="java.lang.Integer"/>
+		<field name="enca_requerimientos_id_cat_serv" class="java.lang.Integer"/>
+		<field name="enca_requerimientos_id_estado" class="java.lang.Integer"/>
+		<field name="enca_requerimientos_anio" class="java.lang.Integer"/>
+		<field name="enca_requerimientos_num_caso" class="java.lang.Integer"/>
+		<field name="enca_requerimientos_fecha_fin" class="java.sql.Date"/>
+		<field name="estados_nombre_estado" class="java.lang.String"/>
+		<field name="tecnicos_nombre_tecnico" class="java.lang.String"/>
+		<field name="unidades_ejecutoras_nombre_und_ejecutora" class="java.lang.String"/>
+		<field name="asignar_tecnico_id_und_ejecutora" class="java.lang.Integer"/>
+		<field name="categoria_servicios_id_cat_serv" class="java.lang.Integer"/>
+		<field name="categoria_servicios_nombre_cat_serv" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="fecha1" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha2" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="undEje" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     asignar_tecnico."id_tecnico" AS asignar_tecnico_id_tecnico,
+     asignar_tecnico."fecha_asigna" AS asignar_tecnico_fecha_asigna,
+     enca_requerimientos."id_enca_requerimiento" AS enca_requerimientos_id_enca_requerimiento,
+     enca_requerimientos."id_cat_serv" AS enca_requerimientos_id_cat_serv,
+     enca_requerimientos."id_estado" AS enca_requerimientos_id_estado,
+     enca_requerimientos."anio" AS enca_requerimientos_anio,
+     enca_requerimientos."num_caso" AS enca_requerimientos_num_caso,
+     enca_requerimientos."fecha_fin" AS enca_requerimientos_fecha_fin,
+     estados."nombre_estado" AS estados_nombre_estado,
+     tecnicos."nombre_tecnico" AS tecnicos_nombre_tecnico,
+     unidades_ejecutoras."nombre_und_ejecutora" AS unidades_ejecutoras_nombre_und_ejecutora,
+     asignar_tecnico."id_und_ejecutora" AS asignar_tecnico_id_und_ejecutora,
+     categoria_servicios."id_cat_serv" AS categoria_servicios_id_cat_serv,
+     categoria_servicios."nombre_cat_serv" AS categoria_servicios_nombre_cat_serv,
+     dependencias."nombre_dependencia" AS dependencias_nombre_dependencia
+FROM
+     "public"."enca_requerimientos" enca_requerimientos INNER JOIN "public"."asignar_tecnico" asignar_tecnico ON enca_requerimientos."id_enca_requerimiento" = asignar_tecnico."id_enca_requerimiento"
+     INNER JOIN "public"."estados" estados ON enca_requerimientos."id_estado" = estados."id_estado"
+     INNER JOIN "public"."categoria_servicios" categoria_servicios ON enca_requerimientos."id_cat_serv" = categoria_servicios."id_cat_serv"
+     INNER JOIN "public"."usuarios" usuarios ON enca_requerimientos."usuario_usuario_solicitante" = usuarios."usuario_usuario"
+     INNER JOIN "public"."dependencias" dependencias ON usuarios."id_dependencia" = dependencias."id_dependencia"
+     INNER JOIN "public"."tecnicos" tecnicos ON asignar_tecnico."id_tecnico" = tecnicos."id_tecnico"
+     AND tecnicos."id_und_ejecutora" = asignar_tecnico."id_und_ejecutora"
+     INNER JOIN "public"."unidades_ejecutoras" unidades_ejecutoras ON tecnicos."id_und_ejecutora" = unidades_ejecutoras."id_und_ejecutora"
+WHERE asignar_tecnico."id_und_ejecutora" = $P{undEje}
+AND enca_requerimientos."id_estado" = 3
+AND enca_requerimientos."fecha_fin" >= $P{fecha1}
+AND enca_requerimientos."fecha_fin" <= $P{fecha2}
+ORDER BY tecnicos."nombre_tecnico", enca_requerimientos."num_caso"]]>
+	</queryString>
+	<field name="asignar_tecnico_id_tecnico" class="java.lang.Integer"/>
+	<field name="asignar_tecnico_fecha_asigna" class="java.sql.Date"/>
+	<field name="enca_requerimientos_id_enca_requerimiento" class="java.lang.Integer"/>
+	<field name="enca_requerimientos_id_cat_serv" class="java.lang.Integer"/>
+	<field name="enca_requerimientos_id_estado" class="java.lang.Integer"/>
+	<field name="enca_requerimientos_anio" class="java.lang.Integer"/>
+	<field name="enca_requerimientos_num_caso" class="java.lang.Integer"/>
+	<field name="enca_requerimientos_fecha_fin" class="java.sql.Date"/>
+	<field name="estados_nombre_estado" class="java.lang.String"/>
+	<field name="tecnicos_nombre_tecnico" class="java.lang.String"/>
+	<field name="unidades_ejecutoras_nombre_und_ejecutora" class="java.lang.String"/>
+	<field name="asignar_tecnico_id_und_ejecutora" class="java.lang.Integer"/>
+	<field name="categoria_servicios_id_cat_serv" class="java.lang.Integer"/>
+	<field name="categoria_servicios_nombre_cat_serv" class="java.lang.String"/>
+	<field name="dependencias_nombre_dependencia" class="java.lang.String"/>
+	<sortField name="asignar_tecnico_fecha_asigna"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="4" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="137" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="6ef63a50-1020-4642-b194-c9134381c34b" x="164" y="93" width="79" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Desde:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7efc0e75-e60e-4233-816f-eb76d594a6ae" x="415" y="93" width="80" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Hasta:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="bd1e1a60-f676-423d-8e55-455f24f05440" x="245" y="93" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{fecha1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="da636927-5dab-4e42-9d12-beee986d7151" x="499" y="93" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{fecha2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b26497f5-8fd4-4936-9a97-dcb4eb137319" x="261" y="61" width="208" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{unidades_ejecutoras_nombre_und_ejecutora}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="2425b736-bf95-40ac-a7e9-ad50a5e4f018" x="585" y="-12" width="172" height="100"/>
+				<imageExpression><![CDATA["logo_e.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="97fff45d-925b-4cc8-ab88-f5518dd90e94" x="11" y="2" width="128" height="98"/>
+				<imageExpression><![CDATA["escudo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="b750136b-f720-498e-b6e7-3b94467c010c" x="191" y="36" width="335" height="23"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[.: Reporte de Requerimientos Finalizados :.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0d34a39c-be27-4be9-a20a-bb1b25f801d8" x="259" y="16" width="211" height="16"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistema de Control de Requerimientos]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3bbfce08-4802-4ad3-a363-028e9d86e531" x="37" y="1" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Técnico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="41cbf4bc-3f81-4e49-bbe7-cd5d67420731" x="153" y="1" width="92" height="20"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número de reque.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bafc089b-6880-4c8f-9f20-94159b1de311" x="248" y="1" width="98" height="22"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Asignación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="92e4828f-7eb6-4474-a7d6-0711409f786b" x="346" y="2" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Fecha Finalización]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="592cdbed-fd88-48d2-aec1-d71c17bad926" x="621" y="3" width="124" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Categoría del Servicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="294880a0-7467-485c-919b-d0d05d0fe3a3" x="447" y="3" width="169" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dependencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="66ef9cfd-d4f7-4142-b36c-753c9d1ec39d" x="10" y="1" width="27" height="20"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="9b9e37df-3d83-4e01-bcc4-5d6ad47aa1b9" x="10" y="24" width="731" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="78f08bef-8538-4394-b8a7-af156eef41bf" x="39" y="0" width="114" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tecnicos_nombre_tecnico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="718c0499-e3a2-41ed-b4bb-9c3d1947cf2d" x="158" y="0" width="44" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{enca_requerimientos_num_caso}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="1e7d5b65-4919-4ea2-8add-4376026150c9" x="356" y="1" width="74" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{enca_requerimientos_fecha_fin}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="b3898cb9-6fb8-4c03-8bb7-9ac4b9f5af38" x="632" y="2" width="113" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{categoria_servicios_nombre_cat_serv}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="cad965d1-0f66-463c-ad61-beaee4091abb" x="445" y="2" width="177" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dependencias_nombre_dependencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="073791c4-0abb-4595-a4ac-6310faf5bd58" x="213" y="0" width="40" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{enca_requerimientos_anio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="48dd092e-79a6-4376-99ff-4edd8f2fe66a" x="11" y="0" width="21" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="68071a1c-290f-4dea-a463-04197537ddb3" x="205" y="0" width="19" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="a54e2dc2-ec40-48a2-a069-2516fb332ee3" x="261" y="0" width="69" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{asignar_tecnico_fecha_asigna}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="101" splitType="Stretch">
+			<line>
+				<reportElement uuid="0ac9d157-c740-499d-b3f5-cd48aa1feb3d" x="8" y="6" width="731" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="26d11ae0-aaa2-452e-b821-93ab8b0c8198" x="608" y="78" width="80" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="ce6447bb-4ac5-4113-a994-7441bbbda287" x="688" y="78" width="40" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement uuid="fdf3170d-447b-444e-906c-5426d0dd098b" x="8" y="78" width="131" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="a1cdb70d-11e9-4a28-8bfe-c62d15fd4bec" x="8" y="7" width="159" height="91"/>
+				<imageExpression><![CDATA["secre_new.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="225" splitType="Stretch">
+			<textField>
+				<reportElement uuid="4d61a6fc-698c-4949-bcbd-92e8dcf24b1d" x="683" y="12" width="56" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="574d48a7-2b7c-49b6-aa1f-1e2db4b9164c" x="512" y="8" width="169" height="27"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Total de requerimientos atendidos en el periodo seleccionado]]></text>
+			</staticText>
+			<crosstab>
+				<reportElement uuid="b6f4638d-763f-4066-85ef-bff603f73898" x="72" y="79" width="616" height="97"/>
+				<crosstabHeaderCell>
+					<cellContents>
+						<box>
+							<topPen lineWidth="0.75"/>
+							<leftPen lineWidth="0.75"/>
+							<bottomPen lineWidth="0.75"/>
+							<rightPen lineWidth="0.75"/>
+						</box>
+						<staticText>
+							<reportElement uuid="85b8632a-a56a-433e-abb5-40bf7860c27c" style="Crosstab Data Text" x="36" y="0" width="129" height="30"/>
+							<textElement textAlignment="Left" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
+							<text><![CDATA[Técnico     /     Categoría]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="tecnicos_nombre_tecnico" width="193" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{tecnicos_nombre_tecnico}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement uuid="deaa17a0-27c2-4f1a-84f9-213d0ad00c04" style="Crosstab Data Text" x="6" y="0" width="181" height="25"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{tecnicos_nombre_tecnico}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement uuid="ef594185-8b60-44f0-8404-1d9b4422086f" x="116" y="2" width="70" height="25"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total tecnicos_nombre_tecnico]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="categoria_servicios_nombre_cat_serv" height="30" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{categoria_servicios_nombre_cat_serv}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement uuid="9c50f2d0-51a5-4b42-9ac4-e9aa8beb2ea9" style="Crosstab Data Text" x="3" y="0" width="79" height="30"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{categoria_servicios_nombre_cat_serv}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement uuid="86811431-2dc5-4414-afb5-e125a817bb06" x="7" y="0" width="59" height="30"/>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total por Técnico]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="enca_requerimientos_num_casoMeasure" class="java.lang.Integer" calculation="Count">
+					<measureExpression><![CDATA[$F{enca_requerimientos_num_caso}]]></measureExpression>
+				</measure>
+				<crosstabCell width="84" height="25">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="28b118ce-24a0-4be2-9665-5d7575746499" style="Crosstab Data Text" x="11" y="0" width="67" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{enca_requerimientos_num_casoMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="84" height="30" rowTotalGroup="tecnicos_nombre_tecnico">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="8151a354-e697-4792-83aa-263d8a73bc1b" style="Crosstab Data Text" x="11" y="2" width="67" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{enca_requerimientos_num_casoMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="66" columnTotalGroup="categoria_servicios_nombre_cat_serv">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="b7cb3786-a1a2-4421-9a82-e3162e1f3881" style="Crosstab Data Text" x="9" y="0" width="50" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{enca_requerimientos_num_casoMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="66" height="30" rowTotalGroup="tecnicos_nombre_tecnico" columnTotalGroup="categoria_servicios_nombre_cat_serv">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="5d057702-4626-4474-8928-db1d30b1d3dd" style="Crosstab Data Text" x="10" y="2" width="50" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{enca_requerimientos_num_casoMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+			<staticText>
+				<reportElement uuid="39d00026-3e50-4c9d-b9f8-6a27a73f9423" x="169" y="48" width="396" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Consolidado de requerimientos finalizados por técnico en el período]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

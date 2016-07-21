@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cat_servicios" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0211a661-9762-4a33-a152-576bbe145481">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="undEje" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$F{unidades_ejecutoras_id_und_ejecutora}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     servicios."id_servicio" AS servicios_id_servicio,
+     servicios."id_und_ejecutora" AS servicios_id_und_ejecutora,
+     servicios."id_cat_serv" AS servicios_id_cat_serv,
+     categoria_servicios."nombre_cat_serv" AS categoria_servicios_nombre_cat_serv,
+     servicios."nombre_servicio" AS servicios_nombre_servicio,
+     servicios."descripcion_servicio" AS servicios_descripcion_servicio,
+     servicios."tiempo_atencion_servicio" AS servicios_tiempo_atencion_servicio,
+     unidades_ejecutoras."nombre_und_ejecutora" AS unidades_ejecutoras_nombre_und_ejecutora,
+     unidades_ejecutoras."id_und_ejecutora" AS unidades_ejecutoras_id_und_ejecutora
+FROM
+     "public"."servicios" servicios, "unidades_ejecutoras" unidades_ejecutoras, "categoria_servicios" categoria_servicios
+
+WHERE
+     servicios."id_und_ejecutora"=unidades_ejecutoras."id_und_ejecutora"
+and  categoria_servicios."id_cat_serv"=servicios."id_cat_serv"
+and servicios."id_und_ejecutora"=$P{undEje}
+
+ORDER BY categoria_servicios_nombre_cat_serv]]>
+	</queryString>
+	<field name="servicios_id_servicio" class="java.lang.Integer"/>
+	<field name="servicios_id_und_ejecutora" class="java.lang.Integer"/>
+	<field name="servicios_id_cat_serv" class="java.lang.Integer"/>
+	<field name="categoria_servicios_nombre_cat_serv" class="java.lang.String"/>
+	<field name="servicios_nombre_servicio" class="java.lang.String"/>
+	<field name="servicios_descripcion_servicio" class="java.lang.String"/>
+	<field name="servicios_tiempo_atencion_servicio" class="java.lang.String"/>
+	<field name="unidades_ejecutoras_nombre_und_ejecutora" class="java.lang.String"/>
+	<field name="unidades_ejecutoras_id_und_ejecutora" class="java.lang.Integer"/>
+	<group name="Categoria">
+		<groupExpression><![CDATA[$F{categoria_servicios_nombre_cat_serv}]]></groupExpression>
+		<groupHeader>
+			<band height="29">
+				<textField>
+					<reportElement uuid="e029d21f-df9e-438d-af47-f9a065ebb284" x="120" y="4" width="381" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="12" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categoria_servicios_nombre_cat_serv}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="84a7a1bf-3d69-4be9-bcdd-750efd817b2c" x="15" y="4" width="105" height="20"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[>>  Categoría]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="ca5a5a77-f221-4ef7-baf7-afa3212eca0e" x="15" y="23" width="549" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="2"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="9" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="151" splitType="Stretch">
+			<image>
+				<reportElement uuid="bdbb98a5-2089-4e55-a45c-999635259ca0" x="6" y="0" width="128" height="98"/>
+				<imageExpression><![CDATA["escudo.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="59241729-9800-432c-9c07-bf7143a4c60b" x="409" y="-5" width="172" height="100"/>
+				<imageExpression><![CDATA["logo_e.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="ce5989ed-dff1-4dc6-beff-510d1923fc5d" x="182" y="71" width="201" height="16"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistema de Control de Requerimientos]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="ed061565-ea10-40f6-84a6-114978ea8f10" x="19" y="94" width="549" height="20" backcolor="#899FB6"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="d936fb7d-e250-4d95-8dda-af7e8982a80c" x="196" y="124" width="189" height="20"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{unidades_ejecutoras_nombre_und_ejecutora}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="64bb6dd6-bad9-48e6-b621-9a91df5912e9" x="151" y="94" width="280" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[.: Catalogo de Servicios por Unidad Ejecutora :.]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="0995b633-f20d-4d4d-996e-1e7632bba441" x="15" y="0" width="32" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="84a7a1bf-3d69-4be9-bcdd-750efd817b2c" x="52" y="0" width="210" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Servicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="79c0a8a2-362c-46e1-b1ad-52a1ff64a4e4" x="287" y="0" width="101" height="30"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tiempo de Atención En Horas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="26d5d4a5-b474-46ed-b2d1-a42f862716e2" x="396" y="0" width="176" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement uuid="ccfbfb51-3a60-4f8f-83ef-eb6126fee2e6" x="13" y="1" width="34" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{servicios_id_servicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b5e387da-f618-4f0e-9496-8dc1802626d0" x="52" y="1" width="235" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{servicios_nombre_servicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="93d57a86-ba32-44aa-8857-b59a25b2ebb3" x="322" y="0" width="53" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{servicios_tiempo_atencion_servicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fbdb7fa7-9376-4363-ac36-213e2aac34f4" x="395" y="1" width="177" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{servicios_descripcion_servicio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="8" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="101" splitType="Stretch">
+			<image>
+				<reportElement uuid="ce7918ad-ae98-4161-bf40-83f84afdc91f" x="13" y="15" width="159" height="71"/>
+				<imageExpression><![CDATA["secre_new.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="dd/MM/yyyy h:mm a">
+				<reportElement uuid="b6adc4ee-9dbf-4b93-89a6-b6b0baba09c8" mode="Transparent" x="15" y="77" width="100" height="20" forecolor="#736343" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="dce50bd0-9380-4481-8c23-d75693f080c3" x="524" y="77" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0f90d3b5-56d8-4d99-ae97-ca3d44c2df23" x="444" y="77" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ef92bcf7-8043-4797-9e74-5b07f9ff70c5" x="428" y="10" width="86" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total de registros ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7b008b0d-ed5b-4f32-9d91-d5927a4154e4" x="517" y="10" width="47" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

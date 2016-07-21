@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+        
+    <ui:define name="content">
+        
+        <h:form id="formularioServicios" style="width: 100%">  
+            
+            <p:dataTable id="servicio" var="servicio" value="#{manejadorGestionCatalogo.listaServicios}" rowKey="#{servicio.idServicio}" paginator="8"
+                         selection="#{manejadorGestionCatalogo.servicioSeleccionado}" selectionMode="single">
+                <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="4">CATÁLOGO DE SERVICIOS</p:column>
+                  </p:row>
+                </f:facet>
+                <p:column headerText="Id: " sortBy="#{servicio.idServicio}" filterBy="#{servicio.idServicio}">
+                     <h:outputText value="#{servicio.idServicio}"/>
+                </p:column>
+                <p:column headerText="Unidad Ejecutora: " >
+                    <h:outputText value="#{servicio.idUndEjecutora.nombreUndEjecutora}"/>
+                </p:column>
+                <p:column headerText="Categoría del Servicio: " >
+                    <h:outputText value="#{servicio.idCatServ.nombreCatServ}"/>
+                </p:column>
+                <p:column headerText="Nombre: " sortBy="#{servicio.nombreServicio}" filterBy="#{servicio.nombreServicio}">
+                     <h:outputText value="#{servicio.nombreServicio}"/>
+                </p:column>
+                <p:column headerText="Tiempo de atención: " >
+                     <h:outputText value="#{servicio.tiempoAtencionServicio}"/>
+                </p:column>
+                <p:column headerText="Descripción: " >
+                    <h:outputText value="#{servicio.descripcionServicio}"/>
+                </p:column>
+               
+                
+                 <f:facet name="footer">  
+                     <p:commandButton id="agregar" value="Adicionar" oncomplete="agregaServicio1.show();" process="@this servicio" update=":formularioServicios:Conte1" />
+                     <p:commandButton id="ConsultaBtnSv" value="Modificar" oncomplete="modificaServi.show();" process="servicio" update=":formularioServicios:Conte2"/>
+                 </f:facet>       
+            </p:dataTable>
+            
+            <p:dialog  id="Conte1" widgetVar="agregaServicio1" header="Ingrese Nuevo Servicio" modal="true">
+                <p:panelGrid id="depliegaE1" columns="2">
+                    <h:outputLabel id="idSer" value="Id Servicio" style="font-weight: bold"/>
+                    <h:outputText value="#{manejadorAdicionCatalogo.nuevoServicio.idServicio}" />
+                    
+                    <h:outputLabel id="undeje3" value="Unidad Ejecutora" style="font-weight: bold"/>
+                    <h:selectOneMenu id="ueNom3" value="#{manejadorAdicionCatalogo.unEjSeles}">
+                        <f:selectItem itemLabel="Seleccione unidad" itemValue="0"/>
+                        <f:selectItems value="#{manejadorGestionCatalogo.listaUndEjecutora}" var="catUndEje1" itemLabel="#{catUndEje1.nombreUndEjecutora}" itemValue="#{catUndEje1.idUndEjecutora}"/>
+                    </h:selectOneMenu>
+                    
+                    <h:outputLabel id="catSer" value="Categoría del Servicio" style="font-weight: bold"/>
+                    <h:selectOneMenu id="catSer3" value="#{manejadorAdicionCatalogo.serviSelec}">
+                        <f:selectItem itemLabel="Seleccione categoría" itemValue="0"/>
+                        <f:selectItems value="#{manejadorGestionCatalogo.listaCatServicios}" var="catServi1" itemLabel="#{catServi1.nombreCatServ}" itemValue="#{catServi1.idCatServ}"/>
+                    </h:selectOneMenu>
+                    
+                    <h:outputLabel id="nomSer" value="Nombre del Servicio" style="font-weight: bold"/>
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoServicio.nombreServicio}" />
+                    <h:outputLabel id="tiempo" value="Tiempo de Atención" style="font-weight: bold"/>
+                    <h:inputText value="#{manejadorAdicionCatalogo.nuevoServicio.tiempoAtencionServicio}" />
+                    <h:outputLabel id="desSer" value="Descripción" style="font-weight: bold"/>
+                    <p:inputTextarea value="#{manejadorAdicionCatalogo.nuevoServicio.descripcionServicio}" rows="2" style="width: 99%;" autoResize="true"/>
+                </p:panelGrid>
+                
+                <p:commandButton value="Guardar" action="#{manejadorAdicionCatalogo.crearServicio()}" update=":formularioServicios:servicio" process="@this Conte1" oncomplete="handleRequest(args);"/>
+                   
+               <script type="text/javascript">
+                      function handleRequest(args) {
+                      if (args.validationFailed) {
+                          alert('Ha ocurrido un error. Complete los datos necesarios');
+                      }else{
+                        alert('Datos adicionados correctamente');
+                        agregaServicio1.hide();
+                        }
+                      }
+               </script> 
+                
+            </p:dialog>
+            
+            <p:dialog  id="Conte2" widgetVar="modificaServi" header="Modificar Servicios" modal="true">
+                 <p:panelGrid id="Modifica2" columns="2">
+                     <h:outputLabel value="Nombre del Servicio: " style="font-weight: bold"/>
+                     <h:inputText value="#{manejadorGestionCatalogo.servicioSeleccionado.nombreServicio}" />
+                     <h:outputLabel value="Tiempo de Atención: " style="font-weight: bold"/>
+                     <h:inputText value="#{manejadorGestionCatalogo.servicioSeleccionado.tiempoAtencionServicio}"/>
+                     <h:outputLabel value="Descripción del Servicio:" style="font-weight: bold"/>
+                     <h:inputText value="#{manejadorGestionCatalogo.servicioSeleccionado.descripcionServicio}"/>
+                 </p:panelGrid>
+                <p:commandButton value="Guardar" action="#{manejadorGestionCatalogo.actualizaServicio()}" update=":formularioServicios:servicio" process="@this Conte2" oncomplete="modificaServi.hide();" />
+             </p:dialog>
+                       
+            
+        </h:form>
+    </ui:define>
+
+    
+</ui:composition>

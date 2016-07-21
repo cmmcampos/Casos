@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../plantilla/plantilla4.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <ui:define name="content">
+            <h:form id="formListaCAmodi" prependId="false" style="width: 100%">
+            
+                <p:dataTable id="listaC"  var="listaq" value="#{controladorAdicionCaso.listEncaRequerimientoAModificar}"  rowKey="#{listaq.idEncaRequerimiento}" paginator="true" rows="8" >
+                
+                <f:facet name="header">
+                  <p:row>
+                     <p:column colspan="6">CASOS POR ASIGNAR</p:column>
+                  </p:row>
+                </f:facet>
+               
+               <p:column headerText="ID" >
+                    <h:outputText value="#{listaq.idEncaRequerimiento}"/>
+                 </p:column>
+                    <!--
+               <p:column headerText="Categoría"  filterBy="#{listaq.idCatServ}" filterMatchMode="contains">
+                    <h:outputText value="#{listaq.idCatServ.nombreCatServ}"/>
+                 </p:column>
+                <p:column headerText="Usuario Solicitante" filterBy="#{listaq.solicitante}" filterMatchMode="contains">
+                    <h:outputText value="#{listaq.solicitante}"/>
+                 </p:column>
+                    <p:column headerText="Dependencia" filterBy="#{listaq.usuarioUsuario.idDependencia.nombreDependencia}" filterMatchMode="contains">
+                     <h:outputText value="#{listaq.usuarioUsuario.idDependencia.nombreDependencia}"/>
+                 </p:column>
+                    <p:column headerText="Fecha de Requerimiento" width="160" filterBy="#{listaq.fechaRequerimiento}" filterMatchMode="contains">
+                    <center> <h:outputText value="#{listaq.fechaRequerimiento}">
+                      <f:convertDateTime pattern="dd/MM/yyyy" locale="es"></f:convertDateTime>
+                        </h:outputText></center>
+                 </p:column>
+                   <p:column headerText="Descripción">
+                       <p:inputTextarea value="#{listaq.descripcionRequerimiento}" autoResize="false" style="width: 240px" disabled="true"></p:inputTextarea>
+                     
+                 </p:column>
+                <p:column headerText="Asignar">
+                    <p:commandButton icon="ui-icon-check" title="Asignar Tecnico" process="@this" action="#{controladorAdicionCaso.requeSelec()}" >
+                       <f:setPropertyActionListener value="#{listaq}" target="#{controladorAdicionCaso.requeSeleccionado}"/>
+                    </p:commandButton>
+                </p:column>
+                !-->
+                               
+            </p:dataTable>
+            
+           
+            
+            
+      
+</h:form>        
+        
+    </ui:define>
+
+    
+</ui:composition>
+
+
